@@ -22,6 +22,10 @@ import UserIcon from 'src/layouts/components/UserIcon'
 // ** Utils
 import { handleURLQueries } from 'src/@core/layouts/utils'
 
+// miui icons
+import CircleOutline from 'mdi-material-ui/CircleOutline'
+import { ChevronRight, ChevronDown } from 'mdi-material-ui'
+
 // ** Styled Components
 const MenuNavLink = styled(ListItemButton)(({ theme }) => ({
   width: '100%',
@@ -33,10 +37,10 @@ const MenuNavLink = styled(ListItemButton)(({ theme }) => ({
   '&.active, &.active:hover': {
     boxShadow: theme.shadows[3],
     backgroundImage: `linear-gradient(98deg, ${theme.palette.customColors.primaryGradient}, ${theme.palette.primary.main} 94%)`
+  },
+  '&.active .MuiTypography-root, &.active .MuiSvgIcon-root': {
+    color: `${theme.palette.common.white} !important`
   }
-  // '&.active .MuiTypography-root, &.active .MuiSvgIcon-root': {
-  //   color: `${theme.palette.common.white} !important`
-  // }
 }))
 
 const MenuItemTextMetaWrapper = styled(Box)({
@@ -56,8 +60,8 @@ const VerticalNavDropdown = ({ item, navVisible, toggleNavVisibility }) => {
   const router = useRouter()
   const IconTag = item.icon
 
-  const isNavLinkActive = () => {
-    if (router.pathname === item.path || handleURLQueries(router, item.path)) {
+  const isNavLinkActive = path => {
+    if (router.pathname === path || handleURLQueries(router, path)) {
       return true
     } else {
       return false
@@ -65,9 +69,6 @@ const VerticalNavDropdown = ({ item, navVisible, toggleNavVisibility }) => {
   }
   const [isClicked, setIsClicked] = useState(false)
 
-  const handleClick = () => {
-    setIsClicked(true)
-  }
   return (
     <>
       <ListItem
@@ -82,8 +83,7 @@ const VerticalNavDropdown = ({ item, navVisible, toggleNavVisibility }) => {
           component={'a'}
           className={isClicked ? 'active' : ''}
           style={{
-            background: isClicked ? 'linear-gradient(to bottom, #c4c4c4, #dddddd)' : '',
-            color: isClicked ? `black !important` : ''
+            background: isClicked ? 'linear-gradient(to right, #b3b3b3, #8c8c8c)' : ''
           }}
           // {...(item.openInNewTab ? { target: '_blank' } : null)}
           onClick={e => {
@@ -127,67 +127,83 @@ const VerticalNavDropdown = ({ item, navVisible, toggleNavVisibility }) => {
               />
             ) : null}
           </MenuItemTextMetaWrapper>
+          <ListItemIcon
+            sx={{
+              mr: 2.5,
+              color: 'text.primary',
+              transition: 'margin .25s ease-in-out'
+            }}
+          >
+            <UserIcon icon={isClicked ? ChevronDown : ChevronRight} />
+          </ListItemIcon>
         </MenuNavLink>
 
         {/* <MenuNavLink>...</MenuNavLink> */}
         {/* </Link> */}
       </ListItem>
-      <ListItem
-        disablePadding
-        className='nav-link'
-        disabled={item.disabled || false}
-        sx={{ mt: 1.5, px: '0 !important' }}
-      >
-        <Link passHref href={item.path === undefined ? '/' : `${item.path}`}>
-          <MenuNavLink
-            component={'a'}
-            className={isNavLinkActive() ? 'active' : ''}
-            {...(item.openInNewTab ? { target: '_blank' } : null)}
-            onClick={e => {
-              if (item.path === undefined) {
-                e.preventDefault()
-                e.stopPropagation()
-              }
-              if (navVisible) {
-                toggleNavVisibility()
-              }
-            }}
-            sx={{
-              pl: 5.5,
-              ...(item.disabled ? { pointerEvents: 'none' } : { cursor: 'pointer' })
-            }}
-          >
-            <ListItemIcon
-              sx={{
-                mr: 2.5,
-                color: 'text.primary',
-                transition: 'margin .25s ease-in-out'
-              }}
+      {console.log(item)}
+      {isClicked && (
+        <>
+          {item.items.map((item, index) => (
+            <ListItem
+              disablePadding
+              className='nav-link'
+              disabled={item.disabled || false}
+              sx={{ mt: 1.5, px: '0 !important' }}
             >
-              <UserIcon icon={IconTag} />
-            </ListItemIcon>
-
-            <MenuItemTextMetaWrapper>
-              <Typography {...(themeConfig.menuTextTruncate && { noWrap: true })}>{item.title}</Typography>
-
-              {console.log(item)}
-
-              {item.badgeContent ? (
-                <Chip
-                  label={item.badgeContent}
-                  color={item.badgeColor || 'primary'}
-                  sx={{
-                    height: 20,
-                    fontWeight: 500,
-                    marginLeft: 1.25,
-                    '& .MuiChip-label': { px: 1.5, textTransform: 'capitalize' }
+              <Link passHref href={item.path === undefined ? '/' : `${item.path}`}>
+                <MenuNavLink
+                  component={'a'}
+                  className={isNavLinkActive(item.path) ? 'active' : ''}
+                  {...(item.openInNewTab ? { target: '_blank' } : null)}
+                  onClick={e => {
+                    if (item.path === undefined) {
+                      e.preventDefault()
+                      e.stopPropagation()
+                    }
+                    if (navVisible) {
+                      toggleNavVisibility()
+                    }
                   }}
-                />
-              ) : null}
-            </MenuItemTextMetaWrapper>
-          </MenuNavLink>
-        </Link>
-      </ListItem>
+                  sx={{
+                    pl: 5.5,
+                    ...(item.disabled ? { pointerEvents: 'none' } : { cursor: 'pointer' })
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      mr: 2.5,
+                      color: 'text.primary',
+                      transition: 'margin .25s ease-in-out'
+                    }}
+                  >
+                    <UserIcon icon={CircleOutline} />
+                  </ListItemIcon>
+
+                  <MenuItemTextMetaWrapper>
+                    <Typography {...(themeConfig.menuTextTruncate && { noWrap: true })}>{item.title}</Typography>
+
+                    {/* {console.log(item)} */}
+
+                    {item.badgeContent ? (
+                      <Chip
+                        label={item.badgeContent}
+                        color={item.badgeColor || 'primary'}
+                        sx={{
+                          height: 20,
+                          fontWeight: 500,
+                          marginLeft: 1.25,
+                          '& .MuiChip-label': { px: 1.5, textTransform: 'capitalize' }
+                        }}
+                      />
+                    ) : null}
+                  </MenuItemTextMetaWrapper>
+                </MenuNavLink>
+              </Link>
+            </ListItem>
+          ))}
+        </>
+      )}
     </>
   )
 }
