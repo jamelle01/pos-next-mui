@@ -123,7 +123,7 @@ const Navigation = props => {
           </Box>
         </ScrollWrapper>
       </Box>
-      {afterVerticalNavMenuContent ? afterVerticalNavMenuContent(props) : null}
+      {/* {afterVerticalNavMenuContent ? afterVerticalNavMenuContent(props) : null} */}
     </Drawer>
   )
 }

@@ -4,10 +4,16 @@ import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import InputAdornment from '@mui/material/InputAdornment'
+import { Button } from '@mui/material'
 
 // ** Icons Imports
 import Menu from 'mdi-material-ui/Menu'
 import Magnify from 'mdi-material-ui/Magnify'
+import Fullscreen from 'mdi-material-ui/Fullscreen'
+import FullscreenExit from 'mdi-material-ui/FullscreenExit'
+
+// import from next
+import Link from 'next/link'
 
 // ** Components
 import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
@@ -34,6 +40,7 @@ const AppBarContent = props => {
           </IconButton>
         ) : null}
         <TextField
+          placeholder='search'
           size='small'
           sx={{ '& .MuiOutlinedInput-root': { borderRadius: 4 } }}
           InputProps={{
@@ -61,6 +68,22 @@ const AppBarContent = props => {
             />
           </Box>
         )}
+        <Link href='/pos'><Button>POS</Button></Link>
+        {/* <Button fullWidth sx={{ height: '100%' }} onClick={handleFullscreen}>
+          {scrn ? (
+            <FullscreenExit
+              sx={{
+                fontSize: '2rem'
+              }}
+            />
+          ) : (
+            <Fullscreen
+              sx={{
+                fontSize: '2rem'
+              }}
+            />
+          )}
+        </Button> */}
         <ModeToggler settings={settings} saveSettings={saveSettings} />
         <NotificationDropdown />
         <UserDropdown />

@@ -83,7 +83,7 @@ const VerticalNavDropdown = ({ item, navVisible, toggleNavVisibility }) => {
           component={'a'}
           className={isClicked ? 'active' : ''}
           style={{
-            background: isClicked ? 'linear-gradient(to right, #b3b3b3, #8c8c8c)' : ''
+            background: isClicked ? 'linear-gradient(to right, #cccccc, #b3b3b3)' : ''
           }}
           // {...(item.openInNewTab ? { target: '_blank' } : null)}
           onClick={e => {
@@ -141,11 +141,11 @@ const VerticalNavDropdown = ({ item, navVisible, toggleNavVisibility }) => {
         {/* <MenuNavLink>...</MenuNavLink> */}
         {/* </Link> */}
       </ListItem>
-      {console.log(item)}
       {isClicked && (
         <>
           {item.items.map((item, index) => (
             <ListItem
+              key={index}
               disablePadding
               className='nav-link'
               disabled={item.disabled || false}
@@ -182,8 +182,6 @@ const VerticalNavDropdown = ({ item, navVisible, toggleNavVisibility }) => {
 
                   <MenuItemTextMetaWrapper>
                     <Typography {...(themeConfig.menuTextTruncate && { noWrap: true })}>{item.title}</Typography>
-
-                    {/* {console.log(item)} */}
 
                     {item.badgeContent ? (
                       <Chip

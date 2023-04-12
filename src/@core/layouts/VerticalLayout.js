@@ -84,7 +84,6 @@ const VerticalLayout = props => {
           >
             {children}
           </ContentWrapper>
-
           <Footer {...props} />
 
           <DatePickerWrapper sx={{ zIndex: 11 }}>

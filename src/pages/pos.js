@@ -1,27 +1,26 @@
 // ** Next Import
 import Link from 'next/link'
 
+// ** Icons Imports
+
 // ** MUI Components
-import Button from '@mui/material/Button'
 import { styled } from '@mui/material/styles'
-import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Card from '@mui/material/Card'
 
 // ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout'
 
-// ** Demo Imports
-import FooterIllustrations from 'src/views/pages/misc/FooterIllustrations'
+// **  Imports components
+import StatisticsCard from 'src/views/dashboard/StatisticsCard'
 
+// ** Styled Component Import
+import ApexChartWrapper from 'src/@core/styles/libs/react-apexcharts'
 
-
-// ** Styled Components
-const BoxWrapper = styled(Box)(({ theme }) => ({
-  [theme.breakpoints.down('md')]: {
-    width: '90vw'
-  }
-}))
-
+// ** Custom Components Imports
+import ProductTable from 'src/views/pos/ProductTable'
+import ProductList from 'src/views/pos/ProductList'
 
 const Img = styled('img')(({ theme }) => ({
   marginBottom: theme.spacing(10),
@@ -48,24 +47,23 @@ const TreeIllustration = styled('img')(({ theme }) => ({
 
 const Pos = () => {
   return (
-    <Box className='content-center'>
-      <Box sx={{ p: 5, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-        <BoxWrapper>
-          <Typography variant='h1'>500</Typography>
-          <Typography variant='h5' sx={{ mb: 1, fontSize: '1.5rem !important' }}>
-            Internal server error 👨🏻‍💻
-          </Typography>
-          <Typography variant='body2'>Oops, something went wrong!</Typography>
-        </BoxWrapper>
-        <Img height='487' alt='error-illustration' src='/images/pages/500.png' />
-        <Link passHref href='/'>
-          <Button component='a' variant='contained' sx={{ px: 5.5 }}>
-            Back to Home
-          </Button>
-        </Link>
-      </Box>
-      <FooterIllustrations image={<TreeIllustration alt='tree' src='/images/pages/tree-3.png' />} />
-    </Box>
+    <ApexChartWrapper style={{ padding: '10px' }}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={5} lg={4}>
+          <Box >
+            <Card>
+              <ProductTable />
+            </Card>
+          </Box>
+        </Grid>
+        <Grid item xs={12} md={7} lg={8}>
+          <Box>
+            <ProductList/>
+
+          </Box>
+        </Grid>
+      </Grid>
+    </ApexChartWrapper>
   )
 }
 

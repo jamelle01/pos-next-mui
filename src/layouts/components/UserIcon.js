@@ -4,10 +4,14 @@ const UserIcon = props => {
   const IconTag = icon
   let styles
 
-  /* styles = {
-      color: 'red',
-      fontSize: '2rem'
-    } */
+  if (icon.type.render.displayName.toString() === 'CircleOutlineIcon') {
+    styles = {
+      // color: 'red',
+      fontSize: '1rem',
+      marginLeft: '1.5em'
+    }
+  }
+
   // @ts-ignore
   return <IconTag {...iconProps} style={{ ...styles }} />
 }

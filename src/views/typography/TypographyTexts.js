@@ -32,7 +32,7 @@ const TypographyTexts = () => {
             <Typography>subtitle2</Typography>
           </Grid>
           <DemoGrid item xs={12} sm={10}>
-            <Typography variant='subtitle2' sx={{ marginBottom: 2 }}>
+            <Typography aphy variant='subtitle2' sx={{ marginBottom: 2 }}>
               Cupcake ipsum dolor sit amet chocolate bar pastry sesame snaps.
             </Typography>
             <Typography variant='body2'>font-size: 14px / line-height: 21px / font-weight: 500</Typography>

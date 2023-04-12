@@ -1,5 +1,6 @@
 // ** Next Import
 import Link from 'next/link'
+import Image from 'next/image'
 
 // ** MUI Imports
 import Box from '@mui/material/Box'
@@ -41,13 +42,14 @@ const VerticalNavHeader = props => {
   const theme = useTheme()
 
   return (
-    <MenuHeaderWrapper className='nav-header' sx={{ pl: 6 }}>
+    <MenuHeaderWrapper className='nav-header' sx={{ pl: 6 ,pt: 6}}>
       {userVerticalNavMenuBranding ? (
         userVerticalNavMenuBranding(props)
       ) : (
         <Link href='/' passHref>
           <StyledLink>
-            <svg
+            <img style={{zIndex: '99'}} src='/images/logos/advancewarelogo.png' sx={{ ml: 3 }} height={80} alt='' />
+            {/* <svg
               width={30}
               height={25}
               version='1.1'
@@ -105,10 +107,10 @@ const VerticalNavHeader = props => {
                   </g>
                 </g>
               </g>
-            </svg>
-            <HeaderTitle variant='h6' sx={{ ml: 3 }}>
+            </svg> */}
+            {/* <HeaderTitle variant='h6' sx={{ ml: 3 }}>
               {themeConfig.templateName}
-            </HeaderTitle>
+            </HeaderTitle> */}
           </StyledLink>
         </Link>
       )}

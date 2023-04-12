@@ -36,7 +36,7 @@ const Footer = props => {
           ...(contentWidth === 'boxed' && { '@media (min-width:1440px)': { maxWidth: 1440 } })
         }}
       >
-        {userFooterContent ? userFooterContent(props) : <FooterContent />}
+        {userFooterContent ? userFooterContent(props) : <FooterContent />}  
       </Box>
     </Box>
   )

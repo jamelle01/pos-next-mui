@@ -15,9 +15,6 @@ import CardContent from '@mui/material/CardContent'
 
 import Typography from '@mui/material/Typography'
 
-// ** React Imports
-import { forwardRef, useState } from 'react'
-
 // hardcoded data for table
 const createData = (name, calories, fat, carbs, protein) => {
   return { name, calories, fat, carbs, protein }
@@ -32,51 +29,11 @@ const rows = [
 ]
 
 const ProductTable = () => {
-  const [language, setLanguage] = useState([])
-  const [date, setDate] = useState(null)
-
-  const [values, setValues] = useState({
-    password: '',
-    password2: '',
-    showPassword: false,
-    showPassword2: false
-  })
-
-  // Handle Password
-  const handlePasswordChange = prop => event => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
-
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword })
-  }
-
-  const handleMouseDownPassword = event => {
-    event.preventDefault()
-  }
-
-  // Handle Confirm Password
-  const handleConfirmChange = prop => event => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
-
-  const handleClickShowConfirmPassword = () => {
-    setValues({ ...values, showPassword2: !values.showPassword2 })
-  }
-
-  const handleMouseDownConfirmPassword = event => {
-    event.preventDefault()
-  }
-
-  // Handle Select
-  const handleSelectChange = event => {
-    setLanguage(event.target.value)
-  }
 
   return (
-    <>
+    <div style={{ position: 'relative' ,height: '96.5vh'}}>
       {/* table  */}
-      <TableContainer sx={{ minHeight: '70vh' }} component={Paper}>
+      <TableContainer sx={{ height: '66vh' }} component={Paper}>
         <Table aria-label='simple table'>
           <TableHead>
             <TableRow>
@@ -108,37 +65,59 @@ const ProductTable = () => {
 
       {/* totals */}
 
-      <Card>
-        <form onSubmit={e => e.preventDefault()}>
-          <CardContent>
-            <Grid container spacing={5}>
-              <Grid item xs={12} sm={6}>
-                <Typography>fhif</Typography>
+      {/* <Card> */}
+      <form onSubmit={e => e.preventDefault()} style={{ position: 'absolute', bottom: '0' }}>
+        <CardContent>
+          <Grid container spacing={5}>
+            <Grid item xs={12} sm={6} container justify='center' alignItems='center'>
+              <Grid xs={6}>
+                <Typography align='right'>Total QTY: </Typography>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField fullWidth type='email' label='Email' placeholder='carterleonard@gmail.com' />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField fullWidth label='Username' placeholder='carterLeonard' />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField fullWidth type='email' label='Email' placeholder='carterleonard@gmail.com' />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Button size='large' type='submit' fullWidth variant='contained'>
-                  Submit
-                </Button>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Button size='large' color='secondary' fullWidth variant='outlined'>
-                  Cancel
-                </Button>
+              <Grid xs={6}>
+                <Typography mr={5} align='right'>
+                  9900{' '}
+                </Typography>
               </Grid>
             </Grid>
-          </CardContent>
-        </form>
-      </Card>
-    </>
+            <Grid item xs={12} sm={6} container justify='center' alignItems='center'>
+              <Grid xs={6}>
+                <Typography align='right'>Subtotal: ₱ </Typography>
+              </Grid>
+              <Grid xs={6}>
+                <Typography mr={5} align='right'>
+                  9900{' '}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField fullWidth label='Discount' placeholder='Discount' />
+            </Grid>
+            <Grid item xs={12} sm={6} container justify='center' alignItems='center'>
+              <Grid xs={6}>
+                <Typography align='right'>Total: ₱ </Typography>
+              </Grid>
+              <Grid xs={6}>
+                <Typography mr={5} align='right'>
+                  9900{' '}
+                </Typography>
+              </Grid>
+            </Grid>
+
+            <Grid item xs={12} sm={6}>
+              <Button size='large' color='error' fullWidth variant='contained'>
+                reset
+              </Button>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Button size='large' color='info' type='submit' fullWidth variant='contained'>
+                pay now
+              </Button>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </form>
+      {/* </Card> */}
+    </div>
   )
 }
 

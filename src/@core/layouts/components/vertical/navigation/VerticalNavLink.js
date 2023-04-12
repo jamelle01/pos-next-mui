@@ -97,6 +97,9 @@ const VerticalNavLink = ({ item, navVisible, toggleNavVisibility }) => {
 
           <MenuItemTextMetaWrapper>
             <Typography {...(themeConfig.menuTextTruncate && { noWrap: true })}>{item.title}</Typography>
+            
+            {/* {console.log(item)} */}
+            
             {item.badgeContent ? (
               <Chip
                 label={item.badgeContent}

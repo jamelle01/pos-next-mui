@@ -9,6 +9,9 @@ import CreditCardOutline from 'mdi-material-ui/CreditCardOutline'
 import AccountPlusOutline from 'mdi-material-ui/AccountPlusOutline'
 import AlertCircleOutline from 'mdi-material-ui/AlertCircleOutline'
 import GoogleCirclesExtended from 'mdi-material-ui/GoogleCirclesExtended'
+import ShoppingOutline from 'mdi-material-ui/ShoppingOutline'
+import BasketOutline from 'mdi-material-ui/BasketOutline'
+import Account from 'mdi-material-ui/Account'
 
 const navigation = () => {
   return [
@@ -18,9 +21,37 @@ const navigation = () => {
       path: '/'
     },
     {
+      subtitle: 'Products',
+      icon: ShoppingOutline,
+      items: [
+        {
+          title: 'Products',
+          path: '/products'
+        },
+        {
+          title: 'Product Categories',
+          path: '/products/product-categories'
+        },
+        {
+          title: 'Brands',
+          path: '/products/brands'
+        }
+      ]
+    },
+    {
       title: 'Account Settings',
       icon: AccountCogOutline,
       path: '/account-settings'
+    },
+    {
+      title: 'Qoutes',
+      icon: BasketOutline,
+      path: '/qoutes'
+    },
+    {
+      title: 'Towns',
+      icon: Account,
+      path: '/towns'
     },
     {
       sectionTitle: 'Pages'
@@ -67,9 +98,18 @@ const navigation = () => {
       path: '/tables'
     },
     {
+      subtitle: 'Form Layouts',
       icon: CubeOutline,
-      title: 'Form Layouts',
-      path: '/form-layouts'
+      items: [
+        {
+          title: 'Form Layout 1',
+          path: '/form-layouts'
+        },
+        {
+          title: 'Form Layout 2',
+          path: '/form-layout-2'
+        }
+      ]
     }
   ]
 }
