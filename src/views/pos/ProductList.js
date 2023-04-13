@@ -19,7 +19,7 @@ import { height } from '@mui/system'
 
 import Link from 'next/link'
 
-//icons 
+//icons
 import Magnify from 'mdi-material-ui/Magnify'
 import HomeOutline from 'mdi-material-ui/HomeOutline'
 import Fullscreen from 'mdi-material-ui/Fullscreen'
@@ -27,6 +27,8 @@ import FullscreenExit from 'mdi-material-ui/FullscreenExit'
 
 import { useState } from 'react'
 import { Select, MenuItem } from '@mui/material'
+
+import Image from 'next/image'
 
 const options = ['Option 1', 'Option 2', 'Option 3']
 
@@ -68,13 +70,11 @@ const ProductList = () => {
 
   const [scrn, setScrn] = useState(typeof localStorage !== 'undefined' ? localStorage.getItem('screen') : false)
 
-
-
   const handleFullscreen = () => {
     if (document.fullscreenElement) {
       setScrn(false)
       localStorage.setItem('screen', JSON.stringify(scrn))
-      
+
       document.exitFullscreen()
     } else {
       document.documentElement.requestFullscreen()
@@ -169,6 +169,8 @@ const ProductList = () => {
       </Grid>
 
       <Card sx={{ padding: 2 }}>
+        {/* dropdown button */}
+
         <Grid container mb={2} spacing={2}>
           <Grid item xs={12} sm={6}>
             <Select fullWidth value={selectedOption} onChange={handleOptionChange} displayEmpty>
@@ -197,13 +199,21 @@ const ProductList = () => {
           </Grid>
         </Grid>
 
+        {/* product list */}
+
         <div style={{ height: 'calc(100vh - 170px)', overflow: 'auto' }}>
           <Grid container spacing={3} justifyContent='center'>
             {data.map(item => (
               <Grid key={item.id} item xs={12} sm={3} md={2}>
-                <Paper style={{ padding: '1rem' }}>
+                <Paper sx={{ height: '100%' }} style={{ padding: '1rem' }}>
+                  <div className='img-bg'>
+                    <Image src='/images/no-image.png' alt='image' width={100} height={100} />
+                  </div>
+
                   <Typography variant='h6'>{item.title}</Typography>
-                  <Typography variant='body1'>{item.description}</Typography>
+                  {/* <Typography variant='body1'>{item.description}</Typography> */}
+                  <Typography variant='body1'>quantity</Typography>
+                  <Typography variant='body1'>price</Typography>
                 </Paper>
               </Grid>
             ))}
