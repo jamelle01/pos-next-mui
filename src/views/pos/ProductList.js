@@ -67,6 +67,34 @@ const data = [
 
 const ProductList = () => {
   const [selectedOption, setSelectedOption] = useState('')
+  const [categoryValue, setCategoryValue] = useState('All Categories')
+  const [brandValue, setBrandValue] = useState('All Brands')
+
+  const categories = [
+    { name: 'All Categories' },
+    { name: 'Hand Tools' },
+    { name: 'Power Tools' },
+    { name: 'Building Materials' },
+    { name: 'Fasteners' },
+    { name: 'Plumbing Supplies' },
+    { name: 'Electrical Supplies' },
+    { name: 'Paint and Painting Supplies' },
+    { name: 'Garden and Outdoor Supplies' },
+    { name: 'Safety Equipment' }
+  ]
+
+  const brands = [
+    { name: 'All Brands' },
+    { name: 'Bosch' },
+    { name: 'DeWalt' },
+    { name: 'Makita' },
+    { name: 'Milwaukee' },
+    { name: 'Hitachi' },
+    { name: 'Black and Decker' },
+    { name: 'Craftsman' },
+    { name: 'Stanley' },
+    { name: 'Ryobi' }
+  ]
 
   const [scrn, setScrn] = useState(typeof localStorage !== 'undefined' ? localStorage.getItem('screen') : false)
 
@@ -86,6 +114,7 @@ const ProductList = () => {
   const handleOptionChange = event => {
     setSelectedOption(event.target.value)
   }
+
   return (
     <div style={{ height: '96.5vh' }}>
       <Grid container spacing={2} mb={2}>
@@ -173,26 +202,25 @@ const ProductList = () => {
 
         <Grid container mb={2} spacing={2}>
           <Grid item xs={12} sm={6}>
-            <Select fullWidth value={selectedOption} onChange={handleOptionChange} displayEmpty>
-              <MenuItem value='' disabled>
-                Choose an option
-              </MenuItem>
-              {options.map(option => (
-                <MenuItem key={option} value={option}>
-                  {option}
+            <Select fullWidth value={categoryValue} >
+              {categories.map((category, idx) => (
+                <MenuItem
+                  key={idx}
+                  value = {category.name}
+                  onClick={() => setCategoryValue(category.name)}
+                >
+                  {category.name}
                 </MenuItem>
               ))}
             </Select>
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <Select fullWidth value={selectedOption} onChange={handleOptionChange} displayEmpty>
-              <MenuItem value='' disabled>
-                Choose an option
-              </MenuItem>
-              {options.map(option => (
-                <MenuItem key={option} value={option}>
-                  {option}
+            <Select fullWidth value={brandValue} displayEmpty>
+              
+              {brands.map(brand => (
+                <MenuItem key={brand.name} value={brand.name}>
+                  {brand.name}
                 </MenuItem>
               ))}
             </Select>
