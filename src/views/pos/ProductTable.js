@@ -19,6 +19,7 @@ import Typography from '@mui/material/Typography'
 // icon import
 import Plus from 'mdi-material-ui/Plus'
 import Minus from 'mdi-material-ui/Minus'
+import TrashCanOutline from 'mdi-material-ui/TrashCanOutline'
 
 // react import
 import { useState } from 'react'
@@ -51,9 +52,17 @@ const rows = [
   createData('Granola', 220, 4.5, 30, 2.5)
 ]
 
-const ProductTable = ({ selectedProducts }) => {
-  console.log(selectedProducts)
-  console.log(selectedProducts)
+const ProductTable = ({
+  selectedProducts,
+  handleIncrement,
+  handleDecrement,
+  handleProductRemove,
+  handleQuantChange,
+  discount,
+  total,
+  subTotal,
+  totalQuantity
+}) => {
   const [sortBy, setSortBy] = useState(null)
   const [sortOrder, setSortOrder] = useState('asc')
 
@@ -77,7 +86,7 @@ const ProductTable = ({ selectedProducts }) => {
     <div style={{ position: 'relative', height: '96.5vh' }}>
       {/* table  */}
       <TableContainer sx={{ height: '66vh' }} component={Paper}>
-        <Table aria-label='simple table' stickyHeader>
+        <Table size='small' aria-label='a dense table' stickyHeader>
           <TableHead>
             <TableRow>
               <TableCell
@@ -88,7 +97,11 @@ const ProductTable = ({ selectedProducts }) => {
                 #
               </TableCell>
               <TableCell sx={{ border: '1px solid rgba(0, 0, 255, 0.1)' }}>
-                <TableSortLabel active={sortBy === 'name'} direction={sortOrder} onClick={() => handleSort('name')}>
+                <TableSortLabel
+                  active={sortBy === 'product'}
+                  direction={sortOrder}
+                  onClick={() => handleSort('product')}
+                >
                   Product
                 </TableSortLabel>
               </TableCell>
@@ -111,13 +124,31 @@ const ProductTable = ({ selectedProducts }) => {
                   Subtotal
                 </TableSortLabel>
               </TableCell>
+              <TableCell sx={{ border: '1px solid rgba(0, 0, 255, 0.1)' }} align='center'></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
-              <TableRow key={row.name} sx={{ '&:nth-of-type(even)': { backgroundColor: 'rgba(0, 0, 0, 0.04)' } }}>
+            {selectedProducts.map((product, index) => (
+              <TableRow key={product.name} sx={{ '&:nth-of-type(even)': { backgroundColor: 'rgba(0, 0, 0, 0.04)' } }}>
                 <TableCell sx={{ border: '1px solid rgba(0, 0, 255, 0.1)' }}>{index + 1}</TableCell>
-                <TableCell sx={{ fontSize: '14px', border: '1px solid rgba(0, 0, 255, 0.1)' }}>{row.name}</TableCell>
+                <TableCell title={product.name} sx={{ fontSize: '14px', border: '1px solid rgba(0, 0, 255, 0.1)' }}>
+                  <Typography
+                    // variant='h6'
+                    // noWrap
+                    style={{
+                      fontSize: '0.7rem',
+                      lineHeight: 1,
+                      // maxHeight: '2.4rem',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      display: '-webkit-box',
+                      WebkitBoxOrient: 'vertical',
+                      WebkitLineClamp: 2
+                    }}
+                  >
+                    {product.name}
+                  </Typography>
+                </TableCell>
                 <TableCell
                   align='center'
                   verticalAlign='middle'
@@ -134,9 +165,25 @@ const ProductTable = ({ selectedProducts }) => {
                       alignItems: 'center'
                     }}
                   >
-                    <Minus fontSize='small' sx={{ color: 'red', border: '1px solid red', borderRadius: '5px' }} />
+                    <Minus
+                      onClick={() => {
+                        if (product.selectedQuantity > 1) {
+                          handleDecrement(product.id)
+                        }
+                      }}
+                      fontSize='small'
+                      sx={{
+                        color: 'red',
+                        border: '1px solid red',
+                        borderRadius: '5px',
+                        opacity: product.selectedQuantity === 1 ? '0.5' : '1',
+                        cursor: product.selectedQuantity === 1 ? 'not-allowed' : 'pointer'
+                      }}
+                      disabled={product.selectedQuantity === 1}
+                    />
+
                     {/* <TextField
-                    value={row.calories}
+                    value={product.calories}
                     InputProps={{ disableUnderline: true }}
                     sx={{ fontSize: '14px', fontWeight: 'bold', color: 'secondary.main' }}
                   /> */}
@@ -144,7 +191,11 @@ const ProductTable = ({ selectedProducts }) => {
                       className='quantValue'
                       type='number'
                       // inputMode='numeric'
-                      value={row.calories}
+                      value={
+                        product.selectedQuantity >= product.quantity
+                          ? (product.selectedQuantity = product.quantity)
+                          : product.selectedQuantity
+                      }
                       style={{
                         minWidth: '30px',
                         maxWidth: '50px',
@@ -152,25 +203,66 @@ const ProductTable = ({ selectedProducts }) => {
                         border: '1px solid transparent',
                         backgroundColor: 'transparent'
                       }}
+                      onChange={e => handleQuantChange(product.id, e)}
                     />
 
-                    {/* {row.calories} */}
+                    {/* {product.calories} */}
 
-                    <Plus fontSize='small' sx={{ color: 'blue', border: '1px solid blue', borderRadius: '5px' }} />
+                    <Plus
+                      onClick={() => {
+                        if (product.selectedQuantity < product.quantity) {
+                          handleIncrement(product.id)
+                        }
+                      }}
+                      fontSize='small'
+                      sx={{
+                        color: 'blue',
+                        border: '1px solid blue',
+                        borderRadius: '5px',
+                        opacity: product.selectedQuantity === product.quantity ? '0.5' : '1',
+                        cursor: product.selectedQuantity === product.quantity ? 'not-allowed' : 'pointer'
+                      }}
+                      disabled={product.selectedQuantity === product.quantity}
+                    />
                   </div>
                 </TableCell>
 
                 <TableCell sx={{ fontSize: '14px', border: '1px solid rgba(0, 0, 255, 0.1)' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{  display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span style={{ alignSelf: 'flex-start' }}>₱</span>
-                    <span style={{ alignSelf: 'flex-end' }}>{row.fat}</span>
+                    <span style={{ alignSelf: 'flex-end' }}>
+                      {product.price.toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                      })}
+                    </span>
                   </div>
                 </TableCell>
                 <TableCell sx={{ fontSize: '14px', border: '1px solid rgba(0, 0, 255, 0.1)' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span style={{ alignSelf: 'flex-start' }}>₱</span>
-                    <span style={{ alignSelf: 'flex-end' }}>{row.carbs}</span>
+                    <span style={{ alignSelf: 'flex-end' }}>
+                      {(product.subtotal = product.price * product.selectedQuantity).toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                      })}
+                    </span>
                   </div>
+                </TableCell>
+                <TableCell
+                  sx={{
+                    backgroundColor: 'yellow',
+                    position: 'sticky',
+                    left: 0,
+                    border: '1px solid rgba(0, 0, 255, 0.1)',
+                    width: '1px'
+                  }}
+                  align='center'
+                >
+                  <TrashCanOutline
+                    onClick={() => handleProductRemove(product.id)}
+                    sx={{ color: 'red', backgroundColor: 'yellow', cursor: 'pointer' }}
+                  />
                 </TableCell>
               </TableRow>
             ))}
@@ -190,7 +282,7 @@ const ProductTable = ({ selectedProducts }) => {
               </Grid>
               <Grid xs={6}>
                 <Typography mr={5} align='right'>
-                  9900{' '}
+                  {totalQuantity}
                 </Typography>
               </Grid>
             </Grid>
@@ -200,7 +292,7 @@ const ProductTable = ({ selectedProducts }) => {
               </Grid>
               <Grid xs={6}>
                 <Typography mr={5} align='right'>
-                  9900{' '}
+                  {subTotal}
                 </Typography>
               </Grid>
             </Grid>
@@ -213,7 +305,7 @@ const ProductTable = ({ selectedProducts }) => {
               </Grid>
               <Grid xs={6}>
                 <Typography mr={5} align='right'>
-                  9900{' '}
+                  {total}
                 </Typography>
               </Grid>
             </Grid>

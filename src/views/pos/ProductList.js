@@ -67,38 +67,12 @@ const data = [
 
 const url = 'http://localhost:8000/products'
 
-const ProductList = () => {
+const ProductList = ({ handleProductClick }) => {
   const [categoryValue, setCategoryValue] = useState('All Categories')
   const [brandValue, setBrandValue] = useState('All Brands')
   const [search, setSearch] = useState('')
 
   const [products, setProducts] = useState([])
-  const [selectedProducts, setSelectedProducts] = useState({
-    products: [
-      {
-        id: 1,
-        name: 'Bosch 18V Compact 1/2-Inch Drill/Driver Kit',
-        quantity: 10,
-        price: 10,
-        subtotal: 100,
-        category: 'Hand Tools',
-        brand: 'Bosch'
-      },
-      {
-        id: 2,
-        name: 'DeWalt 20V MAX Lithium-Ion Cordless Circular Saw Kit',
-        quantity: 8,
-        price: 15.1,
-        subtotal: 120.8,
-        category: 'Power Tools',
-        brand: 'DeWalt'
-      }
-    ]
-  })
-
-  useEffect(() => {
-    return <ProductTable selectedProducts={selectedProducts} />
-  }, [selectedProducts])
 
   const categories = [
     { name: 'All Categories' },
@@ -186,29 +160,6 @@ const ProductList = () => {
               </Button>
             </Link>
           </Card>
-          {/* <Card sx={{ height: '100%' }}>
-            <Typography
-              component='a'
-              href='/'
-              variant='button'
-              sx={{
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                textAlign: 'center',
-                textDecoration: 'none',
-                color: 'inherit',
-                py: 1,
-                px: 2,
-                '&:hover': {
-                  backgroundColor: 'rgba(0, 0, 0, 0.04)'
-                }
-              }}
-            >
-              Home
-            </Typography>
-          </Card> */}
         </Grid>
         <Grid item xs={2}>
           <Card sx={{ height: '100%' }}>
@@ -289,6 +240,7 @@ const ProductList = () => {
               .map(item => (
                 <Grid key={item.id} item xs={12} sm={3} md={2}>
                   <Paper
+                    onClick={() => handleProductClick(item)}
                     title={item.name}
                     sx={{
                       boxSizing: 'border-box',

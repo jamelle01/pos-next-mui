@@ -1,5 +1,6 @@
 // ** Next Import
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
 
 // ** Icons Imports
 
@@ -46,20 +47,100 @@ const TreeIllustration = styled('img')(({ theme }) => ({
 }))
 
 const Pos = () => {
+  const [selectedProducts, setSelectedProducts] = useState([])
+
+  const [totalQuantity, setTotalQuantity] = useState(0)
+  const [subTotal, setSubTotal] = useState('')
+  const [total, setTotal] = useState(0)
+  const [discount, setDiscount] = useState(0)
+
+  useEffect(() => {
+    const totalQuantity = selectedProducts.reduce((acc, product) => acc + product.selectedQuantity, 0)
+    const subTotal = selectedProducts.reduce((acc, product) => acc + product.subtotal, 0)
+    const total = selectedProducts.reduce((acc, product) => acc + product.subtotal, 0)
+    // console.log(totalQuantity);
+    setTotalQuantity(totalQuantity)
+    setSubTotal(subTotal)
+
+    setTotal(total - discount)
+  }, [selectedProducts, discount])
+
+  const handleProductRemove = productId => {
+    setSelectedProducts(prevSelectedProducts => prevSelectedProducts.filter(product => product.id !== productId))
+  }
+
+
+  const handleDecrement = id => {
+    setSelectedProducts(prevProducts =>
+      prevProducts.map(product =>
+        product.id === id ? { ...product, selectedQuantity: product.selectedQuantity - 1 } : product
+      )
+    )
+    console.log('hi');
+    console.log(selectedProducts);
+  }
+
+  const handleIncrement = id => {
+    setSelectedProducts(prevProducts =>
+      prevProducts.map(product =>
+        product.id === id ? { ...product, selectedQuantity: product.selectedQuantity + 1 } : product
+      )
+    )
+  }
+
+  const handleQuantChange = (id, e) => {
+    const value = e.target.value === '' ? 0 : parseInt(e.target.value)
+    setSelectedProducts(prevProducts =>
+      prevProducts.map(product => (product.id === id ? { ...product, selectedQuantity: value } : product))
+    )
+  }
+
+
+
+  const handleProductClick = product => {
+    // console.log(product.quantity);
+    const productIndex = selectedProducts.findIndex(p => p.id === product.id)
+    if (productIndex === -1 && product.quantity) {
+      // product does not exist, add it to the array
+      const newProduct = { ...product, selectedQuantity: 1, subtotal: 0 }
+      setSelectedProducts([...selectedProducts, newProduct])
+    } else {
+      // product exists, increment its quantity
+      const updatedProducts = [...selectedProducts]
+      if (product.quantity) {
+        if (updatedProducts[productIndex].selectedQuantity !== product.quantity) {
+          updatedProducts[productIndex].selectedQuantity += 1
+          setSelectedProducts(updatedProducts)
+        }
+      }
+    }
+
+    console.log(product)
+  }
+
   return (
     <ApexChartWrapper style={{ padding: '10px' }}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={5} lg={5}>
-          <Box >
+          <Box>
             <Card>
-              <ProductTable />
+              <ProductTable
+                handleIncrement={handleIncrement}
+                handleDecrement={handleDecrement}
+                selectedProducts={selectedProducts}
+                handleProductRemove={handleProductRemove}
+                handleQuantChange={handleQuantChange}
+                discount={discount}
+                total={total}
+                subTotal={subTotal}
+                totalQuantity={totalQuantity}
+              />
             </Card>
           </Box>
         </Grid>
         <Grid item xs={12} md={7} lg={7}>
           <Box>
-            <ProductList/>
-
+            <ProductList handleProductClick={handleProductClick} />
           </Box>
         </Grid>
       </Grid>
