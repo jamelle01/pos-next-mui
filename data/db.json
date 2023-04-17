@@ -1,0 +1,274 @@
+{
+	"products": [
+		{
+			"id": 1,
+			"name": "Bosch 18V Compact 1/2-Inch Drill/Driver Kit",
+			"quantity": 10,
+			"price": 10,
+			"subtotal": 100,
+			"category": "Hand Tools",
+			"brand": "Bosch"
+		},
+		{
+			"id": 2,
+			"name": "DeWalt 20V MAX Lithium-Ion Cordless Circular Saw Kit",
+			"quantity": 8,
+			"price": 15,
+			"subtotal": 120,
+			"category": "Power Tools",
+			"brand": "DeWalt"
+		},
+		{
+			"id": 3,
+			"name": "Makita 18V LXT Lithium-Ion Brushless Cordless Combo Kit",
+			"quantity": 2,
+			"price": 20,
+			"subtotal": 40,
+			"category": "Building Materials",
+			"brand": "Makita"
+		},
+		{
+			"id": 4,
+			"name": "Milwaukee M18 FUEL 1/2\" Hammer Drill/Driver Kit",
+			"quantity": 4,
+			"price": 12,
+			"subtotal": 48,
+			"category": "Fasteners",
+			"brand": "Milwaukee"
+		},
+		{
+			"id": 5,
+			"name": "Hitachi 18V Compact Pro Driver Drill Kit",
+			"quantity": 1,
+			"price": 25,
+			"subtotal": 25,
+			"category": "Plumbing Supplies",
+			"brand": "Hitachi"
+		},
+		{
+			"id": 6,
+			"name": "Black and Decker 20V MAX Lithium-Ion Cordless Drill/Driver",
+			"quantity": 2,
+			"price": 18,
+			"subtotal": 36,
+			"category": "Electrical Supplies",
+			"brand": "Black and Decker"
+		},
+		{
+			"id": 7,
+			"name": "Craftsman 20V MAX Lithium-Ion Cordless Drill/Driver",
+			"quantity": 3,
+			"price": 11,
+			"subtotal": 33,
+			"category": "Paint and Painting Supplies",
+			"brand": "Craftsman"
+		},
+		{
+			"id": 8,
+			"name": "Stanley 25-Feet FatMax Tape Measure",
+			"quantity": 2,
+			"price": 17,
+			"subtotal": 34,
+			"category": "Garden and Outdoor Supplies",
+			"brand": "Stanley"
+		},
+		{
+			"id": 9,
+			"name": "Ryobi 18V ONE+ Lithium-Ion Cordless 6-Tool Combo Kit",
+			"quantity": 1,
+			"price": 30,
+			"subtotal": 30,
+			"category": "Safety Equipment",
+			"brand": "Ryobi"
+		},
+		{
+			"id": 10,
+			"name": "Bosch 12V Max EC Brushless Palm Edge Router",
+			"quantity": 1224,
+			"price": 14,
+			"subtotal": 56,
+			"category": "Hand Tools",
+			"brand": "Bosch"
+		},
+		{
+			"id": 11,
+			"name": "DeWalt 20V MAX Lithium-Ion Cordless 7-Tool Combo Kit",
+			"quantity": 5,
+			"price": 500,
+			"subtotal": 2500,
+			"category": "Power Tools",
+			"brand": "DeWalt"
+		},
+		{
+			"id": 12,
+			"name": "Makita 18V LXT Lithium-Ion Brushless Cordless Recipro Saw",
+			"quantity": 3,
+			"price": 250,
+			"subtotal": 750,
+			"category": "Power Tools",
+			"brand": "Makita"
+		},
+		{
+			"id": 13,
+			"name": "Milwaukee M18 FUEL 18-Volt Lithium-Ion Cordless Jig Saw",
+			"quantity": 2,
+			"price": 300,
+			"subtotal": 600,
+			"category": "Power Tools",
+			"brand": "Milwaukee"
+		},
+		{
+			"id": 14,
+			"name": "Hitachi 12V Peak Cordless Lithium-Ion Mini Grinder",
+			"quantity": 2,
+			"price": 100,
+			"subtotal": 200,
+			"category": "Power Tools",
+			"brand": "Hitachi"
+		},
+		{
+			"id": 15,
+			"name": "Black and Decker 20V MAX Lithium-Ion Cordless Drill/Driver and Circular Saw Kit",
+			"quantity": 3,
+			"price": 150,
+			"subtotal": 450,
+			"category": "Power Tools",
+			"brand": "Black and Decker"
+		},
+		{
+			"id": 16,
+			"name": "Craftsman 20V MAX Lithium-Ion Cordless Reciprocating Saw",
+			"quantity": 4,
+			"price": 120,
+			"subtotal": 480,
+			"category": "Power Tools",
+			"brand": "Craftsman"
+		},
+		{
+			"id": 17,
+			"name": "Stanley 20-Piece Screwdriver Set",
+			"quantity": 6,
+			"price": 30,
+			"subtotal": 180,
+			"category": "Hand Tools",
+			"brand": "Stanley"
+		},
+		{
+			"id": 18,
+			"name": "Ryobi 18V ONE+ Lithium-Ion Cordless 3-Tool Combo Kit",
+			"quantity": 2,
+			"price": 150,
+			"subtotal": 300,
+			"category": "Power Tools",
+			"brand": "Ryobi"
+		},
+		{
+			"id": 19,
+			"name": "Bosch 18V EC Brushless Compact Tough 1/2-Inch Drill/Driver Kit",
+			"quantity": 7,
+			"price": 200,
+			"subtotal": 1400,
+			"category": "Power Tools",
+			"brand": "Bosch"
+		},
+		{
+			"id": 20,
+			"name": "DeWalt 20V MAX Lithium-Ion Cordless 5-Tool Combo Kit",
+			"quantity": 3,
+			"price": 400,
+			"subtotal": 1200,
+			"category": "Power Tools",
+			"brand": "DeWalt"
+		},
+		{
+			"id": 21,
+			"name": "Makita 18V LXT Lithium-Ion Cordless 6-1/2-Inch Circular Saw",
+			"quantity": 8,
+			"price": 150,
+			"subtotal": 1200,
+			"category": "Power Tools",
+			"brand": "Makita"
+		},
+		{
+			"id": 22,
+			"name": "Bosch 12V Max EC Brushless 3/8-Inch Drill/Driver Kit",
+			"quantity": 5,
+			"price": 100,
+			"subtotal": 500,
+			"category": "Power Tools",
+			"brand": "Bosch"
+		},
+		{
+			"id": 23,
+			"name": "DeWalt 10-Inch Compact Job Site Table Saw",
+			"quantity": 2,
+			"price": 500,
+			"subtotal": 1000,
+			"category": "Power Tools",
+			"brand": "DeWalt"
+		},
+		{
+			"id": 24,
+			"name": "Milwaukee M18 FUEL 18-Volt Lithium-Ion Brushless Cordless Combo Kit",
+			"quantity": 4,
+			"price": 700,
+			"subtotal": 2800,
+			"category": "Power Tools",
+			"brand": "Milwaukee"
+		},
+		{
+			"id": 25,
+			"name": "Klein Tools VDV Commander Test Kit",
+			"quantity": 6,
+			"price": 1000,
+			"subtotal": 6000,
+			"category": "Electrical Tools",
+			"brand": "Klein Tools"
+		},
+		{
+			"id": 26,
+			"name": "Milwaukee M18 FUEL 18-Volt Lithium-Ion Brushless Cordless Hammer Drill and Impact Driver Combo Kit",
+			"quantity": 8,
+			"price": 450,
+			"subtotal": 3600,
+			"category": "Power Tools",
+			"brand": "Milwaukee"
+		},
+		{
+			"id": 27,
+			"name": "Bosch 100 ft. Self-Leveling Cross-Line Laser Level with Plumb Points",
+			"quantity": 4,
+			"price": 200,
+			"subtotal": 800,
+			"category": "Measuring Tools",
+			"brand": "Bosch"
+		},
+		{
+			"id": 28,
+			"name": "DEWALT 7-1/4 in. Lightweight Circular Saw",
+			"quantity": 10,
+			"price": 120,
+			"subtotal": 1200,
+			"category": "Power Tools",
+			"brand": "DeWalt"
+		},
+		{
+			"id": 29,
+			"name": "Ryobi 18-Volt ONE+ 6-Tool Combo Kit",
+			"quantity": 5,
+			"price": 250,
+			"subtotal": 1250,
+			"category": "Power Tools",
+			"brand": "Ryobi"
+		},
+		{
+			"id": 30,
+			"name": "Husky 144-Tooth Ratchet Set (38-Piece)",
+			"quantity": 2,
+			"price": 150,
+			"subtotal": 300,
+			"category": "Hand Tools",
+			"brand": "Husky"
+		}
+	]
+}

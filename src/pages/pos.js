@@ -49,14 +49,14 @@ const Pos = () => {
   return (
     <ApexChartWrapper style={{ padding: '10px' }}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={5} lg={4}>
+        <Grid item xs={12} md={5} lg={5}>
           <Box >
             <Card>
               <ProductTable />
             </Card>
           </Box>
         </Grid>
-        <Grid item xs={12} md={7} lg={8}>
+        <Grid item xs={12} md={7} lg={7}>
           <Box>
             <ProductList/>
 

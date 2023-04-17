@@ -25,12 +25,12 @@ import HomeOutline from 'mdi-material-ui/HomeOutline'
 import Fullscreen from 'mdi-material-ui/Fullscreen'
 import FullscreenExit from 'mdi-material-ui/FullscreenExit'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Select, MenuItem } from '@mui/material'
 
-import Image from 'next/image'
+import ProductTable from './ProductTable'
 
-const options = ['Option 1', 'Option 2', 'Option 3']
+import Image from 'next/image'
 
 const data = [
   { id: 1, title: 'Title 1', description: 'Description 1' },
@@ -65,10 +65,40 @@ const data = [
   { id: 30, title: 'Title 30', description: 'Description 30' }
 ]
 
+const url = 'http://localhost:8000/products'
+
 const ProductList = () => {
-  const [selectedOption, setSelectedOption] = useState('')
   const [categoryValue, setCategoryValue] = useState('All Categories')
   const [brandValue, setBrandValue] = useState('All Brands')
+  const [search, setSearch] = useState('')
+
+  const [products, setProducts] = useState([])
+  const [selectedProducts, setSelectedProducts] = useState({
+    products: [
+      {
+        id: 1,
+        name: 'Bosch 18V Compact 1/2-Inch Drill/Driver Kit',
+        quantity: 10,
+        price: 10,
+        subtotal: 100,
+        category: 'Hand Tools',
+        brand: 'Bosch'
+      },
+      {
+        id: 2,
+        name: 'DeWalt 20V MAX Lithium-Ion Cordless Circular Saw Kit',
+        quantity: 8,
+        price: 15.1,
+        subtotal: 120.8,
+        category: 'Power Tools',
+        brand: 'DeWalt'
+      }
+    ]
+  })
+
+  useEffect(() => {
+    return <ProductTable selectedProducts={selectedProducts} />
+  }, [selectedProducts])
 
   const categories = [
     { name: 'All Categories' },
@@ -96,6 +126,13 @@ const ProductList = () => {
     { name: 'Ryobi' }
   ]
 
+  useEffect(() => {
+    fetch(url)
+      .then(response => response.json())
+      .then(data => setProducts(data))
+      .catch(error => console.error(error))
+  }, [url])
+
   const [scrn, setScrn] = useState(typeof localStorage !== 'undefined' ? localStorage.getItem('screen') : false)
 
   const handleFullscreen = () => {
@@ -111,10 +148,6 @@ const ProductList = () => {
     }
   }
 
-  const handleOptionChange = event => {
-    setSelectedOption(event.target.value)
-  }
-
   return (
     <div style={{ height: '96.5vh' }}>
       <Grid container spacing={2} mb={2}>
@@ -124,6 +157,7 @@ const ProductList = () => {
               fullWidth
               size='small'
               placeholder='Search'
+              onChange={e => setSearch(e.target.value)}
               InputProps={{
                 startAdornment: (
                   <Magnify
@@ -202,13 +236,9 @@ const ProductList = () => {
 
         <Grid container mb={2} spacing={2}>
           <Grid item xs={12} sm={6}>
-            <Select fullWidth value={categoryValue} >
+            <Select fullWidth value={categoryValue}>
               {categories.map((category, idx) => (
-                <MenuItem
-                  key={idx}
-                  value = {category.name}
-                  onClick={() => setCategoryValue(category.name)}
-                >
+                <MenuItem key={idx} value={category.name} onClick={() => setCategoryValue(category.name)}>
                   {category.name}
                 </MenuItem>
               ))}
@@ -217,9 +247,8 @@ const ProductList = () => {
 
           <Grid item xs={12} sm={6}>
             <Select fullWidth value={brandValue} displayEmpty>
-              
               {brands.map(brand => (
-                <MenuItem key={brand.name} value={brand.name}>
+                <MenuItem key={brand.name} value={brand.name} onClick={() => setBrandValue(brand.name)}>
                   {brand.name}
                 </MenuItem>
               ))}
@@ -231,20 +260,107 @@ const ProductList = () => {
 
         <div style={{ height: 'calc(100vh - 170px)', overflow: 'auto' }}>
           <Grid container spacing={3} justifyContent='center'>
-            {data.map(item => (
-              <Grid key={item.id} item xs={12} sm={3} md={2}>
-                <Paper sx={{ height: '100%' }} style={{ padding: '1rem' }}>
-                  <div className='img-bg'>
-                    <Image src='/images/no-image.png' alt='image' width={100} height={100} />
-                  </div>
+            {products
+              .filter(product => {
+                if (search === '') {
+                  if (brandValue.toLowerCase() === 'all brands' && categoryValue.toLowerCase() === 'all categories') {
+                    return true
+                  } else if (
+                    product.category.toLowerCase().includes(categoryValue.toLowerCase()) &&
+                    product.brand.toLowerCase().includes(brandValue.toLowerCase())
+                  ) {
+                    return true
+                  } else if (
+                    brandValue.toLowerCase() === 'all brands' &&
+                    product.category.toLowerCase().includes(categoryValue.toLowerCase())
+                  ) {
+                    return true
+                  } else if (
+                    categoryValue.toLowerCase() === 'all categories' &&
+                    product.brand.toLowerCase().includes(brandValue.toLowerCase())
+                  ) {
+                    return true
+                  }
+                } else {
+                  return product.name.toLowerCase().includes(search.toLowerCase()) === true
+                }
+              })
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map(item => (
+                <Grid key={item.id} item xs={12} sm={3} md={2}>
+                  <Paper
+                    title={item.name}
+                    sx={{
+                      boxSizing: 'border-box',
+                      background: '#FFFFFF',
+                      // border: '1px solid #6FB1FF',
+                      border: '1px solid #cce2ff',
+                      borderRadius: '25px 0px',
+                      height: '100%',
+                      padding: '.5rem',
+                      '&:hover': {
+                        backgroundColor: '#E3FCEF',
+                        cursor: 'pointer'
+                      }
+                    }}
+                  >
+                    <div className='img-bg'>
+                      <Image src='/images/no-image.png' alt='image' width={100} height={100} draggable={false} />
+                    </div>
 
-                  <Typography variant='h6'>{item.title}</Typography>
-                  {/* <Typography variant='body1'>{item.description}</Typography> */}
-                  <Typography variant='body1'>quantity</Typography>
-                  <Typography variant='body1'>price</Typography>
-                </Paper>
-              </Grid>
-            ))}
+                    <Typography
+                      variant='h6'
+                      // noWrap
+                      style={{
+                        fontSize: '0.7rem',
+                        lineHeight: 1.2,
+                        maxHeight: '2.4rem',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        display: '-webkit-box',
+                        WebkitBoxOrient: 'vertical',
+                        WebkitLineClamp: 3
+                      }}
+                    >
+                      {item.name}
+                    </Typography>
+
+                    {/* <Typography variant='body1'>{item.description}</Typography> */}
+                    <Typography
+                      variant='body1'
+                      sx={{
+                        fontSize: '0.7rem',
+                        display: 'flex',
+                        margin: '.2em 0',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: '#EAEAEA', // changed from '#F5F5F5'
+                        borderRadius: '8px'
+                      }}
+                    >
+                      {item.quantity} pieces
+                    </Typography>
+
+                    <Typography
+                      variant='body1'
+                      sx={{
+                        fontSize: '0.7rem',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: '#6FB1FF',
+                        borderRadius: '8px'
+                      }}
+                    >
+                      ₱{' '}
+                      {item.price.toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                      })}
+                    </Typography>
+                  </Paper>
+                </Grid>
+              ))}
           </Grid>
         </div>
       </Card>

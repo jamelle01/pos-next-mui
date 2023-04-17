@@ -16,8 +16,12 @@ import CardContent from '@mui/material/CardContent'
 
 import Typography from '@mui/material/Typography'
 
+// icon import
+import Plus from 'mdi-material-ui/Plus'
+import Minus from 'mdi-material-ui/Minus'
+
 // react import
-import {useState} from 'react'
+import { useState } from 'react'
 
 // hardcoded data for table
 const createData = (name, calories, fat, carbs, protein) => {
@@ -47,9 +51,9 @@ const rows = [
   createData('Granola', 220, 4.5, 30, 2.5)
 ]
 
-
-const ProductTable = () => {
-
+const ProductTable = ({ selectedProducts }) => {
+  console.log(selectedProducts)
+  console.log(selectedProducts)
   const [sortBy, setSortBy] = useState(null)
   const [sortOrder, setSortOrder] = useState('asc')
 
@@ -69,7 +73,6 @@ const ProductTable = () => {
     })
   }
 
-
   return (
     <div style={{ position: 'relative', height: '96.5vh' }}>
       {/* table  */}
@@ -77,12 +80,19 @@ const ProductTable = () => {
         <Table aria-label='simple table' stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell>
+              <TableCell
+                sx={{ border: '1px solid rgba(0, 0, 255, 0.1)' }}
+                style={{ cursor: 'pointer' }}
+                onClick={() => handleSort('')}
+              >
+                #
+              </TableCell>
+              <TableCell sx={{ border: '1px solid rgba(0, 0, 255, 0.1)' }}>
                 <TableSortLabel active={sortBy === 'name'} direction={sortOrder} onClick={() => handleSort('name')}>
                   Product
                 </TableSortLabel>
               </TableCell>
-              <TableCell align='center'>
+              <TableCell sx={{ border: '1px solid rgba(0, 0, 255, 0.1)' }} align='center'>
                 <TableSortLabel
                   active={sortBy === 'calories'}
                   direction={sortOrder}
@@ -91,12 +101,12 @@ const ProductTable = () => {
                   Quantity
                 </TableSortLabel>
               </TableCell>
-              <TableCell align='center'>
+              <TableCell sx={{ border: '1px solid rgba(0, 0, 255, 0.1)' }} align='center'>
                 <TableSortLabel active={sortBy === 'fat'} direction={sortOrder} onClick={() => handleSort('fat')}>
                   Price
                 </TableSortLabel>
               </TableCell>
-              <TableCell align='center'>
+              <TableCell sx={{ border: '1px solid rgba(0, 0, 255, 0.1)' }} align='center'>
                 <TableSortLabel active={sortBy === 'carbs'} direction={sortOrder} onClick={() => handleSort('carbs')}>
                   Subtotal
                 </TableSortLabel>
@@ -104,17 +114,63 @@ const ProductTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map(row => (
-              <TableRow key={row.name}>
-                <TableCell sx={{ fontSize: '14px' }}>{row.name}</TableCell>
-                <TableCell align='center' sx={{ fontSize: '14px' }}>
-                  {row.calories}
+            {rows.map((row, index) => (
+              <TableRow key={row.name} sx={{ '&:nth-of-type(even)': { backgroundColor: 'rgba(0, 0, 0, 0.04)' } }}>
+                <TableCell sx={{ border: '1px solid rgba(0, 0, 255, 0.1)' }}>{index + 1}</TableCell>
+                <TableCell sx={{ fontSize: '14px', border: '1px solid rgba(0, 0, 255, 0.1)' }}>{row.name}</TableCell>
+                <TableCell
+                  align='center'
+                  verticalAlign='middle'
+                  sx={{
+                    fontSize: '14px',
+                    border: '1px solid rgba(0, 0, 255, 0.1)'
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      height: '100%',
+                      justifyContent: 'center',
+                      alignItems: 'center'
+                    }}
+                  >
+                    <Minus fontSize='small' sx={{ color: 'red', border: '1px solid red', borderRadius: '5px' }} />
+                    {/* <TextField
+                    value={row.calories}
+                    InputProps={{ disableUnderline: true }}
+                    sx={{ fontSize: '14px', fontWeight: 'bold', color: 'secondary.main' }}
+                  /> */}
+                    <input
+                      className='quantValue'
+                      type='number'
+                      // inputMode='numeric'
+                      value={row.calories}
+                      style={{
+                        minWidth: '30px',
+                        maxWidth: '50px',
+                        textAlign: 'center',
+                        border: '1px solid transparent',
+                        backgroundColor: 'transparent'
+                      }}
+                    />
+
+                    {/* {row.calories} */}
+
+                    <Plus fontSize='small' sx={{ color: 'blue', border: '1px solid blue', borderRadius: '5px' }} />
+                  </div>
                 </TableCell>
-                <TableCell align='center' sx={{ fontSize: '14px' }}>
-                  {row.fat}
+
+                <TableCell sx={{ fontSize: '14px', border: '1px solid rgba(0, 0, 255, 0.1)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ alignSelf: 'flex-start' }}>₱</span>
+                    <span style={{ alignSelf: 'flex-end' }}>{row.fat}</span>
+                  </div>
                 </TableCell>
-                <TableCell align='center' sx={{ fontSize: '14px' }}>
-                  {row.carbs}
+                <TableCell sx={{ fontSize: '14px', border: '1px solid rgba(0, 0, 255, 0.1)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ alignSelf: 'flex-start' }}>₱</span>
+                    <span style={{ alignSelf: 'flex-end' }}>{row.carbs}</span>
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
