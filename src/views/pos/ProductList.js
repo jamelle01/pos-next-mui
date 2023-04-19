@@ -19,16 +19,18 @@ import { height } from '@mui/system'
 
 import Link from 'next/link'
 
-//icons 
+//icons
 import Magnify from 'mdi-material-ui/Magnify'
 import HomeOutline from 'mdi-material-ui/HomeOutline'
 import Fullscreen from 'mdi-material-ui/Fullscreen'
 import FullscreenExit from 'mdi-material-ui/FullscreenExit'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Select, MenuItem } from '@mui/material'
 
-const options = ['Option 1', 'Option 2', 'Option 3']
+import ProductTable from './ProductTable'
+
+import Image from 'next/image'
 
 const data = [
   { id: 1, title: 'Title 1', description: 'Description 1' },
@@ -63,18 +65,45 @@ const data = [
   { id: 30, title: 'Title 30', description: 'Description 30' }
 ]
 
-const ProductList = () => {
-  const [selectedOption, setSelectedOption] = useState('')
+const ProductList = ({ handleProductClick, products, categories, brands }) => {
+  console.log(products)
+  const [categoryValue, setCategoryValue] = useState('All Categories')
+  const [brandValue, setBrandValue] = useState('All Brands')
+  const [search, setSearch] = useState('')
+
+  // const categories = [
+  //   { name: 'All Categories' },
+  //   { name: 'Hand Tools' },
+  //   { name: 'Power Tools' },
+  //   { name: 'Building Materials' },
+  //   { name: 'Fasteners' },
+  //   { name: 'Plumbing Supplies' },
+  //   { name: 'Electrical Supplies' },
+  //   { name: 'Paint and Painting Supplies' },
+  //   { name: 'Garden and Outdoor Supplies' },
+  //   { name: 'Safety Equipment' }
+  // ]
+
+  // const brands = [
+  //   { name: 'All Brands' },
+  //   { name: 'Bosch' },
+  //   { name: 'DeWalt' },
+  //   { name: 'Makita' },
+  //   { name: 'Milwaukee' },
+  //   { name: 'Hitachi' },
+  //   { name: 'Black and Decker' },
+  //   { name: 'Craftsman' },
+  //   { name: 'Stanley' },
+  //   { name: 'Ryobi' }
+  // ]
 
   const [scrn, setScrn] = useState(typeof localStorage !== 'undefined' ? localStorage.getItem('screen') : false)
-
-
 
   const handleFullscreen = () => {
     if (document.fullscreenElement) {
       setScrn(false)
       localStorage.setItem('screen', JSON.stringify(scrn))
-      
+
       document.exitFullscreen()
     } else {
       document.documentElement.requestFullscreen()
@@ -83,9 +112,6 @@ const ProductList = () => {
     }
   }
 
-  const handleOptionChange = event => {
-    setSelectedOption(event.target.value)
-  }
   return (
     <div style={{ height: '96.5vh' }}>
       <Grid container spacing={2} mb={2}>
@@ -95,6 +121,7 @@ const ProductList = () => {
               fullWidth
               size='small'
               placeholder='Search'
+              onChange={e => setSearch(e.target.value)}
               InputProps={{
                 startAdornment: (
                   <Magnify
@@ -123,29 +150,6 @@ const ProductList = () => {
               </Button>
             </Link>
           </Card>
-          {/* <Card sx={{ height: '100%' }}>
-            <Typography
-              component='a'
-              href='/'
-              variant='button'
-              sx={{
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                textAlign: 'center',
-                textDecoration: 'none',
-                color: 'inherit',
-                py: 1,
-                px: 2,
-                '&:hover': {
-                  backgroundColor: 'rgba(0, 0, 0, 0.04)'
-                }
-              }}
-            >
-              Home
-            </Typography>
-          </Card> */}
         </Grid>
         <Grid item xs={2}>
           <Card sx={{ height: '100%' }}>
@@ -169,44 +173,136 @@ const ProductList = () => {
       </Grid>
 
       <Card sx={{ padding: 2 }}>
+        {/* dropdown button */}
+
         <Grid container mb={2} spacing={2}>
           <Grid item xs={12} sm={6}>
-            <Select fullWidth value={selectedOption} onChange={handleOptionChange} displayEmpty>
-              <MenuItem value='' disabled>
-                Choose an option
-              </MenuItem>
-              {options.map(option => (
-                <MenuItem key={option} value={option}>
-                  {option}
+            <Select fullWidth value={categoryValue}>
+              {categories.map((category, idx) => (
+                <MenuItem key={idx} value={category.name} onClick={() => setCategoryValue(category.name)}>
+                  {category.name}
                 </MenuItem>
               ))}
             </Select>
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <Select fullWidth value={selectedOption} onChange={handleOptionChange} displayEmpty>
-              <MenuItem value='' disabled>
-                Choose an option
-              </MenuItem>
-              {options.map(option => (
-                <MenuItem key={option} value={option}>
-                  {option}
+            <Select fullWidth value={brandValue} displayEmpty>
+              {brands.map(brand => (
+                <MenuItem key={brand.name} value={brand.name} onClick={() => setBrandValue(brand.name)}>
+                  {brand.name}
                 </MenuItem>
               ))}
             </Select>
           </Grid>
         </Grid>
 
+        {/* product list */}
+
         <div style={{ height: 'calc(100vh - 170px)', overflow: 'auto' }}>
           <Grid container spacing={3} justifyContent='center'>
-            {data.map(item => (
-              <Grid key={item.id} item xs={12} sm={3} md={2}>
-                <Paper style={{ padding: '1rem' }}>
-                  <Typography variant='h6'>{item.title}</Typography>
-                  <Typography variant='body1'>{item.description}</Typography>
-                </Paper>
-              </Grid>
-            ))}
+            {products
+              .filter(product => {
+                if (search === '') {
+                  if (brandValue.toLowerCase() === 'all brands' && categoryValue.toLowerCase() === 'all categories') {
+                    return true
+                  } else if (
+                    product.category.toLowerCase().includes(categoryValue.toLowerCase()) &&
+                    product.brand.toLowerCase().includes(brandValue.toLowerCase())
+                  ) {
+                    return true
+                  } else if (
+                    brandValue.toLowerCase() === 'all brands' &&
+                    product.category.toLowerCase().includes(categoryValue.toLowerCase())
+                  ) {
+                    return true
+                  } else if (
+                    categoryValue.toLowerCase() === 'all categories' &&
+                    product.brand.toLowerCase().includes(brandValue.toLowerCase())
+                  ) {
+                    return true
+                  }
+                } else {
+                  return product.name.toLowerCase().includes(search.toLowerCase()) === true
+                }
+              })
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map(item => (
+                <Grid key={item.id} item xs={12} sm={3} md={2}>
+                  <Paper
+                    onClick={() => handleProductClick(item)}
+                    title={item.name}
+                    sx={{
+                      boxSizing: 'border-box',
+                      background: '#FFFFFF',
+                      // border: '1px solid #6FB1FF',
+                      border: '1px solid #cce2ff',
+                      borderRadius: '25px 0px',
+                      height: '100%',
+                      padding: '.5rem',
+                      '&:hover': {
+                        backgroundColor: '#E3FCEF',
+                        cursor: 'pointer'
+                      }
+                    }}
+                  >
+                    <div className='img-bg'>
+                      <Image src='/images/no-image.png' alt='image' width={100} height={100} draggable={false} />
+                    </div>
+
+                    <Typography
+                      variant='h6'
+                      // noWrap
+                      style={{
+                        fontSize: '0.7rem',
+                        lineHeight: 1.2,
+                        maxHeight: '2.4rem',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        display: '-webkit-box',
+                        WebkitBoxOrient: 'vertical',
+                        WebkitLineClamp: 3
+                      }}
+                    >
+                      {item.name}
+                    </Typography>
+
+                    {/* <Typography variant='body1'>{item.description}</Typography> */}
+                    <Typography
+                      variant='body1'
+                      sx={{
+                        fontSize: '0.7rem',
+                        display: 'flex',
+                        margin: '.2em 0',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: '#EAEAEA', // changed from '#F5F5F5'
+                        borderRadius: '8px'
+                      }}
+                    >
+                      {item.quantity} pieces
+                    </Typography>
+
+                    <Typography
+                      variant='body1'
+                      sx={{
+                        fontSize: '0.7rem',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: '#6FB1FF',
+                        borderRadius: '8px'
+                      }}
+                    >
+                      ₱{' '}
+                      {item.price.toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                      })}
+                    </Typography>
+                  </Paper>
+                </Grid>
+              ))}
           </Grid>
         </div>
       </Card>

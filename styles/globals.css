@@ -15,10 +15,71 @@ code {
   color: #d400ff;
   border-radius: 0.1335rem;
 }
+
 code:not([class*='language-']):before,
 code:not([class*='language-']):after {
   content: '`';
 }
+
 code[class*='language-'] {
   padding: 0;
+}
+
+.img-bg {
+  background-image: url("/images/imgbg.svg");
+  background-size: cover;
+  /* adjust the size of the background image to cover the entire div */
+  /* background-position: center; */
+  /* center the background image within the div */
+  /* position: absolute; */
+  /* width: 110%;  */
+  /* height: 112px; */
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* top: -10px; */
+}
+
+.quantValue::-webkit-inner-spin-button,
+.quantValue::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  display: none;
+}
+
+/* Change the color of the scrollbar */
+::-webkit-scrollbar:hover {
+  cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  /* width of the scrollbar */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+  /* color of the track */
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #b2b2b2;
+  /* color of the thumb */
+  border-radius: 10px;
+}
+
+/* Add styles to the scrollbar when it's hovering */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #bdabff;
+  /* color of the thumb on hover */
+
+}
+
+/* Add styles to the scrollbar when it's being dragged */
+::-webkit-scrollbar-thumb:active {
+  background-color: #002fff;
+  /* color of the thumb when being dragged */
 }

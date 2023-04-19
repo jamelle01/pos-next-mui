@@ -44,9 +44,9 @@ const navigation = () => {
       path: '/account-settings'
     },
     {
-      title: 'Qoutes',
+      title: 'Qoutations',
       icon: BasketOutline,
-      path: '/qoutes'
+      path: '/qoutations'
     },
     {
       title: 'Towns',
