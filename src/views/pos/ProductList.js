@@ -31,6 +31,7 @@ import { Select, MenuItem } from '@mui/material'
 import ProductTable from './ProductTable'
 
 import Image from 'next/image'
+import ScreenButton from 'src/layouts/components/vertical/ScreenButton'
 
 const data = [
   { id: 1, title: 'Title 1', description: 'Description 1' },
@@ -97,18 +98,16 @@ const ProductList = ({ handleProductClick, products, categories, brands }) => {
   //   { name: 'Ryobi' }
   // ]
 
-  const [scrn, setScrn] = useState(typeof localStorage !== 'undefined' ? localStorage.getItem('screen') : false)
+  // const handleFullscreen = () => {
+  //   if (document.fullscreenElement) {
+  //     setScrn(false)
 
-  const handleFullscreen = () => {
-    if (document.fullscreenElement) {
-      setScrn(false)
-
-      document.exitFullscreen()
-    } else {
-      document.documentElement.requestFullscreen()
-      setScrn(true)
-    }
-  }
+  //     document.exitFullscreen()
+  //   } else {
+  //     document.documentElement.requestFullscreen()
+  //     setScrn(true)
+  //   }
+  // }
 
   return (
     <div style={{ height: '96.5vh' }}>
@@ -158,21 +157,7 @@ const ProductList = ({ handleProductClick, products, categories, brands }) => {
 
         <Grid item xs={2}>
           <Card sx={{ height: '100%' }}>
-            <Button fullWidth sx={{ height: '100%' }} onClick={handleFullscreen}>
-              {scrn ? (
-                <FullscreenExit
-                  sx={{
-                    fontSize: '2rem'
-                  }}
-                />
-              ) : (
-                <Fullscreen
-                  sx={{
-                    fontSize: '2rem'
-                  }}
-                />
-              )}
-            </Button>
+            <ScreenButton />
           </Card>
         </Grid>
       </Grid>
