@@ -22,6 +22,7 @@ const Try = () => {
     setSortBy(property)
     setSortOrder(order)
     rows.sort((a, b) => {
+      
       if (a[property] < b[property]) {
         return isAscending ? -1 : 1
       }

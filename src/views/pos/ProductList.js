@@ -65,47 +65,37 @@ const data = [
   { id: 30, title: 'Title 30', description: 'Description 30' }
 ]
 
-const url = 'http://localhost:8000/products'
-
-const ProductList = ({ handleProductClick }) => {
+const ProductList = ({ handleProductClick, products, categories, brands }) => {
+  console.log(products)
   const [categoryValue, setCategoryValue] = useState('All Categories')
   const [brandValue, setBrandValue] = useState('All Brands')
   const [search, setSearch] = useState('')
 
-  const [products, setProducts] = useState([])
+  // const categories = [
+  //   { name: 'All Categories' },
+  //   { name: 'Hand Tools' },
+  //   { name: 'Power Tools' },
+  //   { name: 'Building Materials' },
+  //   { name: 'Fasteners' },
+  //   { name: 'Plumbing Supplies' },
+  //   { name: 'Electrical Supplies' },
+  //   { name: 'Paint and Painting Supplies' },
+  //   { name: 'Garden and Outdoor Supplies' },
+  //   { name: 'Safety Equipment' }
+  // ]
 
-  const categories = [
-    { name: 'All Categories' },
-    { name: 'Hand Tools' },
-    { name: 'Power Tools' },
-    { name: 'Building Materials' },
-    { name: 'Fasteners' },
-    { name: 'Plumbing Supplies' },
-    { name: 'Electrical Supplies' },
-    { name: 'Paint and Painting Supplies' },
-    { name: 'Garden and Outdoor Supplies' },
-    { name: 'Safety Equipment' }
-  ]
-
-  const brands = [
-    { name: 'All Brands' },
-    { name: 'Bosch' },
-    { name: 'DeWalt' },
-    { name: 'Makita' },
-    { name: 'Milwaukee' },
-    { name: 'Hitachi' },
-    { name: 'Black and Decker' },
-    { name: 'Craftsman' },
-    { name: 'Stanley' },
-    { name: 'Ryobi' }
-  ]
-
-  useEffect(() => {
-    fetch(url)
-      .then(response => response.json())
-      .then(data => setProducts(data))
-      .catch(error => console.error(error))
-  }, [url])
+  // const brands = [
+  //   { name: 'All Brands' },
+  //   { name: 'Bosch' },
+  //   { name: 'DeWalt' },
+  //   { name: 'Makita' },
+  //   { name: 'Milwaukee' },
+  //   { name: 'Hitachi' },
+  //   { name: 'Black and Decker' },
+  //   { name: 'Craftsman' },
+  //   { name: 'Stanley' },
+  //   { name: 'Ryobi' }
+  // ]
 
   const [scrn, setScrn] = useState(typeof localStorage !== 'undefined' ? localStorage.getItem('screen') : false)
 

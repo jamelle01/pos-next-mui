@@ -16,18 +16,37 @@ import CardContent from '@mui/material/CardContent'
 
 import Typography from '@mui/material/Typography'
 
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
+import Slide from '@mui/material/Slide'
+
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
+
 // icon import
 import Plus from 'mdi-material-ui/Plus'
 import Minus from 'mdi-material-ui/Minus'
 import TrashCanOutline from 'mdi-material-ui/TrashCanOutline'
 
 // react import
-import { useState } from 'react'
+import { useState, forwardRef } from 'react'
+
+import ResetModal from './modal/ResetModal'
+import PayModal from './modal/PayModal'
 
 // hardcoded data for table
 const createData = (name, calories, fat, carbs, protein) => {
   return { name, calories, fat, carbs, protein }
 }
+
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction='up' ref={ref} {...props} />
+})
 
 const rows = [
   createData('Frozen ', 159, 6.0, 24, 4.0),
@@ -59,31 +78,75 @@ const ProductTable = ({
   handleProductRemove,
   handleQuantChange,
   discount,
+  setDiscount,
   total,
   subTotal,
-  totalQuantity
+  totalQuantity,
+  resetSelectedProducts,
+  setRefresh,
+  refresh
 }) => {
   const [sortBy, setSortBy] = useState(null)
   const [sortOrder, setSortOrder] = useState('asc')
+  const [age, setAge] = useState('')
 
   const handleSort = property => {
     const isAscending = sortOrder === 'asc'
     const order = isAscending ? 'desc' : 'asc'
     setSortBy(property)
     setSortOrder(order)
-    const sortedRows = rows.sort((a, b) => {
-      if (a[property] < b[property]) {
-        return isAscending ? -1 : 1
-      }
-      if (a[property] > b[property]) {
-        return isAscending ? 1 : -1
-      }
-      return 0
+    selectedProducts.sort((a, b) => {
+      const valueA = a[property]
+      const valueB = b[property]
+      const direction = isAscending ? 1 : -1
+
+      return valueA < valueB ? -direction : valueA > valueB ? direction : 0
     })
   }
 
+  function handlePayment() {
+    // Perform pay operation here
+    selectedProducts.map(async product => {
+      const updatedProduct = {
+        id: product.id,
+        name: product.name,
+        quantity: product.quantity - product.selectedQuantity,
+        price: product.price,
+        subtotal: product.price * (product.quantity - product.selectedQuantity),
+        category: product.category,
+        brand: product.brand
+      }
+      await fetch(`http://localhost:8000/products/${product.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedProduct)
+      })
+    })
+
+    resetSelectedProducts()
+    setOpenPay(false)
+  }
+
+  const [openReset, setOpenReset] = useState(false)
+  const [openPay, setOpenPay] = useState(false)
+
   return (
     <div style={{ position: 'relative', height: '96.5vh' }}>
+      <ResetModal openReset={openReset} setOpenReset={setOpenReset} resetSelectedProducts={resetSelectedProducts} />
+      <PayModal
+        selectedProducts={selectedProducts}
+        openPay={openPay}
+        setOpenPay={setOpenPay}
+        handlePayment={handlePayment}
+        setRefresh={setRefresh} // for refresh purpose of data
+        refresh={refresh}
+        subTotal={subTotal}
+        total={total}
+        discount={discount}
+      />
+
       {/* table  */}
       <TableContainer sx={{ height: '66vh' }} component={Paper}>
         <Table size='small' aria-label='a dense table' stickyHeader>
@@ -97,30 +160,30 @@ const ProductTable = ({
                 #
               </TableCell>
               <TableCell sx={{ border: '1px solid rgba(0, 0, 255, 0.1)' }}>
-                <TableSortLabel
-                  active={sortBy === 'product'}
-                  direction={sortOrder}
-                  onClick={() => handleSort('product')}
-                >
+                <TableSortLabel active={sortBy === 'name'} direction={sortOrder} onClick={() => handleSort('name')}>
                   Product
                 </TableSortLabel>
               </TableCell>
               <TableCell sx={{ border: '1px solid rgba(0, 0, 255, 0.1)' }} align='center'>
                 <TableSortLabel
-                  active={sortBy === 'calories'}
+                  active={sortBy === 'selectedQuantity'}
                   direction={sortOrder}
-                  onClick={() => handleSort('calories')}
+                  onClick={() => handleSort('selectedQuantity')}
                 >
                   Quantity
                 </TableSortLabel>
               </TableCell>
               <TableCell sx={{ border: '1px solid rgba(0, 0, 255, 0.1)' }} align='center'>
-                <TableSortLabel active={sortBy === 'fat'} direction={sortOrder} onClick={() => handleSort('fat')}>
+                <TableSortLabel active={sortBy === 'price'} direction={sortOrder} onClick={() => handleSort('price')}>
                   Price
                 </TableSortLabel>
               </TableCell>
               <TableCell sx={{ border: '1px solid rgba(0, 0, 255, 0.1)' }} align='center'>
-                <TableSortLabel active={sortBy === 'carbs'} direction={sortOrder} onClick={() => handleSort('carbs')}>
+                <TableSortLabel
+                  active={sortBy === 'subtotal'}
+                  direction={sortOrder}
+                  onClick={() => handleSort('subtotal')}
+                >
                   Subtotal
                 </TableSortLabel>
               </TableCell>
@@ -228,7 +291,7 @@ const ProductTable = ({
                 </TableCell>
 
                 <TableCell sx={{ fontSize: '14px', border: '1px solid rgba(0, 0, 255, 0.1)' }}>
-                  <div style={{  display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <span style={{ alignSelf: 'flex-start' }}>₱</span>
                     <span style={{ alignSelf: 'flex-end' }}>
                       {product.price.toLocaleString(undefined, {
@@ -251,7 +314,7 @@ const ProductTable = ({
                 </TableCell>
                 <TableCell
                   sx={{
-                    backgroundColor: 'yellow',
+                    // backgroundColor: 'yellow',
                     position: 'sticky',
                     left: 0,
                     border: '1px solid rgba(0, 0, 255, 0.1)',
@@ -261,7 +324,7 @@ const ProductTable = ({
                 >
                   <TrashCanOutline
                     onClick={() => handleProductRemove(product.id)}
-                    sx={{ color: 'red', backgroundColor: 'yellow', cursor: 'pointer' }}
+                    sx={{ color: 'red', cursor: 'pointer' }}
                   />
                 </TableCell>
               </TableRow>
@@ -297,7 +360,25 @@ const ProductTable = ({
               </Grid>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField fullWidth label='Discount' placeholder='Discount' />
+              {/* <TextField fullWidth label='Discount' placeholder='Discount' /> */}
+              <FormControl sx={{ minWidth: 120, width: '80%', marginLeft: '20%' }} fullWidth size='small'>
+                <InputLabel id='demo-select-small-label'>Discount</InputLabel>
+                <Select
+                  label='Discount'
+                  placeholder='Discount'
+                  labelId='demo-select-small-label'
+                  id='demo-select-small'
+                  value={discount}
+                  onChange={e => setDiscount(e.target.value)}
+                >
+                  <MenuItem value={0}>
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={10}>10</MenuItem>
+                  <MenuItem value={20}>20</MenuItem>
+                  <MenuItem value={30}>30</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
             <Grid item xs={12} sm={6} container justify='center' alignItems='center'>
               <Grid xs={6}>
@@ -311,12 +392,27 @@ const ProductTable = ({
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <Button size='large' color='error' fullWidth variant='contained'>
+              <Button
+                onClick={() => setOpenReset(true)}
+                size='large'
+                color='error'
+                fullWidth
+                variant='contained'
+                disabled={selectedProducts.length === 0}
+              >
                 reset
               </Button>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Button size='large' color='info' type='submit' fullWidth variant='contained'>
+              <Button
+                size='large'
+                color='info'
+                type='submit'
+                fullWidth
+                variant='contained'
+                onClick={() => setOpenPay(true)}
+                disabled={selectedProducts.length === 0}
+              >
                 pay now
               </Button>
             </Grid>

@@ -46,6 +46,10 @@ const TreeIllustration = styled('img')(({ theme }) => ({
   }
 }))
 
+const url = 'http://localhost:8000/products'
+const urlCategories = 'http://localhost:8000/categories'
+const urlBrands = 'http://localhost:8000/brands'
+
 const Pos = () => {
   const [selectedProducts, setSelectedProducts] = useState([])
 
@@ -53,6 +57,39 @@ const Pos = () => {
   const [subTotal, setSubTotal] = useState('')
   const [total, setTotal] = useState(0)
   const [discount, setDiscount] = useState(0)
+
+  const [products, setProducts] = useState([])
+  const [refresh, setRefresh] = useState(false)
+
+  const [brands, setBrands] = useState([])
+  const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [categoriesResponse, brandsResponse] = await Promise.all([fetch(urlCategories), fetch(urlBrands)])
+        const [categoriesData, brandsData] = await Promise.all([categoriesResponse.json(), brandsResponse.json()])
+        setCategories(categoriesData)
+        setBrands(brandsData)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+  }, [urlCategories, urlBrands])
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(url)
+        const data = await response.json()
+        setProducts(data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+  }, [url, refresh])
 
   useEffect(() => {
     const totalQuantity = selectedProducts.reduce((acc, product) => acc + product.selectedQuantity, 0)
@@ -69,6 +106,9 @@ const Pos = () => {
     setSelectedProducts(prevSelectedProducts => prevSelectedProducts.filter(product => product.id !== productId))
   }
 
+  const resetSelectedProducts = () => {
+    setSelectedProducts([])
+  }
 
   const handleDecrement = id => {
     setSelectedProducts(prevProducts =>
@@ -76,8 +116,8 @@ const Pos = () => {
         product.id === id ? { ...product, selectedQuantity: product.selectedQuantity - 1 } : product
       )
     )
-    console.log('hi');
-    console.log(selectedProducts);
+    console.log('hi')
+    console.log(selectedProducts)
   }
 
   const handleIncrement = id => {
@@ -94,8 +134,6 @@ const Pos = () => {
       prevProducts.map(product => (product.id === id ? { ...product, selectedQuantity: value } : product))
     )
   }
-
-
 
   const handleProductClick = product => {
     // console.log(product.quantity);
@@ -114,8 +152,6 @@ const Pos = () => {
         }
       }
     }
-
-    console.log(product)
   }
 
   return (
@@ -131,16 +167,25 @@ const Pos = () => {
                 handleProductRemove={handleProductRemove}
                 handleQuantChange={handleQuantChange}
                 discount={discount}
+                setDiscount={setDiscount}
                 total={total}
                 subTotal={subTotal}
                 totalQuantity={totalQuantity}
+                resetSelectedProducts={resetSelectedProducts}
+                setRefresh={setRefresh}
+                refresh={refresh}
               />
             </Card>
           </Box>
         </Grid>
         <Grid item xs={12} md={7} lg={7}>
           <Box>
-            <ProductList handleProductClick={handleProductClick} />
+            <ProductList
+              handleProductClick={handleProductClick}
+              products={products}
+              brands={brands}
+              categories={categories}
+            />
           </Box>
         </Grid>
       </Grid>
