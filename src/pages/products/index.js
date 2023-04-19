@@ -31,14 +31,16 @@ import TableCustomized from 'src/views/tables/TableCustomized'
 import TableCollapsible from 'src/views/tables/TableCollapsible'
 import TableStickyHeader from 'src/views/tables/TableStickyHeader'
 
+import { CSVLink } from 'react-csv'
+
 //react import
 
 import { useState, useEffect } from 'react'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    color: theme.palette.common.black,
-    backgroundColor: theme.palette.background.white
+    // color: theme.palette.common.black,
+    // backgroundColor: theme.palette.common.white
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14
@@ -61,6 +63,10 @@ const url = 'http://localhost:8000/products'
 const Products = () => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
+  const [products, setProducts] = useState([])
+  const [sortBy, setSortBy] = useState(null)
+  const [sortOrder, setSortOrder] = useState('asc')
+  const [search, setSearch] = useState('')
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -70,8 +76,6 @@ const Products = () => {
     setRowsPerPage(+event.target.value)
     setPage(0)
   }
-
-  const [products, setProducts] = useState([])
 
   useEffect(() => {
     async function fetchData() {
@@ -86,9 +90,6 @@ const Products = () => {
     fetchData()
   }, [url])
 
-  const [sortBy, setSortBy] = useState(null)
-  const [sortOrder, setSortOrder] = useState('asc')
-
   const handleSort = property => {
     const isAscending = sortOrder === 'asc'
     const order = isAscending ? 'desc' : 'asc'
@@ -102,8 +103,6 @@ const Products = () => {
       return valueA < valueB ? -direction : valueA > valueB ? direction : 0
     })
   }
-
-  
 
   return (
     <Grid container spacing={2}>
@@ -124,7 +123,7 @@ const Products = () => {
             fullWidth
             size='small'
             placeholder='Search'
-            // onChange={e => setSearch(e.target.value)}
+            onChange={e => setSearch(e.target.value)}
             InputProps={{
               startAdornment: (
                 <Magnify
@@ -147,7 +146,7 @@ const Products = () => {
         Login
       </Button> */}
 
-      <Grid item xs={2}>
+      {/* <Grid item xs={0.6}>
         <Card sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Button
             sx={{ height: '100%', whiteSpace: 'nowrap' }}
@@ -157,7 +156,24 @@ const Products = () => {
             style={{ textTransform: 'none' }}
             variant='contained'
           >
-            Export Product
+            f
+          </Button>
+        </Card>
+      </Grid> */}
+
+      <Grid item xs={2}>
+        <Card sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Button
+            sx={{ height: '100%', whiteSpace: 'nowrap' }}
+            align='center'
+            fullWidth
+            disableElevation
+            variant='contained'
+            style={{ textTransform: 'none' }}
+          >
+            <CSVLink data={products} filename='products.csv' style={{ textDecoration: 'none' , color: 'white'}}>
+              Export Products
+            </CSVLink>
           </Button>
         </Card>
       </Grid>
@@ -250,98 +266,101 @@ const Products = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {products.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(product => (
-                  <StyledTableRow key={product.name}>
-                    <StyledTableCell align='left'>
-                      <Image src='/images/no-image.png' alt='image' width={30} height={30} draggable={false} />
-                    </StyledTableCell>
-                    <StyledTableCell component='th' scope='product'>
-                      <Typography
-                        style={{
-                          fontSize: '.8rem'
-                          // lineHeight: 1,
-                          // // maxHeight: '2.4rem',
-                          // overflow: 'hidden',
-                          // textOverflow: 'ellipsis',
-                          // display: '-webkit-box',
-                          // WebkitBoxOrient: 'vertical'
-                          // WebkitLineClamp: 2
-                        }}
-                      >
-                        {product.name}
-                      </Typography>
-                    </StyledTableCell>
-                    <StyledTableCell align='left'>
-                      <Typography
-                        style={{
-                          fontSize: '0.8rem',
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis'
-                        }}
-                      >
-                        {product.code}
-                      </Typography>
-                    </StyledTableCell>
-                    <StyledTableCell align='left'>
-                      <Typography
-                        style={{
-                          fontSize: '0.8rem',
-                          lineHeight: 1,
-                          // maxHeight: '2.4rem',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          display: '-webkit-box',
-                          WebkitBoxOrient: 'vertical'
-                          // WebkitLineClamp: 2
-                        }}
-                      >
-                        {product.brand}
-                      </Typography>
-                    </StyledTableCell>
-                    <StyledTableCell align='right'>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ alignSelf: 'flex-start' }}>₱&nbsp;</span>
-                        <span style={{ alignSelf: 'flex-end' }}>
-                          {product.price.toLocaleString(undefined, {
-                            minimumFractionDigits: 2,
-                            maximumFractionDigits: 2
-                          })}
-                        </span>
-                      </div>
-                    </StyledTableCell>
-                    <StyledTableCell align='center'>
-                      <Typography
-                        style={{
-                          fontSize: '0.8rem'
-                          // lineHeight: 1,
-                          // // maxHeight: '2.4rem',
-                          // overflow: 'hidden',
-                          // textOverflow: 'ellipsis',
-                          // display: '-webkit-box',
-                          // WebkitBoxOrient: 'vertical'
-                          // WebkitLineClamp: 2
-                        }}
-                      >
-                        {product.unit}
-                      </Typography>
-                    </StyledTableCell>
-                    <StyledTableCell align='center'>{product.quantity}</StyledTableCell>
-                    <StyledTableCell align='center'>
-                      <Typography
-                        style={{
-                          fontSize: '0.8rem',
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis'
-                        }}
-                      >
-                        {product.created_on}
-                      </Typography>
-                    </StyledTableCell>
-                    <StyledTableCell align='center'>Crud</StyledTableCell>
-                  </StyledTableRow>
-                ))}
+                {products
+                  .filter(product => product.name.toLowerCase().includes(search.toLowerCase()))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map(product => (
+                    <StyledTableRow key={product.name}>
+                      <StyledTableCell align='left'>
+                        <Image src='/images/no-image.png' alt='image' width={30} height={30} draggable={false} />
+                      </StyledTableCell>
+                      <StyledTableCell component='th' scope='product'>
+                        <Typography
+                          style={{
+                            fontSize: '.8rem'
+                            // lineHeight: 1,
+                            // // maxHeight: '2.4rem',
+                            // overflow: 'hidden',
+                            // textOverflow: 'ellipsis',
+                            // display: '-webkit-box',
+                            // WebkitBoxOrient: 'vertical'
+                            // WebkitLineClamp: 2
+                          }}
+                        >
+                          {product.name}
+                        </Typography>
+                      </StyledTableCell>
+                      <StyledTableCell align='left'>
+                        <Typography
+                          style={{
+                            fontSize: '0.8rem',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis'
+                          }}
+                        >
+                          {product.code}
+                        </Typography>
+                      </StyledTableCell>
+                      <StyledTableCell align='left'>
+                        <Typography
+                          style={{
+                            fontSize: '0.8rem',
+                            lineHeight: 1,
+                            // maxHeight: '2.4rem',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            display: '-webkit-box',
+                            WebkitBoxOrient: 'vertical'
+                            // WebkitLineClamp: 2
+                          }}
+                        >
+                          {product.brand}
+                        </Typography>
+                      </StyledTableCell>
+                      <StyledTableCell align='right'>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <span style={{ alignSelf: 'flex-start' }}>₱&nbsp;</span>
+                          <span style={{ alignSelf: 'flex-end' }}>
+                            {product.price.toLocaleString(undefined, {
+                              minimumFractionDigits: 2,
+                              maximumFractionDigits: 2
+                            })}
+                          </span>
+                        </div>
+                      </StyledTableCell>
+                      <StyledTableCell align='center'>
+                        <Typography
+                          style={{
+                            fontSize: '0.8rem'
+                            // lineHeight: 1,
+                            // // maxHeight: '2.4rem',
+                            // overflow: 'hidden',
+                            // textOverflow: 'ellipsis',
+                            // display: '-webkit-box',
+                            // WebkitBoxOrient: 'vertical'
+                            // WebkitLineClamp: 2
+                          }}
+                        >
+                          {product.unit}
+                        </Typography>
+                      </StyledTableCell>
+                      <StyledTableCell align='center'>{product.quantity}</StyledTableCell>
+                      <StyledTableCell align='center'>
+                        <Typography
+                          style={{
+                            fontSize: '0.8rem',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis'
+                          }}
+                        >
+                          {product.created_on}
+                        </Typography>
+                      </StyledTableCell>
+                      <StyledTableCell align='center'>Crud</StyledTableCell>
+                    </StyledTableRow>
+                  ))}
               </TableBody>
             </Table>
           </TableContainer>
