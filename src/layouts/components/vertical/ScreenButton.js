@@ -4,7 +4,7 @@ import FullscreenExit from 'mdi-material-ui/FullscreenExit'
 import { useState } from 'react'
 
 const ScreenButton = () => {
-  const [scrn, setScrn] = useState(document.fullscreenElement)
+  const [scrn, setScrn] = useState(typeof document !== 'undefined' && document.fullscreenElement)
 
   const handleFullscreen = () => {
     if (document.fullscreenElement) {
