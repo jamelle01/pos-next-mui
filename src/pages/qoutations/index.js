@@ -45,6 +45,8 @@ import FormLayoutsIcons from 'src/views/form-layouts/FormLayoutsIcons'
 import FormLayoutsSeparator from 'src/views/form-layouts/FormLayoutsSeparator'
 import FormLayoutsAlignment from 'src/views/form-layouts/FormLayoutsAlignment'
 
+import { useRouter } from 'next/router'
+
 //react import
 import { useState, useEffect } from 'react'
 
@@ -86,12 +88,12 @@ const Quotations = () => {
   const [statusFilter, setStatusFilter] = useState('All')
   const [dateFilter, setDateFilter] = useState()
 
-
+  const router = useRouter()
 
   const handleChangeDateFilter = event => {
     setDateFilter(event.target.value)
   }
-  
+
   const handleChangeStatus = event => {
     setStatusFilter(event.target.value)
   }
@@ -249,6 +251,7 @@ const Quotations = () => {
             fullWidth
             disableElevation
             style={{ textTransform: 'none' }}
+            onClick={() => router.push('/quotation')}
             variant='contained'
           >
             Create quotation

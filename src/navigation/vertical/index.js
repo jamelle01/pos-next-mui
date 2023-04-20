@@ -39,9 +39,9 @@ const navigation = () => {
       ]
     },
     {
-      title: 'Qoutations',
+      title: 'Quotations',
       icon: BasketOutline,
-      path: '/qoutations'
+      path: '/quotations'
     },
     {
       title: 'Account Settings',
