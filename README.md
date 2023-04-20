@@ -36,5 +36,5 @@ Contributions are welcome! To contribute to this project, follow these steps:
 
 ## Developers
 
-- Jeramelle Tatad (@jamelle01)
+- @jamelle01
 - Jane Smith (@janesmith)
