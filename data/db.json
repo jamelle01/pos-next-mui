@@ -7,7 +7,10 @@
       "price": 10,
       "subtotal": 180,
       "category": "Hand Tools",
-      "brand": "Bosch"
+      "brand": "Bosch",
+      "code": "BOS-18V-DRV-1/2",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 2,
@@ -16,7 +19,10 @@
       "price": 15,
       "subtotal": 240,
       "category": "Power Tools",
-      "brand": "DeWalt"
+      "brand": "DeWalt",
+      "code": "DEW-20V-CSK",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 3,
@@ -25,7 +31,10 @@
       "price": 20,
       "subtotal": 40,
       "category": "Building Materials",
-      "brand": "Makita"
+      "brand": "Makita",
+      "code": "MAK-18V-CMB-BRS",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 4,
@@ -34,7 +43,10 @@
       "price": 12,
       "subtotal": 48,
       "category": "Fasteners",
-      "brand": "Milwaukee"
+      "brand": "Milwaukee",
+      "code": "MIL-M18-HDR-DRV",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 5,
@@ -43,7 +55,10 @@
       "price": 25,
       "subtotal": 25,
       "category": "Plumbing Supplies",
-      "brand": "Hitachi"
+      "brand": "Hitachi",
+      "code": "HIT-18V-DRV-CMP",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 6,
@@ -52,7 +67,10 @@
       "price": 18,
       "subtotal": 36,
       "category": "Electrical Supplies",
-      "brand": "Black and Decker"
+      "brand": "Black and Decker",
+      "code": "B&D-20V-DRV",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 7,
@@ -61,7 +79,10 @@
       "price": 11,
       "subtotal": 33,
       "category": "Paint and Painting Supplies",
-      "brand": "Craftsman"
+      "brand": "Craftsman",
+      "code": "CRA-20V-DRV",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 8,
@@ -70,7 +91,10 @@
       "price": 17,
       "subtotal": 34,
       "category": "Garden and Outdoor Supplies",
-      "brand": "Stanley"
+      "brand": "Stanley",
+      "code": "SM-001",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 9,
@@ -79,7 +103,10 @@
       "price": 30,
       "subtotal": 30,
       "category": "Safety Equipment",
-      "brand": "Ryobi"
+      "brand": "Ryobi",
+      "code": "RY-001",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 10,
@@ -88,7 +115,10 @@
       "price": 14,
       "subtotal": 16870,
       "category": "Hand Tools",
-      "brand": "Bosch"
+      "brand": "Bosch",
+      "code": "BO-001",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 11,
@@ -97,7 +127,10 @@
       "price": 500,
       "subtotal": 2500,
       "category": "Power Tools",
-      "brand": "DeWalt"
+      "brand": "DeWalt",
+      "code": "DW-001",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 12,
@@ -106,7 +139,10 @@
       "price": 250,
       "subtotal": 750,
       "category": "Power Tools",
-      "brand": "Makita"
+      "brand": "Makita",
+      "code": "MK-001",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 13,
@@ -115,7 +151,10 @@
       "price": 300,
       "subtotal": 600,
       "category": "Power Tools",
-      "brand": "Milwaukee"
+      "brand": "Milwaukee",
+      "code": "ML-001",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 14,
@@ -124,7 +163,10 @@
       "price": 100,
       "subtotal": 200,
       "category": "Power Tools",
-      "brand": "Hitachi"
+      "brand": "Hitachi",
+      "code": "HI-001",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 15,
@@ -133,7 +175,10 @@
       "price": 150,
       "subtotal": 450,
       "category": "Power Tools",
-      "brand": "Black and Decker"
+      "brand": "Black and Decker",
+      "code": "BND-20VDCCSDK",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 16,
@@ -142,7 +187,10 @@
       "price": 120,
       "subtotal": 480,
       "category": "Power Tools",
-      "brand": "Craftsman"
+      "brand": "Craftsman",
+      "code": "CRM-20VDCLRS",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 17,
@@ -151,7 +199,10 @@
       "price": 30,
       "subtotal": 180,
       "category": "Hand Tools",
-      "brand": "Stanley"
+      "brand": "Stanley",
+      "code": "STN-20PCSDD",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 18,
@@ -160,7 +211,10 @@
       "price": 150,
       "subtotal": 300,
       "category": "Power Tools",
-      "brand": "Ryobi"
+      "brand": "Ryobi",
+      "code": "RYB-18VDCTCK",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 19,
@@ -169,7 +223,10 @@
       "price": 200,
       "subtotal": 1400,
       "category": "Power Tools",
-      "brand": "Bosch"
+      "brand": "Bosch",
+      "code": "BCH-18VDDBK",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 20,
@@ -178,7 +235,10 @@
       "price": 400,
       "subtotal": 1200,
       "category": "Power Tools",
-      "brand": "DeWalt"
+      "brand": "DeWalt",
+      "code": "DWL-20VDCTCK",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 21,
@@ -187,7 +247,10 @@
       "price": 150,
       "subtotal": 1200,
       "category": "Power Tools",
-      "brand": "Makita"
+      "brand": "Makita",
+      "code": "MT-CS-001",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 22,
@@ -196,7 +259,10 @@
       "price": 100,
       "subtotal": 500,
       "category": "Power Tools",
-      "brand": "Bosch"
+      "brand": "Bosch",
+      "code": "BT-DDK-001",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 23,
@@ -205,7 +271,10 @@
       "price": 500,
       "subtotal": 1000,
       "category": "Power Tools",
-      "brand": "DeWalt"
+      "brand": "DeWalt",
+      "code": "DW-TS-001",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 24,
@@ -214,7 +283,10 @@
       "price": 700,
       "subtotal": 2800,
       "category": "Power Tools",
-      "brand": "Milwaukee"
+      "brand": "Milwaukee",
+      "code": "MK-CM-001",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 25,
@@ -223,7 +295,10 @@
       "price": 1000,
       "subtotal": 6000,
       "category": "Electrical Tools",
-      "brand": "Klein Tools"
+      "brand": "Klein Tools",
+      "code": "KT-VCTK-001",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 26,
@@ -232,7 +307,10 @@
       "price": 450,
       "subtotal": 3600,
       "category": "Power Tools",
-      "brand": "Milwaukee"
+      "brand": "Milwaukee",
+      "code": "MK-HDIDK-001",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 27,
@@ -241,7 +319,10 @@
       "price": 200,
       "subtotal": 800,
       "category": "Measuring Tools",
-      "brand": "Bosch"
+      "brand": "Bosch",
+      "code": "BT-LLP-001",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 28,
@@ -250,7 +331,10 @@
       "price": 120,
       "subtotal": 1200,
       "category": "Power Tools",
-      "brand": "DeWalt"
+      "brand": "DeWalt",
+      "code": "DT-CS-7",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 29,
@@ -259,7 +343,10 @@
       "price": 250,
       "subtotal": 1250,
       "category": "Power Tools",
-      "brand": "Ryobi"
+      "brand": "Ryobi",
+      "code": "RB-TK-6",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     },
     {
       "id": 30,
@@ -268,7 +355,10 @@
       "price": 150,
       "subtotal": 300,
       "category": "Hand Tools",
-      "brand": "Husky"
+      "brand": "Husky",
+      "code": "HS-RT-144",
+      "created_on": "2023-04-19",
+      "unit": "pieces"
     }
   ],
   "categories": [

@@ -31,6 +31,7 @@ import { Select, MenuItem } from '@mui/material'
 import ProductTable from './ProductTable'
 
 import Image from 'next/image'
+import ScreenButton from 'src/layouts/components/vertical/ScreenButton'
 
 const data = [
   { id: 1, title: 'Title 1', description: 'Description 1' },
@@ -97,24 +98,22 @@ const ProductList = ({ handleProductClick, products, categories, brands }) => {
   //   { name: 'Ryobi' }
   // ]
 
-  const [scrn, setScrn] = useState(typeof localStorage !== 'undefined' ? localStorage.getItem('screen') : false)
+  // const handleFullscreen = () => {
+  //   if (document.fullscreenElement) {
+  //     setScrn(false)
 
-  const handleFullscreen = () => {
-    if (document.fullscreenElement) {
-      setScrn(false)
-      localStorage.setItem('screen', JSON.stringify(scrn))
-
-      document.exitFullscreen()
-    } else {
-      document.documentElement.requestFullscreen()
-      setScrn(true)
-      localStorage.setItem('screen', JSON.stringify(scrn))
-    }
-  }
+  //     document.exitFullscreen()
+  //   } else {
+  //     document.documentElement.requestFullscreen()
+  //     setScrn(true)
+  //   }
+  // }
 
   return (
     <div style={{ height: '96.5vh' }}>
       <Grid container spacing={2} mb={2}>
+        {/* search  */}
+
         <Grid item xs={8}>
           <Card sx={{ display: 'flex', padding: 2 }}>
             <TextField
@@ -138,6 +137,8 @@ const ProductList = ({ handleProductClick, products, categories, brands }) => {
           </Card>
         </Grid>
 
+        {/* HOME button */}
+
         <Grid item xs={2}>
           <Card sx={{ height: '100%' }}>
             <Link href='/'>
@@ -151,30 +152,19 @@ const ProductList = ({ handleProductClick, products, categories, brands }) => {
             </Link>
           </Card>
         </Grid>
+
+        {/* full screen button */}
+
         <Grid item xs={2}>
           <Card sx={{ height: '100%' }}>
-            <Button fullWidth sx={{ height: '100%' }} onClick={handleFullscreen}>
-              {scrn ? (
-                <FullscreenExit
-                  sx={{
-                    fontSize: '2rem'
-                  }}
-                />
-              ) : (
-                <Fullscreen
-                  sx={{
-                    fontSize: '2rem'
-                  }}
-                />
-              )}
-            </Button>
+            <ScreenButton />
           </Card>
         </Grid>
       </Grid>
 
-      <Card sx={{ padding: 2 }}>
-        {/* dropdown button */}
+      {/* dropdown button */}
 
+      <Card sx={{ padding: 2 }}>
         <Grid container mb={2} spacing={2}>
           <Grid item xs={12} sm={6}>
             <Select fullWidth value={categoryValue}>

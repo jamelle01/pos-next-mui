@@ -158,6 +158,8 @@ const Pos = () => {
     <ApexChartWrapper style={{ padding: '10px' }}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={5} lg={5}>
+
+          {/* table of selected prod */}
           <Box>
             <Card>
               <ProductTable
@@ -179,6 +181,7 @@ const Pos = () => {
           </Box>
         </Grid>
         <Grid item xs={12} md={7} lg={7}>
+          {/* list of prod */}
           <Box>
             <ProductList
               handleProductClick={handleProductClick}

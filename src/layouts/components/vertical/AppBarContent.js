@@ -4,13 +4,11 @@ import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import InputAdornment from '@mui/material/InputAdornment'
-import { Button } from '@mui/material'
+import Button from '@mui/material/Button'
 
 // ** Icons Imports
 import Menu from 'mdi-material-ui/Menu'
 import Magnify from 'mdi-material-ui/Magnify'
-import Fullscreen from 'mdi-material-ui/Fullscreen'
-import FullscreenExit from 'mdi-material-ui/FullscreenExit'
 
 // import from next
 import Link from 'next/link'
@@ -19,6 +17,8 @@ import Link from 'next/link'
 import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
 import UserDropdown from 'src/@core/layouts/components/shared-components/UserDropdown'
 import NotificationDropdown from 'src/@core/layouts/components/shared-components/NotificationDropdown'
+
+import ScreenButton from './ScreenButton'
 
 const AppBarContent = props => {
   // ** Props
@@ -68,22 +68,12 @@ const AppBarContent = props => {
             />
           </Box>
         )}
-        <Link href='/pos'><Button>POS</Button></Link>
-        {/* <Button fullWidth sx={{ height: '100%' }} onClick={handleFullscreen}>
-          {scrn ? (
-            <FullscreenExit
-              sx={{
-                fontSize: '2rem'
-              }}
-            />
-          ) : (
-            <Fullscreen
-              sx={{
-                fontSize: '2rem'
-              }}
-            />
-          )}
-        </Button> */}
+        <Link href='/pos'>
+          <Button>POS</Button>
+        </Link>
+
+        <ScreenButton/>
+
         <ModeToggler settings={settings} saveSettings={saveSettings} />
         <NotificationDropdown />
         <UserDropdown />

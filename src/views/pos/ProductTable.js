@@ -39,37 +39,9 @@ import { useState, forwardRef } from 'react'
 import ResetModal from './modal/ResetModal'
 import PayModal from './modal/PayModal'
 
-// hardcoded data for table
-const createData = (name, calories, fat, carbs, protein) => {
-  return { name, calories, fat, carbs, protein }
-}
-
 const Transition = forwardRef(function Transition(props, ref) {
-  return <Slide direction='up' ref={ref} {...props} />
+  return <Slide direction='down' ref={ref} {...props} />
 })
-
-const rows = [
-  createData('Frozen ', 159, 6.0, 24, 4.0),
-  createData('Ice cream', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-  createData('Donut', 452, 25.0, 51, 4.9),
-  createData('Croissant', 290, 11.0, 32, 5.1),
-  createData('Bagel', 300, 8.0, 25, 4.2),
-  createData('Muffin', 346, 12.0, 48, 3.8),
-  createData('Pancake', 430, 15.0, 56, 4.5),
-  createData('Waffle', 380, 13.0, 41, 4.1),
-  createData('Toast', 180, 3.0, 20, 2.5),
-  createData('Omelette', 230, 7.0, 31, 3.3),
-  createData('Scrambled eggs', 210, 6.0, 28, 3.0),
-  createData('Bacon', 150, 5.0, 15, 2.5),
-  createData('Sausage', 180, 4.0, 18, 2.8),
-  createData('Hash browns', 220, 7.0, 22, 3.2),
-  createData('Fruit salad', 120, 2.0, 16, 1.5),
-  createData('Yogurt', 80, 1.5, 10, 1.0),
-  createData('Granola', 220, 4.5, 30, 2.5)
-]
 
 const ProductTable = ({
   selectedProducts,
@@ -86,9 +58,10 @@ const ProductTable = ({
   setRefresh,
   refresh
 }) => {
+  // sorting purpose
+
   const [sortBy, setSortBy] = useState(null)
   const [sortOrder, setSortOrder] = useState('asc')
-  const [age, setAge] = useState('')
 
   const handleSort = property => {
     const isAscending = sortOrder === 'asc'
@@ -192,7 +165,11 @@ const ProductTable = ({
           </TableHead>
           <TableBody>
             {selectedProducts.map((product, index) => (
-              <TableRow key={product.name} sx={{ '&:nth-of-type(even)': { backgroundColor: 'rgba(0, 0, 0, 0.04)' } }}>
+              <TableRow
+                TransitionComponent={Transition}
+                key={product.name}
+                sx={{ '&:nth-of-type(even)': { backgroundColor: 'rgba(0, 0, 0, 0.04)' } }}
+              >
                 <TableCell sx={{ border: '1px solid rgba(0, 0, 255, 0.1)' }}>{index + 1}</TableCell>
                 <TableCell title={product.name} sx={{ fontSize: '14px', border: '1px solid rgba(0, 0, 255, 0.1)' }}>
                   <Typography
