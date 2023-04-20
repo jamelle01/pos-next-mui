@@ -39,7 +39,7 @@ const AppBarContent = props => {
             <Menu />
           </IconButton>
         ) : null}
-        <TextField
+        {/* <TextField
           placeholder='search'
           size='small'
           sx={{ '& .MuiOutlinedInput-root': { borderRadius: 4 } }}
@@ -50,7 +50,7 @@ const AppBarContent = props => {
               </InputAdornment>
             )
           }}
-        />
+        /> */}
       </Box>
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
         {hiddenSm ? null : (
