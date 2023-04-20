@@ -22,17 +22,9 @@ To install and run the application locally, follow these steps:
 
 - Next.js
 - Material UI
-- <sub>ThemeSelection</sub> template
+- [ThemeSelection](https://github.com/some-user/ThemeSelection) template
 
 ## Contributing
-
-Contributions are welcome! To contribute to this project, follow these steps:
-
-1. Fork the repository
-2. Create a new branch: `git checkout -b feature/your-feature`
-3. Make your changes and commit them: `git commit -m 'Add some feature'`
-4. Push to the branch: `git push origin feature/your-feature`
-5. Create a new pull request
 
 ## Developers
 
