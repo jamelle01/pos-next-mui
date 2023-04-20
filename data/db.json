@@ -361,6 +361,7 @@
       "unit": "pieces"
     }
   ],
+
   "categories": [
     { "name": "All Categories" },
     { "name": "Hand Tools" },
@@ -373,6 +374,7 @@
     { "name": "Garden and Outdoor Supplies" },
     { "name": "Safety Equipment" }
   ],
+
   "brands": [
     { "name": "All Brands" },
     { "name": "Bosch" },
@@ -384,5 +386,134 @@
     { "name": "Craftsman" },
     { "name": "Stanley" },
     { "name": "Ryobi" }
+  ],
+
+  "quotations": [
+    {
+      "id": 1,
+      "reference": "QA_111199",
+      "customer": "Ursula Penesula",
+      "warehouse": "Warehouse 3",
+      "status": "pending",
+      "grand_total": 1200,
+      "created_on": "5:41 PM 2023-04-20"
+    },
+    {
+      "id": 2,
+      "reference": "QA_111200",
+      "customer": "John Smith",
+      "warehouse": "Warehouse 2",
+      "status": "ordered",
+      "grand_total": 5000,
+      "created_on": "9:15 AM 2023-04-21"
+    },
+    {
+      "id": 3,
+      "reference": "QA_111201",
+      "customer": "Jane Doe",
+      "warehouse": "Warehouse 1",
+      "status": "pending",
+      "grand_total": 5000,
+      "created_on": "1:30 PM 2023-04-21"
+    },
+    {
+      "id": 4,
+      "reference": "QA_111202",
+      "customer": "Bob Johnson",
+      "warehouse": "Warehouse 4",
+      "status": "pending",
+      "grand_total": 1500,
+      "created_on": "10:20 AM 2023-04-22"
+    },
+    {
+      "id": 5,
+      "reference": "QA_111203",
+      "customer": "Emily Wang",
+      "warehouse": "Warehouse 3",
+      "status": "ordered",
+      "grand_total": 3500,
+      "created_on": "3:45 PM 2023-04-22"
+    },
+    {
+      "id": 6,
+      "reference": "QA_345678",
+      "customer": "Tom Brown",
+      "warehouse": "Warehouse 3",
+      "status": "pending",
+      "grand_total": 1500,
+      "created_on": "3:27 PM 2023-04-18"
+    },
+    {
+      "id": 7,
+      "reference": "QA_987654",
+      "customer": "Susan Green",
+      "warehouse": "Warehouse 4",
+      "status": "pending",
+      "grand_total": 2000,
+      "created_on": "8:14 AM 2023-04-17"
+    },
+    {
+      "id": 8,
+      "reference": "QA_567890",
+      "customer": "David Lee",
+      "warehouse": "Warehouse 2",
+      "status": "ordered",
+      "grand_total": 800,
+      "created_on": "1:59 PM 2023-04-16"
+    },
+    {
+      "id": 9,
+      "reference": "QA_543210",
+      "customer": "Mary Smith",
+      "warehouse": "Warehouse 1",
+      "status": "pending",
+      "grand_total": 600,
+      "created_on": "6:47 PM 2023-04-15"
+    },
+    {
+      "id": 10,
+      "reference": "QA_876543",
+      "customer": "Alex Johnson",
+      "warehouse": "Warehouse 3",
+      "status": "ordered",
+      "grand_total": 4500,
+      "created_on": "11:34 AM 2023-04-15"
+    },
+    {
+      "id": 11,
+      "reference": "QA_235687",
+      "customer": "John Doe",
+      "warehouse": "Warehouse 1",
+      "status": "ordered",
+      "grand_total": 5000,
+      "created_on": "10:23 AM 2023-04-20"
+    },
+    {
+      "id": 12,
+      "reference": "QA_983461",
+      "customer": "Jane Smith",
+      "warehouse": "Warehouse 2",
+      "status": "pending",
+      "grand_total": 1800,
+      "created_on": "2:13 PM 2023-04-19"
+    },
+    {
+      "id": 13,
+      "reference": "QA_776542",
+      "customer": "Bob Johnson",
+      "warehouse": "Warehouse 4",
+      "status": "pending",
+      "grand_total": 900,
+      "created_on": "9:56 AM 2023-04-19"
+    },
+    {
+      "id": 14,
+      "reference": "QA_123456",
+      "customer": "Sarah Lee",
+      "warehouse": "Warehouse 1",
+      "status": "ordered",
+      "grand_total": 3200,
+      "created_on": "11:42 AM 2023-04-18"
+    }
   ]
 }

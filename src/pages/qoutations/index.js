@@ -68,15 +68,21 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   }
 }))
 
-const url = 'http://localhost:8000/products'
+const url = 'http://localhost:8000/quotations'
 
-const Qoutations = () => {
+const Quotations = () => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [products, setProducts] = useState([])
+  const [quotations, setQuotations] = useState([])
   const [sortBy, setSortBy] = useState(null)
   const [sortOrder, setSortOrder] = useState('asc')
   const [search, setSearch] = useState('')
+
+  const [age, setAge] = React.useState('')
+
+  const handleChange = event => {
+    setAge(event.target.value)
+  }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -92,7 +98,7 @@ const Qoutations = () => {
       try {
         const response = await fetch(url)
         const data = await response.json()
-        setProducts(data)
+        setQuotations(data)
       } catch (error) {
         console.error(error)
       }
@@ -105,7 +111,7 @@ const Qoutations = () => {
     const order = isAscending ? 'desc' : 'asc'
     setSortBy(property)
     setSortOrder(order)
-    products.sort((a, b) => {
+    quotations.sort((a, b) => {
       const valueA = a[property]
       const valueB = b[property]
       const direction = isAscending ? 1 : -1
@@ -119,7 +125,7 @@ const Qoutations = () => {
       <Grid item xs={12}>
         <Typography variant='h5'>
           <Link href='https://mui.com/components/tables/' target='_blank'>
-            Products
+            quotations
           </Link>
         </Typography>
         {/* <Typography variant='body2'>Tables display sets of data. They can be fully customized</Typography> */}
@@ -181,8 +187,8 @@ const Qoutations = () => {
             variant='contained'
             style={{ textTransform: 'none' }}
           >
-            <CSVLink data={products} filename='products.csv' style={{ textDecoration: 'none', color: 'white' }}>
-              Export Products
+            <CSVLink data={quotations} filename='quotations.csv' style={{ textDecoration: 'none', color: 'white' }}>
+               Status Filter
             </CSVLink>
           </Button>
         </Card>
@@ -200,7 +206,7 @@ const Qoutations = () => {
             style={{ textTransform: 'none' }}
             variant='contained'
           >
-            Import Product
+            Import quotation
           </Button>
         </Card>
       </Grid>
@@ -216,7 +222,7 @@ const Qoutations = () => {
             style={{ textTransform: 'none' }}
             variant='contained'
           >
-            Create Product
+            Create quotation
           </Button>
         </Card>
       </Grid>
@@ -228,63 +234,77 @@ const Qoutations = () => {
             <Table sx={{ minWidth: 700 }} size='small' aria-label='a dense table'>
               <TableHead>
                 <TableRow>
-                  <StyledTableCell align='left'>Product</StyledTableCell>
                   <StyledTableCell align='left'>
                     <TableSortLabel
                       fullwidth
-                      active={sortBy === 'name'}
+                      active={sortBy === 'reference'}
                       direction={sortOrder}
-                      onClick={() => handleSort('name')}
+                      onClick={() => handleSort('reference')}
                     >
-                      Name
+                      Reference
                     </TableSortLabel>
                   </StyledTableCell>
-                  <StyledTableCell align='left'>Code</StyledTableCell>
                   <StyledTableCell align='left'>
                     <TableSortLabel
                       fullwidth
-                      active={sortBy === 'brand'}
+                      active={sortBy === 'customer'}
                       direction={sortOrder}
-                      onClick={() => handleSort('brand')}
+                      onClick={() => handleSort('customer')}
                     >
-                      Brand
+                      Customer
+                    </TableSortLabel>
+                  </StyledTableCell>
+                  <StyledTableCell align='left'>
+                    <TableSortLabel
+                      fullwidth
+                      active={sortBy === 'warehouse'}
+                      direction={sortOrder}
+                      onClick={() => handleSort('warehouse')}
+                    >
+                      Warehouse
+                    </TableSortLabel>
+                  </StyledTableCell>
+                  <StyledTableCell align='left'>
+                    <TableSortLabel
+                      fullwidth
+                      active={sortBy === 'status'}
+                      direction={sortOrder}
+                      onClick={() => handleSort('status')}
+                    >
+                      Status
+                    </TableSortLabel>
+                  </StyledTableCell>
+
+                  <StyledTableCell align='center'>
+                    <TableSortLabel
+                      fullwidth
+                      active={sortBy === 'grand_total'}
+                      direction={sortOrder}
+                      onClick={() => handleSort('grand_total')}
+                    >
+                      Grand Total
                     </TableSortLabel>
                   </StyledTableCell>
                   <StyledTableCell align='center'>
                     <TableSortLabel
                       fullwidth
-                      active={sortBy === 'price'}
+                      active={sortBy === 'grand_total'}
                       direction={sortOrder}
-                      onClick={() => handleSort('price')}
+                      onClick={() => handleSort('created_on')}
                     >
-                      Price
+                      Created On
                     </TableSortLabel>
                   </StyledTableCell>
-                  <StyledTableCell align='center'>Product Unit</StyledTableCell>
-                  <StyledTableCell align='center'>
-                    <TableSortLabel
-                      fullwidth
-                      active={sortBy === 'quantity'}
-                      direction={sortOrder}
-                      onClick={() => handleSort('quantity')}
-                    >
-                      In Stock
-                    </TableSortLabel>
-                  </StyledTableCell>
-                  <StyledTableCell align='center'>Created On</StyledTableCell>
                   <StyledTableCell align='center'>Action</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {products
-                  .filter(product => product.name.toLowerCase().includes(search.toLowerCase()))
+                {quotations
+                  .filter(quotation => quotation.reference.toLowerCase().includes(search.toLowerCase()))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map(product => (
-                    <StyledTableRow key={product.name}>
+                  .map(quotation => (
+                    <StyledTableRow key={quotation.id}>
                       <StyledTableCell align='left'>
-                        <Image src='/images/no-image.png' alt='image' width={30} height={30} draggable={false} />
-                      </StyledTableCell>
-                      <StyledTableCell component='th' scope='product'>
                         <Typography
                           style={{
                             fontSize: '.8rem'
@@ -297,9 +317,10 @@ const Qoutations = () => {
                             // WebkitLineClamp: 2
                           }}
                         >
-                          {product.name}
+                          {quotation.reference}
                         </Typography>
                       </StyledTableCell>
+
                       <StyledTableCell align='left'>
                         <Typography
                           style={{
@@ -309,7 +330,7 @@ const Qoutations = () => {
                             textOverflow: 'ellipsis'
                           }}
                         >
-                          {product.code}
+                          {quotation.customer}
                         </Typography>
                       </StyledTableCell>
                       <StyledTableCell align='left'>
@@ -325,37 +346,43 @@ const Qoutations = () => {
                             // WebkitLineClamp: 2
                           }}
                         >
-                          {product.brand}
+                          {quotation.warehouse}
                         </Typography>
                       </StyledTableCell>
-                      <StyledTableCell align='right'>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ alignSelf: 'flex-start' }}>₱&nbsp;</span>
-                          <span style={{ alignSelf: 'flex-end' }}>
-                            {product.price.toLocaleString(undefined, {
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 2
-                            })}
-                          </span>
-                        </div>
-                      </StyledTableCell>
-                      <StyledTableCell align='center'>
+                      <StyledTableCell align='left'>
                         <Typography
                           style={{
-                            fontSize: '0.8rem'
-                            // lineHeight: 1,
-                            // // maxHeight: '2.4rem',
-                            // overflow: 'hidden',
-                            // textOverflow: 'ellipsis',
-                            // display: '-webkit-box',
-                            // WebkitBoxOrient: 'vertical'
+                            fontSize: '0.8rem',
+                            lineHeight: 1,
+                            // maxHeight: '2.4rem',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            display: '-webkit-box',
+                            WebkitBoxOrient: 'vertical'
                             // WebkitLineClamp: 2
                           }}
                         >
-                          {product.unit}
+                          {quotation.status}
                         </Typography>
                       </StyledTableCell>
-                      <StyledTableCell align='center'>{product.quantity}</StyledTableCell>
+                      <StyledTableCell align='center'>
+                        <div
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            gap: '0.5rem'
+                          }}
+                        >
+                          <span style={{ alignSelf: 'flex-start' }}>₱&nbsp;</span>
+                          <span style={{ alignSelf: 'flex-end' }}>
+                            {parseFloat(quotation.grand_total)
+                              .toFixed(2)
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                          </span>
+                        </div>
+                      </StyledTableCell>
+
                       <StyledTableCell align='center'>
                         <Typography
                           style={{
@@ -365,7 +392,7 @@ const Qoutations = () => {
                             textOverflow: 'ellipsis'
                           }}
                         >
-                          {product.created_on}
+                          {quotation.created_on}
                         </Typography>
                       </StyledTableCell>
                       <StyledTableCell align='center'>Crud</StyledTableCell>
@@ -377,7 +404,7 @@ const Qoutations = () => {
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component='div'
-            count={products.length}
+            count={quotations.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -389,7 +416,7 @@ const Qoutations = () => {
   )
 }
 
-export default Qoutations
+export default Quotations
 
-// to run json 
+// to run json
 // npx json-server --watch data/db.json --port 8000
