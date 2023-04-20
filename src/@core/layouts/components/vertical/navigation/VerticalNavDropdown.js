@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 // ** MUI Imports
 import Chip from '@mui/material/Chip'
@@ -59,14 +59,21 @@ const VerticalNavDropdown = ({ item, navVisible, toggleNavVisibility }) => {
   // ** Hooks
   const router = useRouter()
   const IconTag = item.icon
+  const [res, setRes] = useState(false)
 
-  const isNavLinkActive = path => {
-    if (router.pathname === path || handleURLQueries(router, path)) {
-      return true
-    } else {
-      return false
+  const isNavLinkActive = item => {
+    let isActive = false
+    for (let i = 0; i < item.path.length; i++) {
+      const path = item.path[i]
+      if (router.pathname === path.href || handleURLQueries(router, path.href)) {
+        isActive = true
+        break
+      }
     }
+    return isActive
   }
+
+
   const [isClicked, setIsClicked] = useState(false)
 
   return (
@@ -151,13 +158,14 @@ const VerticalNavDropdown = ({ item, navVisible, toggleNavVisibility }) => {
               disabled={item.disabled || false}
               sx={{ mt: 1.5, px: '0 !important' }}
             >
-              <Link passHref href={item.path === undefined ? '/' : `${item.path}`}>
+              {console.log(item.path[0].href)}
+              <Link passHref href={item.path[0].href === undefined ? '/' : `${item.path[0].href}`}>
                 <MenuNavLink
                   component={'a'}
-                  className={isNavLinkActive(item.path) ? 'active' : ''}
+                  className={isNavLinkActive(item) ? 'active' : ''}
                   {...(item.openInNewTab ? { target: '_blank' } : null)}
                   onClick={e => {
-                    if (item.path === undefined) {
+                    if (item.path[0].href === undefined) {
                       e.preventDefault()
                       e.stopPropagation()
                     }

@@ -26,15 +26,15 @@ const navigation = () => {
       items: [
         {
           title: 'Products',
-          path: '/products'
+          path: [{ href: '/products' }, { href: '/products/create' }]
         },
         {
           title: 'Product Categories',
-          path: '/products/product-categories'
+          path: [{ href: '/products/product-categories' }]
         },
         {
           title: 'Brands',
-          path: '/products/brands'
+          path: [{ href: '/products/brands' }]
         }
       ]
     },
@@ -103,11 +103,7 @@ const navigation = () => {
       items: [
         {
           title: 'Form Layout 1',
-          path: '/form-layouts'
-        },
-        {
-          title: 'Form Layout 2',
-          path: '/form-layout-2'
+          path: [{ href: '/form-layouts' }]
         }
       ]
     }

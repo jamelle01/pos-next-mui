@@ -21,6 +21,8 @@ import TextField from '@mui/material/TextField'
 import Magnify from 'mdi-material-ui/Magnify'
 import Button from '@mui/material/Button'
 
+// next import
+import { useRouter } from 'next/router'
 import Image from 'next/image'
 
 // ** Demo Components Imports
@@ -67,6 +69,8 @@ const Products = () => {
   const [sortBy, setSortBy] = useState(null)
   const [sortOrder, setSortOrder] = useState('asc')
   const [search, setSearch] = useState('')
+
+  const router = useRouter()
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
@@ -171,7 +175,7 @@ const Products = () => {
             variant='contained'
             style={{ textTransform: 'none' }}
           >
-            <CSVLink data={products} filename='products.csv' style={{ textDecoration: 'none' , color: 'white'}}>
+            <CSVLink data={products} filename='products.csv' style={{ textDecoration: 'none', color: 'white' }}>
               Export Products
             </CSVLink>
           </Button>
@@ -205,6 +209,7 @@ const Products = () => {
             disableElevation
             style={{ textTransform: 'none' }}
             variant='contained'
+            onClick={() => router.push('/products/create')}
           >
             Create Product
           </Button>

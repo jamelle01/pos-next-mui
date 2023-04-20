@@ -72,7 +72,7 @@ const AppBarContent = props => {
           <Button>POS</Button>
         </Link>
 
-        <ScreenButton/>
+        <ScreenButton />
 
         <ModeToggler settings={settings} saveSettings={saveSettings} />
         <NotificationDropdown />

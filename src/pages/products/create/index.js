@@ -21,7 +21,23 @@ import TextField from '@mui/material/TextField'
 import Magnify from 'mdi-material-ui/Magnify'
 import Button from '@mui/material/Button'
 
-import Image from 'next/image'
+import Divider from '@mui/material/Divider'
+import CardContent from '@mui/material/CardContent'
+import CardActions from '@mui/material/CardActions'
+import FormControl from '@mui/material/FormControl'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import InputAdornment from '@mui/material/InputAdornment'
+import Select from '@mui/material/Select'
+import InputLabel from '@mui/material/InputLabel'
+import IconButton from '@mui/material/IconButton'
+import MenuItem from '@mui/material/MenuItem'
+
+//icons import
+import EyeOutline from 'mdi-material-ui/EyeOutline'
+import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
+
+// ** Third Party Imports
+import DatePicker from 'react-datepicker'
 
 // ** Demo Components Imports
 import TableBasic from 'src/views/tables/TableBasic'
@@ -35,7 +51,15 @@ import { CSVLink } from 'react-csv'
 
 //react import
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, forwardRef } from 'react'
+
+// next import
+import { useRouter } from 'next/router'
+import Image from 'next/image'
+
+const CustomInput = forwardRef((props, ref) => {
+  return <TextField fullWidth {...props} inputRef={ref} label='Birth Date' autoComplete='off' />
+})
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -68,6 +92,8 @@ const Create = () => {
   const [sortOrder, setSortOrder] = useState('asc')
   const [search, setSearch] = useState('')
 
+  const router = useRouter()
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
   }
@@ -90,6 +116,48 @@ const Create = () => {
     fetchData()
   }, [url])
 
+  // ** States
+  const [language, setLanguage] = useState([])
+  const [date, setDate] = useState(null)
+
+  const [values, setValues] = useState({
+    password: '',
+    password2: '',
+    showPassword: false,
+    showPassword2: false
+  })
+
+  // Handle Password
+  const handlePasswordChange = prop => event => {
+    setValues({ ...values, [prop]: event.target.value })
+  }
+
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword })
+  }
+
+  const handleMouseDownPassword = event => {
+    event.preventDefault()
+  }
+
+  // Handle Confirm Password
+  const handleConfirmChange = prop => event => {
+    setValues({ ...values, [prop]: event.target.value })
+  }
+
+  const handleClickShowConfirmPassword = () => {
+    setValues({ ...values, showPassword2: !values.showPassword2 })
+  }
+
+  const handleMouseDownConfirmPassword = event => {
+    event.preventDefault()
+  }
+
+  // Handle Select
+  const handleSelectChange = event => {
+    setLanguage(event.target.value)
+  }
+
   const handleSort = property => {
     const isAscending = sortOrder === 'asc'
     const order = isAscending ? 'desc' : 'asc'
@@ -106,12 +174,11 @@ const Create = () => {
 
   return (
     <Grid container spacing={2}>
-
-      <Grid item xs={11}>
-        <Typography variant='h5'>Create Product</Typography>
+      <Grid item xs={10}>
+        {/* <Typography variant='h5'>Create Product</Typography> */}
       </Grid>
 
-      <Grid item xs={1}>
+      <Grid item xs={2}>
         <Card sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Button
             sx={{ height: '100%', whiteSpace: 'nowrap' }}
@@ -119,6 +186,7 @@ const Create = () => {
             fullWidth
             disableElevation
             style={{ textTransform: 'none' }}
+            onClick={() => router.push('/products')}
             variant='contained'
           >
             Back
@@ -128,165 +196,121 @@ const Create = () => {
 
       <Grid item xs={12}>
         <Card>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 700 }} size='small' aria-label='a dense table'>
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell align='left'>Product</StyledTableCell>
-                  <StyledTableCell align='left'>
-                    <TableSortLabel
-                      fullwidth
-                      active={sortBy === 'name'}
-                      direction={sortOrder}
-                      onClick={() => handleSort('name')}
-                    >
-                      Name
-                    </TableSortLabel>
-                  </StyledTableCell>
-                  <StyledTableCell align='left'>Code</StyledTableCell>
-                  <StyledTableCell align='left'>
-                    <TableSortLabel
-                      fullwidth
-                      active={sortBy === 'brand'}
-                      direction={sortOrder}
-                      onClick={() => handleSort('brand')}
-                    >
-                      Brand
-                    </TableSortLabel>
-                  </StyledTableCell>
-                  <StyledTableCell align='center'>
-                    <TableSortLabel
-                      fullwidth
-                      active={sortBy === 'price'}
-                      direction={sortOrder}
-                      onClick={() => handleSort('price')}
-                    >
-                      Price
-                    </TableSortLabel>
-                  </StyledTableCell>
-                  <StyledTableCell align='center'>Product Unit</StyledTableCell>
-                  <StyledTableCell align='center'>
-                    <TableSortLabel
-                      fullwidth
-                      active={sortBy === 'quantity'}
-                      direction={sortOrder}
-                      onClick={() => handleSort('quantity')}
-                    >
-                      In Stock
-                    </TableSortLabel>
-                  </StyledTableCell>
-                  <StyledTableCell align='center'>Created On</StyledTableCell>
-                  <StyledTableCell align='center'>Action</StyledTableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {products
-                  .filter(product => product.name.toLowerCase().includes(search.toLowerCase()))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map(product => (
-                    <StyledTableRow key={product.name}>
-                      <StyledTableCell align='left'>
-                        <Image src='/images/no-image.png' alt='image' width={30} height={30} draggable={false} />
-                      </StyledTableCell>
-                      <StyledTableCell component='th' scope='product'>
-                        <Typography
-                          style={{
-                            fontSize: '.8rem'
-                            // lineHeight: 1,
-                            // // maxHeight: '2.4rem',
-                            // overflow: 'hidden',
-                            // textOverflow: 'ellipsis',
-                            // display: '-webkit-box',
-                            // WebkitBoxOrient: 'vertical'
-                            // WebkitLineClamp: 2
-                          }}
-                        >
-                          {product.name}
-                        </Typography>
-                      </StyledTableCell>
-                      <StyledTableCell align='left'>
-                        <Typography
-                          style={{
-                            fontSize: '0.8rem',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis'
-                          }}
-                        >
-                          {product.code}
-                        </Typography>
-                      </StyledTableCell>
-                      <StyledTableCell align='left'>
-                        <Typography
-                          style={{
-                            fontSize: '0.8rem',
-                            lineHeight: 1,
-                            // maxHeight: '2.4rem',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            display: '-webkit-box',
-                            WebkitBoxOrient: 'vertical'
-                            // WebkitLineClamp: 2
-                          }}
-                        >
-                          {product.brand}
-                        </Typography>
-                      </StyledTableCell>
-                      <StyledTableCell align='right'>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                          <span style={{ alignSelf: 'flex-start' }}>₱&nbsp;</span>
-                          <span style={{ alignSelf: 'flex-end' }}>
-                            {product.price.toLocaleString(undefined, {
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 2
-                            })}
-                          </span>
-                        </div>
-                      </StyledTableCell>
-                      <StyledTableCell align='center'>
-                        <Typography
-                          style={{
-                            fontSize: '0.8rem'
-                            // lineHeight: 1,
-                            // // maxHeight: '2.4rem',
-                            // overflow: 'hidden',
-                            // textOverflow: 'ellipsis',
-                            // display: '-webkit-box',
-                            // WebkitBoxOrient: 'vertical'
-                            // WebkitLineClamp: 2
-                          }}
-                        >
-                          {product.unit}
-                        </Typography>
-                      </StyledTableCell>
-                      <StyledTableCell align='center'>{product.quantity}</StyledTableCell>
-                      <StyledTableCell align='center'>
-                        <Typography
-                          style={{
-                            fontSize: '0.8rem',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis'
-                          }}
-                        >
-                          {product.created_on}
-                        </Typography>
-                      </StyledTableCell>
-                      <StyledTableCell align='center'>Crud</StyledTableCell>
-                    </StyledTableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component='div'
-            count={products.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
+          <CardHeader title='Create Product' titleTypographyProps={{ variant: 'h6' }} />
+          <Divider sx={{ margin: 0 }} />
+          <form onSubmit={e => e.preventDefault()}>
+            <CardContent>
+              <Grid container spacing={5}>
+                <Grid item xs={8}>
+                  <Grid container spacing={5}>
+                    <Grid item xs={6}>
+                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                      fullWidth
+                        id='standard-multiline-static'
+                        label='Multiline'
+                        multiline
+                        rows={4}
+                        defaultValue='Default Value'
+                        variant='standard'
+                      />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <Divider sx={{ margin: 0 }} />
+                      <CardActions sx={{ justifyContent: 'flex-end' }}>
+                        <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained'>
+                          Save
+                        </Button>
+                        <Button size='large' color='secondary' variant='outlined'>
+                          Cancel
+                        </Button>
+                      </CardActions>
+                    </Grid>
+                  </Grid>
+                </Grid>
+
+                {/* // image and add stock section */}
+
+                <Grid item xs={4}>
+                  <Grid container spacing={5}>
+                    <Grid item xs={12}>
+                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <Typography variant='h6' align='center'>
+                        Add Stocks
+                      </Typography>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                    </Grid>
+                  </Grid>
+                </Grid>
+
+                {/* <Grid item xs={12}>
+                  <Divider sx={{ marginBottom: 0 }} />
+                </Grid> */}
+                {/* <Grid item xs={12}>
+                  <Typography variant='body2' sx={{ fontWeight: 600 }}>
+                    2. Personal Info
+                  </Typography>
+                </Grid> */}
+              </Grid>
+            </CardContent>
+          </form>
         </Card>
       </Grid>
     </Grid>
