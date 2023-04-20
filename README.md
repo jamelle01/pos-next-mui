@@ -28,5 +28,5 @@ To install and run the application locally, follow these steps:
 
 ## Developers
 
-- (@jamelle01)
-- (@ryookkk) 
+- @jamelle01
+- @ryookkk
