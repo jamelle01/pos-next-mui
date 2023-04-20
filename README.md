@@ -1,26 +1,40 @@
-# pos-next-mui
-Point of Sale (POS) System
-This project is a Point of Sale (POS) system built with Next.js and Material-UI. The goal of this project is to create a simple, easy-to-use POS system for small businesses.
+# POS System with Next.js and Material UI
 
-Getting Started
-To get started with this project, follow these steps:
+This is a point of sale (POS) system built with Next.js and Material UI. The system allows users to create and manage orders, view sales reports, and manage inventory.
 
-Clone the repository to your local machine.
-Install the necessary dependencies by running npm install.
-Start the development server by running npm run dev.
-Features
-This POS system includes the following features:
+## Installation
 
-Product management (add, edit, and delete products).
-Order management (add and view orders).
-Export orders as a CSV file.
-Technologies Used
-This project was built using the following technologies:
+To install and run the application locally, follow these steps:
 
-Next.js
-Material-UI
-Credits
-This project was created using a template from ThemeSelection in a professional way. The original template can be found here.
+1. Clone the repository: `git clone https://github.com/your-username/pos-system.git`
+2. Navigate to the project directory: `cd pos-system`
+3. Install dependencies: `npm install`
+4. Run the application: `npm run dev`
+5. Open your web browser and navigate to [http://localhost:3000](http://localhost:3000)
 
-License
-This project is licensed under the MIT License.
+## Features
+
+- Create and manage orders
+- View sales reports
+- Manage inventory
+
+## Technologies Used
+
+- Next.js
+- Material UI
+- <sub>ThemeSelection</sub> template
+
+## Contributing
+
+Contributions are welcome! To contribute to this project, follow these steps:
+
+1. Fork the repository
+2. Create a new branch: `git checkout -b feature/your-feature`
+3. Make your changes and commit them: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin feature/your-feature`
+5. Create a new pull request
+
+## Developers
+
+- Jeramelle Tatad (@jamelle01)
+- Jane Smith (@janesmith)
