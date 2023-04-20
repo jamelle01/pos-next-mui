@@ -32,10 +32,11 @@ import InputLabel from '@mui/material/InputLabel'
 import IconButton from '@mui/material/IconButton'
 import MenuItem from '@mui/material/MenuItem'
 
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
-import React from 'react';
+// import Camera from '@mui/material/Camera';
+import Camera from 'mdi-material-ui/Camera'
+import Stack from '@mui/material/Stack'
+import Box from '@mui/material/Box'
+import React from 'react'
 
 //icons import
 import EyeOutline from 'mdi-material-ui/EyeOutline'
@@ -62,26 +63,18 @@ import { useState, useEffect, forwardRef } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
+const ITEM_HEIGHT = 48
+const ITEM_PADDING_TOP = 8
 const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
+      width: 250
+    }
+  }
+}
 
-const names = [
-  'Conductors',
-  'Semiconductors',
-  'Isolators',
-  'Magnetic materials',
-
-];
-
-
+const names = ['Conductors', 'Semiconductors', 'Isolators', 'Magnetic materials']
 
 const CustomInput = forwardRef((props, ref) => {
   return <TextField fullWidth {...props} inputRef={ref} label='Birth Date' autoComplete='off' />
@@ -197,18 +190,17 @@ const Create = () => {
       return valueA < valueB ? -direction : valueA > valueB ? direction : 0
     })
   }
-  const [personName, setPersonName] = useState([]);
+  const [personName, setPersonName] = useState([])
 
-  const handleChange = (event) => {
+  const handleChange = event => {
     const {
-      target: { value },
-    } = event;
+      target: { value }
+    } = event
     setPersonName(
       // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
-  };
-  
+      typeof value === 'string' ? value.split(',') : value
+    )
+  }
 
   return (
     <Grid container spacing={2}>
@@ -249,72 +241,63 @@ const Create = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <FormControl sx={{ m: 1, width: 370 }}>
-                      <InputLabel id="demo-multiple-name-label">Product Category</InputLabel>
+                        <InputLabel id='demo-multiple-name-label'>Product Category</InputLabel>
                         <Select
-                          labelId="demo-multiple-name-label"
-                          id="demo-multiple-name"
+                          labelId='demo-multiple-name-label'
+                          id='demo-multiple-name'
                           multiple
                           value={personName}
                           onChange={handleChange}
-                          input={<OutlinedInput label="Product Category" />}
+                          input={<OutlinedInput label='Product Category' />}
                           MenuProps={MenuProps}
                         >
-                          {names.map((name) => (
-                            <MenuItem
-                              key={name}
-                              value={name}
-                            >
+                          {names.map(name => (
+                            <MenuItem key={name} value={name}>
                               {name}
                             </MenuItem>
                           ))}
                         </Select>
-                        </FormControl>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={6}>
-                    <FormControl sx={{ m: 1, width: 370 }}>
-                      <InputLabel id="demo-multiple-name-label">Brand</InputLabel>
+                      <FormControl sx={{ m: 1, width: 370 }}>
+                        <InputLabel id='demo-multiple-name-label'>Brand</InputLabel>
                         <Select
-                          labelId="demo-multiple-name-label"
-                          id="demo-multiple-name"
+                          labelId='demo-multiple-name-label'
+                          id='demo-multiple-name'
                           multiple
                           value={personName}
                           onChange={handleChange}
-                          input={<OutlinedInput label="Brand" />}
+                          input={<OutlinedInput label='Brand' />}
                           MenuProps={MenuProps}
                         >
-                          {names.map((name) => (
-                            <MenuItem
-                              key={name}
-                              value={name}
-                            >
+                          {names.map(name => (
+                            <MenuItem key={name} value={name}>
                               {name}
                             </MenuItem>
                           ))}
                         </Select>
-                        </FormControl>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={6}>
-                    <FormControl sx={{ m: 1, width: 370 }}>
-                      <InputLabel id="demo-multiple-name-label">Barcode Symbology</InputLabel>
+                      <FormControl sx={{ m: 1, width: 370 }}>
+                        <InputLabel id='demo-multiple-name-label'>Barcode Symbology</InputLabel>
                         <Select
-                          labelId="demo-multiple-name-label"
-                          id="demo-multiple-name"
+                          labelId='demo-multiple-name-label'
+                          id='demo-multiple-name'
                           multiple
                           value={personName}
                           onChange={handleChange}
-                          input={<OutlinedInput label="Barcode Symbology" />}
+                          input={<OutlinedInput label='Barcode Symbology' />}
                           MenuProps={MenuProps}
                         >
-                          {names.map((name) => (
-                            <MenuItem
-                              key={name}
-                              value={name}
-                            >
+                          {names.map(name => (
+                            <MenuItem key={name} value={name}>
                               {name}
                             </MenuItem>
                           ))}
                         </Select>
-                        </FormControl>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={6}>
                       <TextField fullWidth label='Product Cost' placeholder='Enter Product Cost' />
@@ -323,83 +306,74 @@ const Create = () => {
                       <TextField fullWidth label='Product price' placeholder='Enter Product Price' />
                     </Grid>
                     <Grid item xs={6}>
-                    <FormControl sx={{ m: 1, width: 370 }}>
-                      <InputLabel id="demo-multiple-name-label">Product Unit</InputLabel>
+                      <FormControl sx={{ m: 1, width: 370 }}>
+                        <InputLabel id='demo-multiple-name-label'>Product Unit</InputLabel>
                         <Select
-                          labelId="demo-multiple-name-label"
-                          id="demo-multiple-name"
+                          labelId='demo-multiple-name-label'
+                          id='demo-multiple-name'
                           multiple
                           value={personName}
                           onChange={handleChange}
-                          input={<OutlinedInput label="Product Unit" />}
+                          input={<OutlinedInput label='Product Unit' />}
                           MenuProps={MenuProps}
                         >
-                          {names.map((name) => (
-                            <MenuItem
-                              key={name}
-                              value={name}
-                            >
+                          {names.map(name => (
+                            <MenuItem key={name} value={name}>
                               {name}
                             </MenuItem>
                           ))}
                         </Select>
-                        </FormControl>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={6}>
-                    <FormControl sx={{ m: 1, width: 370 }}>
-                      <InputLabel id="demo-multiple-name-label">Sales Unit</InputLabel>
+                      <FormControl sx={{ m: 1, width: 370 }}>
+                        <InputLabel id='demo-multiple-name-label'>Sales Unit</InputLabel>
                         <Select
-                          labelId="demo-multiple-name-label"
-                          id="demo-multiple-name"
+                          labelId='demo-multiple-name-label'
+                          id='demo-multiple-name'
                           multiple
                           value={personName}
                           onChange={handleChange}
-                          input={<OutlinedInput label="Sales Unit" />}
+                          input={<OutlinedInput label='Sales Unit' />}
                           MenuProps={MenuProps}
                         >
-                          {names.map((name) => (
-                            <MenuItem
-                              key={name}
-                              value={name}
-                            >
+                          {names.map(name => (
+                            <MenuItem key={name} value={name}>
                               {name}
                             </MenuItem>
                           ))}
                         </Select>
-                        </FormControl>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={6}>
-                    <FormControl sx={{ m: 1, width: 370 }}>
-                      <InputLabel id="demo-multiple-name-label">Purchase Unit</InputLabel>
+                      <FormControl sx={{ m: 1, width: 370 }}>
+                        <InputLabel id='demo-multiple-name-label'>Purchase Unit</InputLabel>
                         <Select
-                          labelId="demo-multiple-name-label"
-                          id="demo-multiple-name"
+                          labelId='demo-multiple-name-label'
+                          id='demo-multiple-name'
                           multiple
                           value={personName}
                           onChange={handleChange}
-                          input={<OutlinedInput label="Barcode Symbology" />}
+                          input={<OutlinedInput label='Barcode Symbology' />}
                           MenuProps={MenuProps}
                         >
-                          {names.map((name) => (
-                            <MenuItem
-                              key={name}
-                              value={name}
-                            >
+                          {names.map(name => (
+                            <MenuItem key={name} value={name}>
                               {name}
                             </MenuItem>
                           ))}
                         </Select>
-                        </FormControl>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
-                          id="outlined-number"
-                          label="Number"
-                          type="number"
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                        />
+                        id='outlined-number'
+                        label='Number'
+                        type='number'
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                      />
                     </Grid>
                     <Grid item xs={6}>
                       <TextField fullWidth label='First Name' placeholder='Leonard' />
@@ -412,7 +386,7 @@ const Create = () => {
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
-                      fullWidth
+                        fullWidth
                         id='standard-multiline-static'
                         label='Multiline'
                         multiline
@@ -441,13 +415,13 @@ const Create = () => {
                 <Grid item xs={4}>
                   <Grid container spacing={5}>
                     <Grid item xs={12}>
-                    <Button variant="contained" component="label">
+                      <Button variant='contained' component='label'>
                         Upload
-                        <input hidden accept="image/*" multiple type="file" />
+                        <input hidden accept='image/*' multiple type='file' />
                       </Button>
-                      <IconButton color="primary" aria-label="upload picture" component="label">
-                        <input hidden accept="image/*" type="file" />
-                        <PhotoCamera />
+                      <IconButton color='primary' aria-label='upload picture' component='label'>
+                        <input hidden accept='image/*' type='file' />
+                        <Camera />
                       </IconButton>
                     </Grid>
 
