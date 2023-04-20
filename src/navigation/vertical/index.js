@@ -41,7 +41,7 @@ const navigation = () => {
     {
       title: 'Quotations',
       icon: BasketOutline,
-      path: '/quotations'
+      path: '/qoutations'
     },
     {
       title: 'Account Settings',

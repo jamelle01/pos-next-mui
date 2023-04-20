@@ -251,7 +251,7 @@ const Quotations = () => {
             fullWidth
             disableElevation
             style={{ textTransform: 'none' }}
-            onClick={() => router.push('/quotation')}
+            onClick={() => router.push('/qoutations/create')}
             variant='contained'
           >
             Create quotation
