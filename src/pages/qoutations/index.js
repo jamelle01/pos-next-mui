@@ -21,6 +21,11 @@ import TextField from '@mui/material/TextField'
 import Magnify from 'mdi-material-ui/Magnify'
 import Button from '@mui/material/Button'
 
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+
 import Image from 'next/image'
 
 // ** Demo Components Imports
@@ -78,10 +83,17 @@ const Quotations = () => {
   const [sortOrder, setSortOrder] = useState('asc')
   const [search, setSearch] = useState('')
 
-  const [age, setAge] = React.useState('')
+  const [statusFilter, setStatusFilter] = useState('All')
+  const [dateFilter, setDateFilter] = useState()
 
-  const handleChange = event => {
-    setAge(event.target.value)
+
+
+  const handleChangeDateFilter = event => {
+    setDateFilter(event.target.value)
+  }
+  
+  const handleChangeStatus = event => {
+    setStatusFilter(event.target.value)
   }
 
   const handleChangePage = (event, newPage) => {
@@ -178,37 +190,54 @@ const Quotations = () => {
       </Grid> */}
 
       <Grid item xs={2}>
-        <Card sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Button
+        {/* <Card sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}> */}
+        {/* <Button
             sx={{ height: '100%', whiteSpace: 'nowrap' }}
             align='center'
             fullWidth
             disableElevation
             variant='contained'
             style={{ textTransform: 'none' }}
+          > */}
+        <FormControl sx={{ padding: 0.5 }} size='small' fullWidth>
+          <InputLabel id='demo-simple-select-label'>Filter by Status</InputLabel>
+          <Select
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
+            value={statusFilter}
+            label='Filter by Status'
+            onChange={handleChangeStatus}
           >
-            <CSVLink data={quotations} filename='quotations.csv' style={{ textDecoration: 'none', color: 'white' }}>
-               Status Filter
-            </CSVLink>
-          </Button>
-        </Card>
+            <MenuItem value={'All'}>All</MenuItem>
+            <MenuItem value={'Received'}>Received</MenuItem>
+            <MenuItem value={'Pending'}>Pending</MenuItem>
+            <MenuItem value={'Ordered'}>Ordered</MenuItem>
+          </Select>
+        </FormControl>
+        {/* </Button> */}
+        {/* </Card> */}
       </Grid>
 
       {/* full screen button */}
 
       <Grid item xs={2}>
-        <Card sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Button
-            sx={{ height: '100%', whiteSpace: 'nowrap' }}
-            align='center'
-            fullWidth
-            disableElevation
-            style={{ textTransform: 'none' }}
-            variant='contained'
+        <FormControl sx={{ padding: 0.5 }} size='small' fullWidth>
+          <InputLabel id='demo-simple-select-label'>Filter by Status</InputLabel>
+          <Select
+            labelId='demo-simple-select-label'
+            id='demo-simple-select'
+            value={dateFilter}
+            label='Filter by Date'
+            onChange={handleChangeDateFilter}
           >
-            Import quotation
-          </Button>
-        </Card>
+            <MenuItem value={null}>none</MenuItem>
+            <MenuItem value={'Today'}>Today</MenuItem>
+            <MenuItem value={'This Week'}>This Week</MenuItem>
+            <MenuItem value={'Last Week'}>Last Week</MenuItem>
+            <MenuItem value={'This Month'}>This Month</MenuItem>
+            <MenuItem value={'Last Month'}>Last Month</MenuItem>
+          </Select>
+        </FormControl>
       </Grid>
       <Grid item xs={2}>
         <Card sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
