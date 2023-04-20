@@ -37,4 +37,4 @@ Contributions are welcome! To contribute to this project, follow these steps:
 ## Developers
 
 - @jamelle01
-- Jane Smith (@janesmith)
+- @ryookkk 
