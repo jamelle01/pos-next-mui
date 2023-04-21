@@ -303,7 +303,18 @@ const Create = () => {
                 <Grid item xs={4}>
                   <TextField fullWidth label='First Name' placeholder='Leonard' />
                 </Grid>
-                
+
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    id='standard-multiline-static'
+                    label='Multiline'
+                    multiline
+                    rows={4}
+                    defaultValue='Default Value'
+                    variant='standard'
+                  />
+                </Grid>
               </Grid>
             </CardContent>
           </form>
