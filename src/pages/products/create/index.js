@@ -234,22 +234,20 @@ const Create = () => {
                 <Grid item xs={8}>
                   <Grid container spacing={5}>
                     <Grid item xs={6}>
-                      <TextField fullWidth label='Name' placeholder='Enter First Name' />
+                      <TextField fullWidth label='Name' placeholder='Enter Product Name' />
                     </Grid>
                     <Grid item xs={6}>
-                      <TextField fullWidth label='Code' placeholder='Enter Code' />
+                      <TextField fullWidth label='Code' placeholder='Enter Product Code' />
                     </Grid>
                     <Grid item xs={6}>
-                      <FormControl sx={{ m: 1, width: 370 }}>
+                      <FormControl fullWidth>
                         <InputLabel id='demo-multiple-name-label'>Product Category</InputLabel>
                         <Select
                           labelId='demo-multiple-name-label'
                           id='demo-multiple-name'
-                          multiple
                           value={personName}
                           onChange={handleChange}
                           input={<OutlinedInput label='Product Category' />}
-                          MenuProps={MenuProps}
                         >
                           {names.map(name => (
                             <MenuItem key={name} value={name}>
@@ -259,8 +257,9 @@ const Create = () => {
                         </Select>
                       </FormControl>
                     </Grid>
+
                     <Grid item xs={6}>
-                      <FormControl sx={{ m: 1, width: 370 }}>
+                      <FormControl fullWidth>
                         <InputLabel id='demo-multiple-name-label'>Brand</InputLabel>
                         <Select
                           labelId='demo-multiple-name-label'
@@ -269,7 +268,6 @@ const Create = () => {
                           value={personName}
                           onChange={handleChange}
                           input={<OutlinedInput label='Brand' />}
-                          MenuProps={MenuProps}
                         >
                           {names.map(name => (
                             <MenuItem key={name} value={name}>
@@ -279,8 +277,9 @@ const Create = () => {
                         </Select>
                       </FormControl>
                     </Grid>
+
                     <Grid item xs={6}>
-                      <FormControl sx={{ m: 1, width: 370 }}>
+                      <FormControl fullWidth>
                         <InputLabel id='demo-multiple-name-label'>Barcode Symbology</InputLabel>
                         <Select
                           labelId='demo-multiple-name-label'
@@ -289,7 +288,6 @@ const Create = () => {
                           value={personName}
                           onChange={handleChange}
                           input={<OutlinedInput label='Barcode Symbology' />}
-                          MenuProps={MenuProps}
                         >
                           {names.map(name => (
                             <MenuItem key={name} value={name}>
@@ -306,7 +304,7 @@ const Create = () => {
                       <TextField fullWidth label='Product price' placeholder='Enter Product Price' />
                     </Grid>
                     <Grid item xs={6}>
-                      <FormControl sx={{ m: 1, width: 370 }}>
+                      <FormControl fullWidth>
                         <InputLabel id='demo-multiple-name-label'>Product Unit</InputLabel>
                         <Select
                           labelId='demo-multiple-name-label'
@@ -315,7 +313,6 @@ const Create = () => {
                           value={personName}
                           onChange={handleChange}
                           input={<OutlinedInput label='Product Unit' />}
-                          MenuProps={MenuProps}
                         >
                           {names.map(name => (
                             <MenuItem key={name} value={name}>
@@ -326,7 +323,7 @@ const Create = () => {
                       </FormControl>
                     </Grid>
                     <Grid item xs={6}>
-                      <FormControl sx={{ m: 1, width: 370 }}>
+                      <FormControl fullWidth>
                         <InputLabel id='demo-multiple-name-label'>Sales Unit</InputLabel>
                         <Select
                           labelId='demo-multiple-name-label'
@@ -335,7 +332,6 @@ const Create = () => {
                           value={personName}
                           onChange={handleChange}
                           input={<OutlinedInput label='Sales Unit' />}
-                          MenuProps={MenuProps}
                         >
                           {names.map(name => (
                             <MenuItem key={name} value={name}>
@@ -346,7 +342,7 @@ const Create = () => {
                       </FormControl>
                     </Grid>
                     <Grid item xs={6}>
-                      <FormControl sx={{ m: 1, width: 370 }}>
+                      <FormControl fullWidth>
                         <InputLabel id='demo-multiple-name-label'>Purchase Unit</InputLabel>
                         <Select
                           labelId='demo-multiple-name-label'
@@ -355,7 +351,6 @@ const Create = () => {
                           value={personName}
                           onChange={handleChange}
                           input={<OutlinedInput label='Barcode Symbology' />}
-                          MenuProps={MenuProps}
                         >
                           {names.map(name => (
                             <MenuItem key={name} value={name}>
@@ -366,33 +361,18 @@ const Create = () => {
                       </FormControl>
                     </Grid>
                     <Grid item xs={6}>
-                      <TextField
-                        id='outlined-number'
-                        label='Number'
-                        type='number'
-                        InputLabelProps={{
-                          shrink: true
-                        }}
-                      />
+                      <TextField fullWidth type='number' label='Stock Alert' placeholder='Enter Stock Alert' />
                     </Grid>
-                    <Grid item xs={6}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
+
                     <Grid item xs={12}>
                       <TextField
                         fullWidth
                         id='standard-multiline-static'
-                        label='Multiline'
+                        label='Notes'
+                        placeholder='Enter Notes'
                         multiline
                         rows={4}
-                        defaultValue='Default Value'
-                        variant='standard'
+                        // variant='standard'
                       />
                     </Grid>
 
@@ -415,14 +395,11 @@ const Create = () => {
                 <Grid item xs={4}>
                   <Grid container spacing={5}>
                     <Grid item xs={12}>
-                      <Button variant='contained' component='label'>
-                        Upload
+                      <Button fullWidth variant='contained' component='label'>
+                        Upload Image
+                        <Camera />
                         <input hidden accept='image/*' multiple type='file' />
                       </Button>
-                      <IconButton color='primary' aria-label='upload picture' component='label'>
-                        <input hidden accept='image/*' type='file' />
-                        <Camera />
-                      </IconButton>
                     </Grid>
 
                     <Grid item xs={12}>
@@ -432,16 +409,69 @@ const Create = () => {
                     </Grid>
 
                     <Grid item xs={12}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                      <FormControl fullWidth>
+                        <InputLabel id='demo-multiple-name-label'>Warehouse</InputLabel>
+                        <Select
+                          labelId='demo-multiple-name-label'
+                          id='demo-multiple-name'
+                          multiple
+                          value={personName}
+                          onChange={handleChange}
+                          input={<OutlinedInput label='Warehouse' />}
+                        >
+                          {names.map(name => (
+                            <MenuItem key={name} value={name}>
+                              {name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                      <FormControl fullWidth>
+                        <InputLabel id='demo-multiple-name-label'>Supplier</InputLabel>
+                        <Select
+                          labelId='demo-multiple-name-label'
+                          id='demo-multiple-name'
+                          multiple
+                          value={personName}
+                          onChange={handleChange}
+                          input={<OutlinedInput label='Supplier' />}
+                        >
+                          {names.map(name => (
+                            <MenuItem key={name} value={name}>
+                              {name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                      <TextField
+                        fullWidth
+                        type='number'
+                        label='Add Product Quantity'
+                        placeholder='Add Product Quantity'
+                      />
                     </Grid>
                     <Grid item xs={12}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
+                      <FormControl fullWidth>
+                        <InputLabel id='demo-multiple-name-label'>Status</InputLabel>
+                        <Select
+                          labelId='demo-multiple-name-label'
+                          id='demo-multiple-name'
+                          multiple
+                          value={personName}
+                          onChange={handleChange}
+                          input={<OutlinedInput label='Status' />}
+                        >
+                          {names.map(name => (
+                            <MenuItem key={name} value={name}>
+                              {name}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
                     </Grid>
                   </Grid>
                 </Grid>
