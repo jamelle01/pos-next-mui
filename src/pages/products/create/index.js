@@ -254,7 +254,7 @@ const Create = () => {
   const [cost, setSelectedCost] = useState()
   const [price, setSelectedPrice] = useState()
   const [selectedUnit, setSelectedUnit] = useState()
-  const [stockAlert]
+  // const [stockAlert]
 
   return (
     <Grid container spacing={2}>
