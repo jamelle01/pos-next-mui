@@ -84,6 +84,36 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const url = 'http://localhost:8000/products'
 
+// for table hardcoded
+const TAX_RATE = 0.07
+
+const ccyFormat = num => {
+  return `${num.toFixed(2)}`
+}
+
+const priceRow = (qty, unit) => {
+  return qty * unit
+}
+
+const createRow = (desc, qty, unit) => {
+  const price = priceRow(qty, unit)
+
+  return { desc, qty, unit, price }
+}
+
+const subtotal = items => {
+  return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0)
+}
+
+const rows = [
+  createRow('Paperclips (Box)', 100, 1.15),
+  createRow('Paper (Case)', 10, 45.99),
+  createRow('Waste Basket', 2, 17.99)
+]
+const invoiceSubtotal = subtotal(rows)
+const invoiceTaxes = TAX_RATE * invoiceSubtotal
+const invoiceTotal = invoiceTaxes + invoiceSubtotal
+
 const Create = () => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
@@ -196,118 +226,84 @@ const Create = () => {
 
       <Grid item xs={12}>
         <Card>
-          <CardHeader title='Create Product' titleTypographyProps={{ variant: 'h6' }} />
+          <CardHeader title='Create Quotation' titleTypographyProps={{ variant: 'h6' }} />
           <Divider sx={{ margin: 0 }} />
           <form onSubmit={e => e.preventDefault()}>
             <CardContent>
               <Grid container spacing={5}>
-                <Grid item xs={8}>
-                  <Grid container spacing={5}>
-                    <Grid item xs={6}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                    <Grid item xs={6}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        fullWidth
-                        id='standard-multiline-static'
-                        label='Multiline'
-                        multiline
-                        rows={4}
-                        defaultValue='Default Value'
-                        variant='standard'
-                      />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <Divider sx={{ margin: 0 }} />
-                      <CardActions sx={{ justifyContent: 'flex-end' }}>
-                        <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained'>
-                          Save
-                        </Button>
-                        <Button size='large' color='secondary' variant='outlined'>
-                          Cancel
-                        </Button>
-                      </CardActions>
-                    </Grid>
-                  </Grid>
+                <Grid item xs={4}>
+                  <TextField fullWidth label='First Name' placeholder='Leonard' />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField fullWidth label='First Name' placeholder='Leonard' />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField fullWidth label='First Name' placeholder='Leonard' />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField fullWidth label='First Name' placeholder='Leonard' />
                 </Grid>
 
-                {/* // image and add stock section */}
+                {/* table */}
+
+                <Grid item xs={12}>
+                  <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 700 }} aria-label='spanning table'>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align='center' colSpan={3}>
+                            Details
+                          </TableCell>
+                          <TableCell align='right'>Price</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Desc</TableCell>
+                          <TableCell align='right'>Qty.</TableCell>
+                          <TableCell align='right'>Unit</TableCell>
+                          <TableCell align='right'>Sum</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {rows.map(row => (
+                          <TableRow key={row.desc}>
+                            <TableCell>{row.desc}</TableCell>
+                            <TableCell align='right'>{row.qty}</TableCell>
+                            <TableCell align='right'>{row.unit}</TableCell>
+                            <TableCell align='right'>{ccyFormat(row.price)}</TableCell>
+                          </TableRow>
+                        ))}
+                        <TableRow>
+                          <TableCell rowSpan={3} />
+                          <TableCell colSpan={2}>Subtotal</TableCell>
+                          <TableCell align='right'>{ccyFormat(invoiceSubtotal)}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Tax</TableCell>
+                          <TableCell align='right'>{`${(TAX_RATE * 100).toFixed(0)} %`}</TableCell>
+                          <TableCell align='right'>{ccyFormat(invoiceTaxes)}</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell colSpan={2}>Total</TableCell>
+                          <TableCell align='right'>{ccyFormat(invoiceTotal)}</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Grid>
 
                 <Grid item xs={4}>
-                  <Grid container spacing={5}>
-                    <Grid item xs={12}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <Typography variant='h6' align='center'>
-                        Add Stocks
-                      </Typography>
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField fullWidth label='First Name' placeholder='Leonard' />
-                    </Grid>
-                  </Grid>
+                  <TextField fullWidth label='First Name' placeholder='Leonard' />
                 </Grid>
-
-                {/* <Grid item xs={12}>
-                  <Divider sx={{ marginBottom: 0 }} />
-                </Grid> */}
-                {/* <Grid item xs={12}>
-                  <Typography variant='body2' sx={{ fontWeight: 600 }}>
-                    2. Personal Info
-                  </Typography>
-                </Grid> */}
+                <Grid item xs={4}>
+                  <TextField fullWidth label='First Name' placeholder='Leonard' />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField fullWidth label='First Name' placeholder='Leonard' />
+                </Grid>
+                <Grid item xs={4}>
+                  <TextField fullWidth label='First Name' placeholder='Leonard' />
+                </Grid>
+                
               </Grid>
             </CardContent>
           </form>
