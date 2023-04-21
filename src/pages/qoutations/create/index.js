@@ -315,6 +315,20 @@ const Create = () => {
                     variant='standard'
                   />
                 </Grid>
+
+                {/* submit btn  */}
+
+                <Grid item xs={12}>
+                  <Divider sx={{ margin: 0 }} />
+                  <CardActions sx={{ justifyContent: 'flex-end' }}>
+                    <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained'>
+                      Save
+                    </Button>
+                    <Button size='large' color='secondary' variant='outlined'>
+                      Cancel
+                    </Button>
+                  </CardActions>
+                </Grid>
               </Grid>
             </CardContent>
           </form>
