@@ -102,6 +102,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }))
 
 const url = 'http://localhost:8000/products'
+const categoriesUrl = 'http://localhost:8000/categories'
+const brandsUrl = 'http://localhost:8000/brands'
 
 const Create = () => {
   const [page, setPage] = useState(0)
@@ -202,6 +204,58 @@ const Create = () => {
     )
   }
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(categoriesUrl)
+        const data = await response.json()
+        setCategories(data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+  }, [categoriesUrl])
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(brandsUrl)
+        const data = await response.json()
+        setBrands(data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+  }, [brandsUrl])
+
+  const handleKeyPress = event => {
+    const keyCode = event.keyCode || event.which
+    const keyValue = String.fromCharCode(keyCode)
+
+    if (!/^\d+$/.test(keyValue)) {
+      event.preventDefault()
+    }
+  }
+
+  const barcodeSymbol = [{ name: 'code 39' }, { name: 'code 128' }]
+  const productUnit = [{ name: 'kg' }, { name: 'pieces' }]
+  const shelves = [{ name: '1' }, { name: '2' }]
+
+  const [categories, setCategories] = useState([])
+  const [brands, setBrands] = useState([])
+
+  const [name, setName] = useState()
+  const [code, setCode] = useState()
+  const [selectedCategory, setSelectedCategory] = useState()
+  const [selectedBrand, setSelectedBrand] = useState()
+  const [selectedBarcodeSymbol, setSelectedBarcodeSymbol] = useState()
+  const [cost, setSelectedCost] = useState()
+  const [price, setSelectedPrice] = useState()
+  const [selectedUnit, setSelectedUnit] = useState()
+  const [stockAlert]
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={10}>
@@ -234,10 +288,20 @@ const Create = () => {
                 <Grid item xs={8}>
                   <Grid container spacing={5}>
                     <Grid item xs={6}>
-                      <TextField fullWidth label='Name' placeholder='Enter Product Name' />
+                      <TextField
+                        fullWidth
+                        onChange={e => setName(e.target.value)}
+                        label='Name'
+                        placeholder='Enter Product Name'
+                      />
                     </Grid>
                     <Grid item xs={6}>
-                      <TextField fullWidth label='Code' placeholder='Enter Product Code' />
+                      <TextField
+                        fullWidth
+                        label='Code'
+                        onChange={e => setCode(e.target.value)}
+                        placeholder='Enter Product Code'
+                      />
                     </Grid>
                     <Grid item xs={6}>
                       <FormControl fullWidth>
@@ -245,13 +309,13 @@ const Create = () => {
                         <Select
                           labelId='demo-multiple-name-label'
                           id='demo-multiple-name'
-                          value={personName}
-                          onChange={handleChange}
+                          value={selectedCategory}
+                          onChange={e => setSelectedCategory(e.target.value)}
                           input={<OutlinedInput label='Product Category' />}
                         >
-                          {names.map(name => (
-                            <MenuItem key={name} value={name}>
-                              {name}
+                          {categories.map(category => (
+                            <MenuItem key={category.name} value={category.name}>
+                              {category.name}
                             </MenuItem>
                           ))}
                         </Select>
@@ -264,14 +328,13 @@ const Create = () => {
                         <Select
                           labelId='demo-multiple-name-label'
                           id='demo-multiple-name'
-                          multiple
-                          value={personName}
-                          onChange={handleChange}
+                          value={selectedBrand}
+                          onChange={e => setSelectedBrand(e.target.value)}
                           input={<OutlinedInput label='Brand' />}
                         >
-                          {names.map(name => (
-                            <MenuItem key={name} value={name}>
-                              {name}
+                          {brands.map(brand => (
+                            <MenuItem key={brand.name} value={brand.name}>
+                              {brand.name}
                             </MenuItem>
                           ))}
                         </Select>
@@ -284,24 +347,44 @@ const Create = () => {
                         <Select
                           labelId='demo-multiple-name-label'
                           id='demo-multiple-name'
-                          multiple
-                          value={personName}
-                          onChange={handleChange}
-                          input={<OutlinedInput label='Barcode Symbology' />}
+                          // multiple
+                          value={selectedBarcodeSymbol}
+                          onChange={e => setSelectedBarcodeSymbol(e.target.value)}
+                          input={<OutlinedInput label='Choose Barcode Symbology' />}
                         >
-                          {names.map(name => (
-                            <MenuItem key={name} value={name}>
-                              {name}
+                          {barcodeSymbol.map(code => (
+                            <MenuItem key={code.name} value={code.name}>
+                              {code.name}
                             </MenuItem>
                           ))}
                         </Select>
                       </FormControl>
                     </Grid>
                     <Grid item xs={6}>
-                      <TextField fullWidth label='Product Cost' placeholder='Enter Product Cost' />
+                      <TextField
+                        fullWidth
+                        label='Product Cost'
+                        placeholder='Enter Product Cost'
+                        onChange={e => setSelectedCost(e.target.value)}
+                        inputProps={{
+                          onKeyPress: handleKeyPress,
+                          inputMode: 'numeric',
+                          pattern: '[0-9]*'
+                        }}
+                      />
                     </Grid>
                     <Grid item xs={6}>
-                      <TextField fullWidth label='Product price' placeholder='Enter Product Price' />
+                      <TextField
+                        fullWidth
+                        label='Product Price'
+                        placeholder='Enter Product Cost'
+                        onChange={e => setSelectedPrice(e.target.value)}
+                        inputProps={{
+                          onKeyPress: handleKeyPress,
+                          inputMode: 'numeric',
+                          pattern: '[0-9]*'
+                        }}
+                      />
                     </Grid>
                     <Grid item xs={6}>
                       <FormControl fullWidth>
@@ -311,18 +394,18 @@ const Create = () => {
                           id='demo-multiple-name'
                           multiple
                           value={personName}
-                          onChange={handleChange}
+                          onChange={e => setSelectedUnit(e.target.value)}
                           input={<OutlinedInput label='Product Unit' />}
                         >
-                          {names.map(name => (
-                            <MenuItem key={name} value={name}>
-                              {name}
+                          {productUnit.map(unit => (
+                            <MenuItem key={unit.name} value={unit.name}>
+                              {unit.name}
                             </MenuItem>
                           ))}
                         </Select>
                       </FormControl>
                     </Grid>
-                    <Grid item xs={6}>
+                    {/* <Grid item xs={6}>
                       <FormControl fullWidth>
                         <InputLabel id='demo-multiple-name-label'>Sales Unit</InputLabel>
                         <Select
@@ -340,8 +423,8 @@ const Create = () => {
                           ))}
                         </Select>
                       </FormControl>
-                    </Grid>
-                    <Grid item xs={6}>
+                    </Grid> */}
+                    {/* <Grid item xs={6}>
                       <FormControl fullWidth>
                         <InputLabel id='demo-multiple-name-label'>Purchase Unit</InputLabel>
                         <Select
@@ -359,9 +442,15 @@ const Create = () => {
                           ))}
                         </Select>
                       </FormControl>
-                    </Grid>
+                    </Grid> */}
                     <Grid item xs={6}>
-                      <TextField fullWidth type='number' label='Stock Alert' placeholder='Enter Stock Alert' />
+                      <TextField
+                        onchange={e => setStockAler(e.target.value)}
+                        fullWidth
+                        type='number'
+                        label='Stock Alert'
+                        placeholder='Enter Stock Alert'
+                      />
                     </Grid>
 
                     <Grid item xs={12}>
@@ -370,6 +459,7 @@ const Create = () => {
                         id='standard-multiline-static'
                         label='Notes'
                         placeholder='Enter Notes'
+                        onchange={e => setNotes(e.target.value)}
                         multiline
                         rows={4}
                         // variant='standard'
@@ -410,7 +500,7 @@ const Create = () => {
 
                     <Grid item xs={12}>
                       <FormControl fullWidth>
-                        <InputLabel id='demo-multiple-name-label'>Warehouse</InputLabel>
+                        <InputLabel id='demo-multiple-name-label'>Shelve</InputLabel>
                         <Select
                           labelId='demo-multiple-name-label'
                           id='demo-multiple-name'
@@ -419,9 +509,9 @@ const Create = () => {
                           onChange={handleChange}
                           input={<OutlinedInput label='Warehouse' />}
                         >
-                          {names.map(name => (
-                            <MenuItem key={name} value={name}>
-                              {name}
+                          {shelves.map(shelve => (
+                            <MenuItem key={shelve.name} value={shelve.name}>
+                              {shelve.name}
                             </MenuItem>
                           ))}
                         </Select>
