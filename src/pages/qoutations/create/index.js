@@ -216,7 +216,7 @@ const Create = () => {
             fullWidth
             disableElevation
             style={{ textTransform: 'none' }}
-            onClick={() => router.push('/products')}
+            onClick={() => router.push('/qoutations')}
             variant='contained'
           >
             Back
