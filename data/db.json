@@ -359,35 +359,138 @@
       "code": "HS-RT-144",
       "created_on": "2023-04-19",
       "unit": "pieces"
+    },
+    {
+      "name": "new1",
+      "code": "123",
+      "category": "Building Materials",
+      "brand": "Milwaukee",
+      "barcodeSymbol": "code 128",
+      "cost": 5,
+      "price": 10,
+      "notes": "new product",
+      "shelve": 2,
+      "supplier": "supplier 1",
+      "quantity": "20",
+      "subtotal": 200,
+      "created_on": "2023-04-23",
+      "id": 31
+    },
+    {
+      "name": "new1",
+      "code": "123",
+      "category": "Building Materials",
+      "brand": "Milwaukee",
+      "barcodeSymbol": "code 128",
+      "cost": 5,
+      "price": 10,
+      "unit": "kg",
+      "notes": "new product",
+      "shelve": 2,
+      "supplier": "supplier 1",
+      "quantity": "20",
+      "subtotal": 200,
+      "created_on": "2023-04-23",
+      "id": 32
+    },
+    {
+      "name": "new1",
+      "code": "",
+      "category": "Building Materials",
+      "brand": "Milwaukee",
+      "barcodeSymbol": "code 128",
+      "cost": 5,
+      "price": 10,
+      "unit": "kg",
+      "notes": "new product",
+      "shelve": 2,
+      "supplier": "supplier 1",
+      "quantity": "20",
+      "subtotal": 200,
+      "created_on": "2023-04-23",
+      "id": 33
+    },
+    {
+      "cost": null,
+      "price": null,
+      "shelve": null,
+      "subtotal": null,
+      "created_on": "2023-04-23",
+      "id": 34
+    },
+    {
+      "cost": null,
+      "price": null,
+      "shelve": null,
+      "subtotal": null,
+      "created_on": "2023-04-23",
+      "id": 35
     }
   ],
-
   "categories": [
-    { "name": "All Categories" },
-    { "name": "Hand Tools" },
-    { "name": "Power Tools" },
-    { "name": "Building Materials" },
-    { "name": "Fasteners" },
-    { "name": "Plumbing Supplies" },
-    { "name": "Electrical Supplies" },
-    { "name": "Paint and Painting Supplies" },
-    { "name": "Garden and Outdoor Supplies" },
-    { "name": "Safety Equipment" }
+    {
+      "name": "All Categories"
+    },
+    {
+      "name": "Hand Tools"
+    },
+    {
+      "name": "Power Tools"
+    },
+    {
+      "name": "Building Materials"
+    },
+    {
+      "name": "Fasteners"
+    },
+    {
+      "name": "Plumbing Supplies"
+    },
+    {
+      "name": "Electrical Supplies"
+    },
+    {
+      "name": "Paint and Painting Supplies"
+    },
+    {
+      "name": "Garden and Outdoor Supplies"
+    },
+    {
+      "name": "Safety Equipment"
+    }
   ],
-
   "brands": [
-    { "name": "All Brands" },
-    { "name": "Bosch" },
-    { "name": "DeWalt" },
-    { "name": "Makita" },
-    { "name": "Milwaukee" },
-    { "name": "Hitachi" },
-    { "name": "Black and Decker" },
-    { "name": "Craftsman" },
-    { "name": "Stanley" },
-    { "name": "Ryobi" }
+    {
+      "name": "All Brands"
+    },
+    {
+      "name": "Bosch"
+    },
+    {
+      "name": "DeWalt"
+    },
+    {
+      "name": "Makita"
+    },
+    {
+      "name": "Milwaukee"
+    },
+    {
+      "name": "Hitachi"
+    },
+    {
+      "name": "Black and Decker"
+    },
+    {
+      "name": "Craftsman"
+    },
+    {
+      "name": "Stanley"
+    },
+    {
+      "name": "Ryobi"
+    }
   ],
-
   "quotations": [
     {
       "id": 1,
@@ -516,8 +619,36 @@
       "created_on": "11:42 AM 2023-04-18"
     }
   ],
-  "barcodeSymbols": [{ "name": "code 39" }, { "name": "code 128" }],
-  "productUnits": [{ "name": "kg" }, { "name": "pieces" }],
-  "shelves": [{ "name": "1" }, { "name": "2" }],
-  "suppliers": [{ "name": "supplier 1" }, { "name": "supplier 2" }]
+  "barcodeSymbols": [
+    {
+      "name": "code 39"
+    },
+    {
+      "name": "code 128"
+    }
+  ],
+  "productUnits": [
+    {
+      "name": "kg"
+    },
+    {
+      "name": "pieces"
+    }
+  ],
+  "shelves": [
+    {
+      "name": "1"
+    },
+    {
+      "name": "2"
+    }
+  ],
+  "suppliers": [
+    {
+      "name": "supplier 1"
+    },
+    {
+      "name": "supplier 2"
+    }
+  ]
 }

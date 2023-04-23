@@ -278,12 +278,64 @@ const Create = () => {
   const [notes, setNotes] = useState()
   const [selectedShelve, setSelectedShelve] = useState()
   const [selectedSupplier, setSelectedSupplier] = useState()
+  const [quantity, setQuantity] = useState()
 
   const [imageFile, setImageFile] = useState(null)
 
   const handleImageChange = event => {
     const file = event.target.files[0]
     setImageFile(file)
+  }
+
+  function saveProduct(productData) {
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(productData)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok')
+        }
+        return response.json()
+      })
+      .then(data => {
+        console.log('Product saved successfully:', data)
+        // do something after the product is saved
+      })
+      .catch(error => {
+        console.error('There was an error saving the product:', error)
+      })
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault()
+    const currentDate = new Date().toISOString().substr(0, 10)
+    const sub = Number(price) * Number(quantity)
+    console.log(price, typeof price)
+    console.log(quantity)
+
+    const productData = {
+      name,
+      code,
+      category: selectedCategory,
+      brand: selectedBrand,
+      barcodeSymbol: selectedBarcodeSymbol,
+      cost: Number(cost),
+      price: Number(price),
+      unit: selectedUnit,
+      stockAlert,
+      notes,
+      shelve: Number(selectedShelve),
+      supplier: selectedSupplier,
+      quantity,
+      subtotal: sub,
+      created_on: currentDate
+    }
+
+    saveProduct(productData)
   }
 
   return (
@@ -312,7 +364,7 @@ const Create = () => {
         <Card>
           <CardHeader title='Create Product' titleTypographyProps={{ variant: 'h6' }} />
           <Divider sx={{ margin: 0 }} />
-          <form onSubmit={e => e.preventDefault()}>
+          <form onSubmit={e => handleSubmit(e)}>
             <CardContent>
               <Grid container spacing={5}>
                 <Grid item xs={8}>
@@ -327,6 +379,7 @@ const Create = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
+                        required
                         fullWidth
                         label='Code'
                         onChange={e => setCode(e.target.value)}
@@ -343,7 +396,7 @@ const Create = () => {
                           onChange={e => setSelectedCategory(e.target.value)}
                           input={<OutlinedInput label='Product Category' />}
                         >
-                          {categories.map(category => (
+                          {categories.slice(1).map(category => (
                             <MenuItem key={category.name} value={category.name}>
                               {category.name}
                             </MenuItem>
@@ -362,7 +415,7 @@ const Create = () => {
                           onChange={e => setSelectedBrand(e.target.value)}
                           input={<OutlinedInput label='Brand' />}
                         >
-                          {brands.map(brand => (
+                          {brands.slice(1).map(brand => (
                             <MenuItem key={brand.name} value={brand.name}>
                               {brand.name}
                             </MenuItem>
@@ -475,7 +528,8 @@ const Create = () => {
                     </Grid> */}
                     <Grid item xs={6}>
                       <TextField
-                        onchange={e => setStockAlert(e.target.value)}
+                        value={stockAlert}
+                        onChange={e => e.target.value}
                         fullWidth
                         type='number'
                         label='Stock Alert'
@@ -489,7 +543,7 @@ const Create = () => {
                         id='standard-multiline-static'
                         label='Notes'
                         placeholder='Enter Notes'
-                        onchange={e => setNotes(e.target.value)}
+                        onChange={e => setNotes(e.target.value)}
                         multiline
                         rows={4}
                         // variant='standard'
@@ -499,7 +553,13 @@ const Create = () => {
                     <Grid item xs={12}>
                       <Divider sx={{ margin: 0 }} />
                       <CardActions sx={{ justifyContent: 'flex-end' }}>
-                        <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained'>
+                        <Button
+                          onClick={e => handleSubmit(e)}
+                          size='large'
+                          type='submit'
+                          sx={{ mr: 2 }}
+                          variant='contained'
+                        >
                           Save
                         </Button>
                         <Button size='large' color='secondary' variant='outlined'>
@@ -605,10 +665,12 @@ const Create = () => {
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
+                        value={quantity}
                         fullWidth
                         type='number'
                         label='Add Product Quantity'
                         placeholder='Add Product Quantity'
+                        onChange={e => setQuantity(e.target.value)}
                       />
                     </Grid>
                     {/* <Grid item xs={12}>
