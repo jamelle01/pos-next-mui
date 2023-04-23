@@ -138,9 +138,9 @@ const Quotations = () => {
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <Typography variant='h5'>
-          <Link href='https://mui.com/components/tables/' target='_blank'>
-            quotations
-          </Link>
+          {/* <Link href='https://mui.com/components/tables/' target='_blank'> */}
+          quotations
+          {/* </Link> */}
         </Typography>
         {/* <Typography variant='body2'>Tables display sets of data. They can be fully customized</Typography> */}
       </Grid>
@@ -251,7 +251,7 @@ const Quotations = () => {
             fullWidth
             disableElevation
             style={{ textTransform: 'none' }}
-            onClick={() => router.push('/qoutations/create')}
+            onClick={() => router.push('/quotations/create')}
             variant='contained'
           >
             Create quotation
