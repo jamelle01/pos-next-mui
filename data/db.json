@@ -384,5 +384,9 @@
     { "name": "Craftsman" },
     { "name": "Stanley" },
     { "name": "Ryobi" }
-  ]
+  ],
+  "barcodeSymbols": [{ "name": "code 39" }, { "name": "code 128" }],
+  "productUnits": [{ "name": "kg" }, { "name": "pieces" }],
+  "shelves": [{ "name": "1" }, { "name": "2" }],
+  "suppliers": [{ "name": "supplier 1" }, { "name": "supplier 2" }]
 }

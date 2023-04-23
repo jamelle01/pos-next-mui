@@ -32,6 +32,8 @@ import InputLabel from '@mui/material/InputLabel'
 import IconButton from '@mui/material/IconButton'
 import MenuItem from '@mui/material/MenuItem'
 
+import Input from '@mui/material/Input'
+
 // import Camera from '@mui/material/Camera';
 import Camera from 'mdi-material-ui/Camera'
 import Stack from '@mui/material/Stack'
@@ -41,6 +43,7 @@ import React from 'react'
 //icons import
 import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
+import CloseCircle from 'mdi-material-ui/CloseCircle'
 
 // ** Third Party Imports
 import DatePicker from 'react-datepicker'
@@ -104,6 +107,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const url = 'http://localhost:8000/products'
 const categoriesUrl = 'http://localhost:8000/categories'
 const brandsUrl = 'http://localhost:8000/brands'
+const barcodeSymbolsUrl = 'http://localhost:8000/barcodeSymbols'
+const productUnitsUrl = 'http://localhost:8000/productUnits'
+const shelvesUrl = 'http://localhost:8000/shelves'
+const suppliersUrl = 'http://localhost:8000/suppliers'
 
 const Create = () => {
   const [page, setPage] = useState(0)
@@ -207,28 +214,40 @@ const Create = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(categoriesUrl)
-        const data = await response.json()
-        setCategories(data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    fetchData()
-  }, [categoriesUrl])
+        const [
+          categoriesResponse,
+          brandsResponse,
+          barcodeSymbolsResponse,
+          productUnitsResponse,
+          shelvesResponse,
+          suppliersResponse
+        ] = await Promise.all([
+          fetch(categoriesUrl),
+          fetch(brandsUrl),
+          fetch(barcodeSymbolsUrl),
+          fetch(productUnitsUrl),
+          fetch(shelvesUrl),
+          fetch(suppliersUrl)
+        ])
+        const categories = await categoriesResponse.json()
+        const brands = await brandsResponse.json()
+        const barcodeSymbols = await barcodeSymbolsResponse.json()
+        const productUnits = await productUnitsResponse.json()
+        const shelves = await shelvesResponse.json()
+        const suppliers = await suppliersResponse.json()
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch(brandsUrl)
-        const data = await response.json()
-        setBrands(data)
+        setCategories(categories)
+        setBrands(brands)
+        setBarcodeSymbols(barcodeSymbols)
+        setProductUnits(productUnits)
+        setShelves(shelves)
+        setSuppliers(suppliers)
       } catch (error) {
         console.error(error)
       }
     }
     fetchData()
-  }, [brandsUrl])
+  }, [categoriesUrl, brandsUrl, barcodeSymbolsUrl, productUnitsUrl, shelvesUrl, suppliersUrl])
 
   const handleKeyPress = event => {
     const keyCode = event.keyCode || event.which
@@ -239,9 +258,10 @@ const Create = () => {
     }
   }
 
-  const barcodeSymbol = [{ name: 'code 39' }, { name: 'code 128' }]
-  const productUnit = [{ name: 'kg' }, { name: 'pieces' }]
-  const shelves = [{ name: '1' }, { name: '2' }]
+  const [barcodeSymbols, setBarcodeSymbols] = useState([])
+  const [productUnits, setProductUnits] = useState([])
+  const [shelves, setShelves] = useState([])
+  const [suppliers, setSuppliers] = useState([])
 
   const [categories, setCategories] = useState([])
   const [brands, setBrands] = useState([])
@@ -254,7 +274,17 @@ const Create = () => {
   const [cost, setSelectedCost] = useState()
   const [price, setSelectedPrice] = useState()
   const [selectedUnit, setSelectedUnit] = useState()
-  // const [stockAlert]
+  const [stockAlert, setStockAlert] = useState()
+  const [notes, setNotes] = useState()
+  const [selectedShelve, setSelectedShelve] = useState()
+  const [selectedSupplier, setSelectedSupplier] = useState()
+
+  const [imageFile, setImageFile] = useState(null)
+
+  const handleImageChange = event => {
+    const file = event.target.files[0]
+    setImageFile(file)
+  }
 
   return (
     <Grid container spacing={2}>
@@ -352,7 +382,7 @@ const Create = () => {
                           onChange={e => setSelectedBarcodeSymbol(e.target.value)}
                           input={<OutlinedInput label='Choose Barcode Symbology' />}
                         >
-                          {barcodeSymbol.map(code => (
+                          {barcodeSymbols.map(code => (
                             <MenuItem key={code.name} value={code.name}>
                               {code.name}
                             </MenuItem>
@@ -377,7 +407,7 @@ const Create = () => {
                       <TextField
                         fullWidth
                         label='Product Price'
-                        placeholder='Enter Product Cost'
+                        placeholder='Enter Product Price'
                         onChange={e => setSelectedPrice(e.target.value)}
                         inputProps={{
                           onKeyPress: handleKeyPress,
@@ -392,12 +422,12 @@ const Create = () => {
                         <Select
                           labelId='demo-multiple-name-label'
                           id='demo-multiple-name'
-                          multiple
-                          value={personName}
+                          // multiple
+                          // value={selectedUnit}
                           onChange={e => setSelectedUnit(e.target.value)}
                           input={<OutlinedInput label='Product Unit' />}
                         >
-                          {productUnit.map(unit => (
+                          {productUnits.map(unit => (
                             <MenuItem key={unit.name} value={unit.name}>
                               {unit.name}
                             </MenuItem>
@@ -445,7 +475,7 @@ const Create = () => {
                     </Grid> */}
                     <Grid item xs={6}>
                       <TextField
-                        onchange={e => setStockAler(e.target.value)}
+                        onchange={e => setStockAlert(e.target.value)}
                         fullWidth
                         type='number'
                         label='Stock Alert'
@@ -485,11 +515,48 @@ const Create = () => {
                 <Grid item xs={4}>
                   <Grid container spacing={5}>
                     <Grid item xs={12}>
-                      <Button fullWidth variant='contained' component='label'>
+                      <FormControl fullWidth>
+                        <Button variant='contained' component='label'>
+                          Choose Image
+                          <input type='file' accept='.png,.jpg,.jpeg' hidden onChange={handleImageChange} />
+                        </Button>
+                        {imageFile && (
+                          <div
+                            style={{
+                              position: 'relative',
+                              display: 'flex',
+                              justifyContent: 'center',
+                              marginTop: '10px'
+                            }}
+                          >
+                            <IconButton
+                              style={{
+                                position: 'absolute',
+                                top: 0,
+                                right: 0,
+                                zIndex: 1,
+                                borderRadius: '50%'
+                              }}
+                              onClick={() => setImageFile(null)}
+                            >
+                              <CloseCircle />
+                            </IconButton>
+                            <img
+                              src={URL.createObjectURL(imageFile)}
+                              alt='Selected'
+                              width='150'
+                              height='auto'
+                              style={{ margin: '0 auto' }}
+                            />
+                          </div>
+                        )}
+                      </FormControl>
+
+                      {/* <Button fullWidth variant='contained' component='label'>
                         Upload Image
                         <Camera />
                         <input hidden accept='image/*' multiple type='file' />
-                      </Button>
+                      </Button> */}
                     </Grid>
 
                     <Grid item xs={12}>
@@ -504,10 +571,10 @@ const Create = () => {
                         <Select
                           labelId='demo-multiple-name-label'
                           id='demo-multiple-name'
-                          multiple
-                          value={personName}
-                          onChange={handleChange}
-                          input={<OutlinedInput label='Warehouse' />}
+                          // multiple
+                          value={selectedShelve}
+                          onChange={e => setSelectedShelve(e.target.value)}
+                          input={<OutlinedInput label='Shelve' />}
                         >
                           {shelves.map(shelve => (
                             <MenuItem key={shelve.name} value={shelve.name}>
@@ -523,14 +590,14 @@ const Create = () => {
                         <Select
                           labelId='demo-multiple-name-label'
                           id='demo-multiple-name'
-                          multiple
-                          value={personName}
-                          onChange={handleChange}
+                          // multiple
+                          value={selectedSupplier}
+                          onChange={e => setSelectedSupplier(e.target.value)}
                           input={<OutlinedInput label='Supplier' />}
                         >
-                          {names.map(name => (
-                            <MenuItem key={name} value={name}>
-                              {name}
+                          {suppliers.map(supplier => (
+                            <MenuItem key={supplier.name} value={supplier.name}>
+                              {supplier.name}
                             </MenuItem>
                           ))}
                         </Select>
@@ -544,7 +611,7 @@ const Create = () => {
                         placeholder='Add Product Quantity'
                       />
                     </Grid>
-                    <Grid item xs={12}>
+                    {/* <Grid item xs={12}>
                       <FormControl fullWidth>
                         <InputLabel id='demo-multiple-name-label'>Status</InputLabel>
                         <Select
@@ -562,7 +629,7 @@ const Create = () => {
                           ))}
                         </Select>
                       </FormControl>
-                    </Grid>
+                    </Grid> */}
                   </Grid>
                 </Grid>
 
