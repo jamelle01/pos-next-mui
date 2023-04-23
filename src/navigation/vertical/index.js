@@ -39,15 +39,16 @@ const navigation = () => {
       ]
     },
     {
+      title: 'Quotations',
+      icon: BasketOutline,
+      path: '/qoutations'
+    },
+    {
       title: 'Account Settings',
       icon: AccountCogOutline,
       path: '/account-settings'
     },
-    {
-      title: 'Qoutations',
-      icon: BasketOutline,
-      path: '/qoutations'
-    },
+
     {
       title: 'Towns',
       icon: Account,
