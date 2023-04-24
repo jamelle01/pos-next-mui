@@ -128,7 +128,10 @@ const Products = () => {
             fullWidth
             size='small'
             placeholder='Search'
-            onChange={e => setSearch(e.target.value)}
+            onChange={e => {
+              setSearch(e.target.value)
+              setPage(0)
+            }}
             InputProps={{
               startAdornment: (
                 <Magnify
@@ -276,7 +279,7 @@ const Products = () => {
                   .filter(product => product.name.toLowerCase().includes(search.toLowerCase()))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map(product => (
-                    <StyledTableRow key={product.name}>
+                    <StyledTableRow key={product.id}>
                       <StyledTableCell align='left'>
                         <Image src='/images/no-image.png' alt='image' width={30} height={30} draggable={false} />
                       </StyledTableCell>

@@ -32,6 +32,11 @@ import ProductTable from './ProductTable'
 
 import Image from 'next/image'
 import ScreenButton from 'src/layouts/components/vertical/ScreenButton'
+// import ThemeComponent from 'src/@core/theme/ThemeComponent'
+import { useTheme } from '@mui/material/styles'
+
+import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
+import { useSettings } from 'src/@core/hooks/useSettings'
 
 const data = [
   { id: 1, title: 'Title 1', description: 'Description 1' },
@@ -67,10 +72,13 @@ const data = [
 ]
 
 const ProductList = ({ handleProductClick, products, categories, brands }) => {
+  const { settings, saveSettings } = useSettings()
   console.log(products)
   const [categoryValue, setCategoryValue] = useState('All Categories')
   const [brandValue, setBrandValue] = useState('All Brands')
   const [search, setSearch] = useState('')
+
+  const theme = useTheme()
 
   // const categories = [
   //   { name: 'All Categories' },
@@ -114,7 +122,7 @@ const ProductList = ({ handleProductClick, products, categories, brands }) => {
       <Grid container spacing={2} mb={2}>
         {/* search  */}
 
-        <Grid item xs={8}>
+        <Grid item xs={7.5}>
           <Card sx={{ display: 'flex', padding: 2 }}>
             <TextField
               fullWidth
@@ -139,7 +147,7 @@ const ProductList = ({ handleProductClick, products, categories, brands }) => {
 
         {/* HOME button */}
 
-        <Grid item xs={2}>
+        <Grid item xs={1.5}>
           <Card sx={{ height: '100%' }}>
             <Link href='/'>
               <Button fullWidth sx={{ height: '100%' }}>
@@ -155,9 +163,14 @@ const ProductList = ({ handleProductClick, products, categories, brands }) => {
 
         {/* full screen button */}
 
-        <Grid item xs={2}>
-          <Card sx={{ height: '100%' }}>
+        <Grid item xs={1.5}>
+          <Card sx={{ height: '100%', display: 'flex', justifyContent: 'center' }}>
             <ScreenButton />
+          </Card>
+        </Grid>
+        <Grid item xs={1.5}>
+          <Card sx={{ height: '100%', display: 'flex', justifyContent: 'center' }}>
+            <ModeToggler settings={settings} saveSettings={saveSettings} />
           </Card>
         </Grid>
       </Grid>
@@ -224,14 +237,15 @@ const ProductList = ({ handleProductClick, products, categories, brands }) => {
                     title={item.name}
                     sx={{
                       boxSizing: 'border-box',
-                      background: '#FFFFFF',
+                      // background: '#FFFFFF',
                       // border: '1px solid #6FB1FF',
                       border: '1px solid #cce2ff',
                       borderRadius: '25px 0px',
                       height: '100%',
                       padding: '.5rem',
+                      backgroundColor: theme.palette.primary,
                       '&:hover': {
-                        backgroundColor: '#E3FCEF',
+                        filter: ' brightness(110%)',
                         cursor: 'pointer'
                       }
                     }}
@@ -266,7 +280,9 @@ const ProductList = ({ handleProductClick, products, categories, brands }) => {
                         margin: '.2em 0',
                         justifyContent: 'center',
                         alignItems: 'center',
+                        color: 'black',
                         backgroundColor: '#EAEAEA', // changed from '#F5F5F5'
+                        // backgroundColor: theme.palette.success,
                         borderRadius: '8px'
                       }}
                     >
@@ -277,10 +293,12 @@ const ProductList = ({ handleProductClick, products, categories, brands }) => {
                       variant='body1'
                       sx={{
                         fontSize: '0.7rem',
+                        color: 'black',
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
                         backgroundColor: '#6FB1FF',
+                        // backgroundColor: theme.palette.primary.dark,/
                         borderRadius: '8px'
                       }}
                     >

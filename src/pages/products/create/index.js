@@ -371,7 +371,9 @@ const Create = () => {
                   <Grid container spacing={5}>
                     <Grid item xs={6}>
                       <TextField
+                        required
                         fullWidth
+                        autoComplete='off'
                         onChange={e => setName(e.target.value)}
                         label='Name'
                         placeholder='Enter Product Name'
@@ -387,7 +389,7 @@ const Create = () => {
                       />
                     </Grid>
                     <Grid item xs={6}>
-                      <FormControl fullWidth>
+                      <FormControl required fullWidth>
                         <InputLabel id='demo-multiple-name-label'>Product Category</InputLabel>
                         <Select
                           labelId='demo-multiple-name-label'
@@ -406,7 +408,7 @@ const Create = () => {
                     </Grid>
 
                     <Grid item xs={6}>
-                      <FormControl fullWidth>
+                      <FormControl required fullWidth>
                         <InputLabel id='demo-multiple-name-label'>Brand</InputLabel>
                         <Select
                           labelId='demo-multiple-name-label'
@@ -425,7 +427,7 @@ const Create = () => {
                     </Grid>
 
                     <Grid item xs={6}>
-                      <FormControl fullWidth>
+                      <FormControl required fullWidth>
                         <InputLabel id='demo-multiple-name-label'>Barcode Symbology</InputLabel>
                         <Select
                           labelId='demo-multiple-name-label'
@@ -445,8 +447,10 @@ const Create = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
+                        required
                         fullWidth
                         label='Product Cost'
+                        autoComplete='off'
                         placeholder='Enter Product Cost'
                         onChange={e => setSelectedCost(e.target.value)}
                         inputProps={{
@@ -458,8 +462,10 @@ const Create = () => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
+                        required
                         fullWidth
                         label='Product Price'
+                        autoComplete='off'
                         placeholder='Enter Product Price'
                         onChange={e => setSelectedPrice(e.target.value)}
                         inputProps={{
@@ -470,7 +476,7 @@ const Create = () => {
                       />
                     </Grid>
                     <Grid item xs={6}>
-                      <FormControl fullWidth>
+                      <FormControl required fullWidth>
                         <InputLabel id='demo-multiple-name-label'>Product Unit</InputLabel>
                         <Select
                           labelId='demo-multiple-name-label'
@@ -528,6 +534,7 @@ const Create = () => {
                     </Grid> */}
                     <Grid item xs={6}>
                       <TextField
+                        required
                         value={stockAlert}
                         onChange={e => e.target.value}
                         fullWidth
@@ -539,6 +546,7 @@ const Create = () => {
 
                     <Grid item xs={12}>
                       <TextField
+                        // required
                         fullWidth
                         id='standard-multiline-static'
                         label='Notes'
@@ -554,7 +562,7 @@ const Create = () => {
                       <Divider sx={{ margin: 0 }} />
                       <CardActions sx={{ justifyContent: 'flex-end' }}>
                         <Button
-                          onClick={e => handleSubmit(e)}
+                          // onClick={e => handleSubmit(e)}
                           size='large'
                           type='submit'
                           sx={{ mr: 2 }}
@@ -562,7 +570,12 @@ const Create = () => {
                         >
                           Save
                         </Button>
-                        <Button size='large' color='secondary' variant='outlined'>
+                        <Button
+                          onClick={() => router.push('/products')}
+                          size='large'
+                          color='secondary'
+                          variant='outlined'
+                        >
                           Cancel
                         </Button>
                       </CardActions>
@@ -626,7 +639,7 @@ const Create = () => {
                     </Grid>
 
                     <Grid item xs={12}>
-                      <FormControl fullWidth>
+                      <FormControl required fullWidth>
                         <InputLabel id='demo-multiple-name-label'>Shelve</InputLabel>
                         <Select
                           labelId='demo-multiple-name-label'
@@ -645,7 +658,7 @@ const Create = () => {
                       </FormControl>
                     </Grid>
                     <Grid item xs={12}>
-                      <FormControl fullWidth>
+                      <FormControl required fullWidth>
                         <InputLabel id='demo-multiple-name-label'>Supplier</InputLabel>
                         <Select
                           labelId='demo-multiple-name-label'
@@ -665,6 +678,7 @@ const Create = () => {
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
+                        required
                         value={quantity}
                         fullWidth
                         type='number'

@@ -2,6 +2,7 @@ import Button from '@mui/material/Button'
 import Fullscreen from 'mdi-material-ui/Fullscreen'
 import FullscreenExit from 'mdi-material-ui/FullscreenExit'
 import { useState } from 'react'
+import { IconButton } from '@mui/material'
 
 const ScreenButton = () => {
   const [scrn, setScrn] = useState(typeof document !== 'undefined' && document.fullscreenElement)
