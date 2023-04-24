@@ -36,8 +36,10 @@ import TableStickyHeader from 'src/views/tables/TableStickyHeader'
 // third party import
 import { CSVLink } from 'react-csv'
 
-//react import
+// modal import
+import CreateCategory from './modal'
 
+//react import
 import { useState, useEffect } from 'react'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -62,14 +64,17 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }))
 
 const url = 'http://localhost:8000/products'
+const categoriesUrl = 'http://localhost:8000/categories'
 
 const ProductCategories = () => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [products, setProducts] = useState([])
+  const [categories, setCategories] = useState([])
   const [sortBy, setSortBy] = useState(null)
   const [sortOrder, setSortOrder] = useState('asc')
   const [search, setSearch] = useState('')
+  const [openCreate, setOpenCreate] = useState(false)
 
   const router = useRouter()
 
@@ -95,12 +100,25 @@ const ProductCategories = () => {
     fetchData()
   }, [url])
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(categoriesUrl)
+        const data = await response.json()
+        setCategories(data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+  }, [categoriesUrl])
+
   const handleSort = property => {
     const isAscending = sortOrder === 'asc'
     const order = isAscending ? 'desc' : 'asc'
     setSortBy(property)
     setSortOrder(order)
-    products.sort((a, b) => {
+    categories.sort((a, b) => {
       const valueA = a[property]
       const valueB = b[property]
       const direction = isAscending ? 1 : -1
@@ -109,13 +127,21 @@ const ProductCategories = () => {
     })
   }
 
+  const categoryCounts = categories.reduce((counts, category) => {
+    counts[category.category] = (counts[category.category] || 0) + 1
+    return counts
+  }, {})
+
+  console.log(categoryCounts)
+
   return (
     <Grid container spacing={2}>
+      <CreateCategory openCreate={openCreate} setOpenCreate={setOpenCreate}/>
       <Grid item xs={12}>
         <Typography variant='h5'>
-          <Link href='https://mui.com/components/tables/' target='_blank'>
-            Products
-          </Link>
+          {/* <Link href='https://mui.com/components/tables/' target='_blank'> */}
+          Products
+          {/* </Link> */}
         </Typography>
         {/* <Typography variant='body2'>Tables display sets of data. They can be fully customized</Typography> */}
       </Grid>
@@ -148,27 +174,6 @@ const ProductCategories = () => {
         </Card>
       </Grid>
 
-      {/* HOME button */}
-
-      {/* <Button size='large' type='submit' variant='contained' sx={{ width: '100%' }}>
-        Login
-      </Button> */}
-
-      {/* <Grid item xs={0.6}>
-        <Card sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Button
-            sx={{ height: '100%', whiteSpace: 'nowrap' }}
-            align='center'
-            fullWidth
-            disableElevation
-            style={{ textTransform: 'none' }}
-            variant='contained'
-          >
-            f
-          </Button>
-        </Card>
-      </Grid> */}
-
       <Grid item xs={3}>
         {/* <Card sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Button
@@ -197,7 +202,7 @@ const ProductCategories = () => {
             disableElevation
             style={{ textTransform: 'none' }}
             variant='contained'
-            onClick={() => router.push('/products/create')}
+            onClick={() => setOpenCreate(true)}
           >
             Create Product Category
           </Button>
@@ -219,15 +224,15 @@ const ProductCategories = () => {
                       direction={sortOrder}
                       onClick={() => handleSort('name')}
                     >
-                      Product Count
+                      Product Category
                     </TableSortLabel>
                   </StyledTableCell>
                   <StyledTableCell align='left'>
                     <TableSortLabel
                       fullwidth
-                      active={sortBy === 'name'}
+                      active={sortBy === 'count'}
                       direction={sortOrder}
-                      onClick={() => handleSort('name')}
+                      onClick={() => handleSort('count')}
                     >
                       Product Count
                     </TableSortLabel>
@@ -236,28 +241,24 @@ const ProductCategories = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {products
-                  .filter(product => product.name.toLowerCase().includes(search.toLowerCase()))
+                {categories
+                  .filter(
+                    category =>
+                      category.name.toLowerCase().includes(search.toLowerCase()) && category.name !== 'All Categories'
+                  )
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map(product => (
-                    <StyledTableRow key={product.id}>
+                  .map(category => (
+                    <StyledTableRow key={category.name}>
                       <StyledTableCell align='left' style={{ width: '70px' }}>
                         <Image src='/images/no-image.png' alt='image' width={30} height={30} draggable={false} />
                       </StyledTableCell>
-                      <StyledTableCell component='th' scope='product'>
+                      <StyledTableCell component='th' scope='category'>
                         <Typography
                           style={{
                             fontSize: '.8rem'
-                            // lineHeight: 1,
-                            // // maxHeight: '2.4rem',
-                            // overflow: 'hidden',
-                            // textOverflow: 'ellipsis',
-                            // display: '-webkit-box',
-                            // WebkitBoxOrient: 'vertical'
-                            // WebkitLineClamp: 2
                           }}
                         >
-                          product cat
+                          {category.name}
                         </Typography>
                       </StyledTableCell>
                       <StyledTableCell align='left'>
@@ -269,7 +270,7 @@ const ProductCategories = () => {
                             textOverflow: 'ellipsis'
                           }}
                         >
-                          count
+                          {category.count}
                         </Typography>
                       </StyledTableCell>
                       <StyledTableCell align='left'>
@@ -277,12 +278,10 @@ const ProductCategories = () => {
                           style={{
                             fontSize: '0.8rem',
                             lineHeight: 1,
-                            // maxHeight: '2.4rem',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
                             display: '-webkit-box',
                             WebkitBoxOrient: 'vertical'
-                            // WebkitLineClamp: 2
                           }}
                         >
                           action
@@ -296,7 +295,7 @@ const ProductCategories = () => {
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component='div'
-            count={products.length}
+            count={categories.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

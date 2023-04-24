@@ -363,66 +363,86 @@
   ],
   "categories": [
     {
-      "name": "All Categories"
+      "name": "All Categories",
+      "count": 0
     },
     {
-      "name": "Hand Tools"
+      "name": "Hand Tools",
+      "count": 2
     },
     {
-      "name": "Power Tools"
+      "name": "Power Tools",
+      "count": 2
     },
     {
-      "name": "Building Materials"
+      "name": "Building Materials",
+      "count": 1
     },
     {
-      "name": "Fasteners"
+      "name": "Fasteners",
+      "count": 1
     },
     {
-      "name": "Plumbing Supplies"
+      "name": "Plumbing Supplies",
+      "count": 1
     },
     {
-      "name": "Electrical Supplies"
+      "name": "Electrical Supplies",
+      "count": 1
     },
     {
-      "name": "Paint and Painting Supplies"
+      "name": "Paint and Painting Supplies",
+      "count": 1
     },
     {
-      "name": "Garden and Outdoor Supplies"
+      "name": "Garden and Outdoor Supplies",
+      "count": 1
     },
     {
-      "name": "Safety Equipment"
+      "name": "Safety Equipment",
+      "count": 1
     }
   ],
   "brands": [
     {
-      "name": "All Brands"
+      "name": "All Brands",
+      "count": 0
     },
     {
-      "name": "Bosch"
+      "name": "Bosch",
+      "count": 3
     },
     {
-      "name": "DeWalt"
+      "name": "DeWalt",
+      "count": 2
     },
     {
-      "name": "Makita"
+      "name": "Makita",
+      "count": 2
     },
     {
-      "name": "Milwaukee"
+      "name": "Milwaukee",
+      "count": 1
     },
     {
-      "name": "Hitachi"
+      "name": "Hitachi",
+      "count": 1
     },
     {
-      "name": "Black and Decker"
+      "name": "Black and Decker",
+      "count": 1
     },
     {
-      "name": "Craftsman"
+      "name": "Craftsman",
+      "count": 1
     },
     {
-      "name": "Stanley"
+      "name": "Stanley",
+      "count": 1
     },
     {
-      "name": "Ryobi"
+      "name": "Ryobi",
+      "count": 1
     }
   ],
   "quotations": [
