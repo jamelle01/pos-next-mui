@@ -14,6 +14,9 @@ import Card from '@mui/material/Card'
 import FormControl from '@mui/material/FormControl'
 import IconButton from '@mui/material/IconButton'
 
+//next imports
+import { useRouter } from 'next/router'
+
 //icon imports
 import CloseCircle from 'mdi-material-ui/CloseCircle'
 
@@ -22,14 +25,19 @@ const Transition = forwardRef(function Transition(props, ref) {
 })
 
 export default function CreateCategory({ openCreate, setOpenCreate }) {
+  const [imageFile, setImageFile] = useState(null)
+  const [productCategory, setProductCategory] = useState(null)
 
+  const router = useRouter()
 
-    const [imageFile, setImageFile] = useState(null)
+  const handleImageSelect = event => {
+    const file = event.target.files[0]
+    setImageFile(file)
+  }
 
-    const handleImageChange = event => {
-      const file = event.target.files[0]
-      setImageFile(file)
-    }
+  const handleSubmit = () => {
+    console.log('shife')
+  }
 
   return (
     <Dialog
@@ -40,20 +48,28 @@ export default function CreateCategory({ openCreate, setOpenCreate }) {
       aria-describedby='alert-dialog-slide-description'
     >
       <DialogTitle>{'Create Product Category  '}</DialogTitle>
-      <form>
+      <form onSubmit={handleSubmit}>
         <DialogContent>
           <DialogContentText id='alert-dialog-slide-description'>
             <Grid container spacing={5}>
               <Grid item xs={12}>
                 <Card sx={{ padding: 2 }}>
-                  <TextField fullWidth required autoComplete='off' label='Name' placeholder='Enter Product Name' />
+                  <TextField
+                    fullWidth
+                    required
+                    autoComplete='off'
+                    label='Name'
+                    placeholder='Enter Product Name'
+                    value={productCategory}
+                    onChange={e => setProductCategory(e.target.value)}
+                  />
                 </Card>
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
                   <Button variant='contained' component='label'>
-                    Choose Image
-                    <input type='file' accept='.png,.jpg,.jpeg' hidden onChange={handleImageChange} />
+                    {imageFile ? 'Change Image' : 'Choose Image'}
+                    <input type='file' accept='.png,.jpg,.jpeg' hidden onChange={handleImageSelect} />
                   </Button>
                   {imageFile && (
                     <div
@@ -94,11 +110,10 @@ export default function CreateCategory({ openCreate, setOpenCreate }) {
           <Button onClick={() => setOpenCreate(false)}>Cancel</Button>
           <Button
             color='info'
+            disabled={!productCategory}
             variant='contained'
             type='submit'
-            onClick={() => {
-              setOpenCreate(false)
-            }}
+            onClick={() => setOpenCreate(false)}
           >
             Save
           </Button>

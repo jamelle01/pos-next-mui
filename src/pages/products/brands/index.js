@@ -64,13 +64,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }))
 
 const url = 'http://localhost:8000/products'
-const categoriesUrl = 'http://localhost:8000/categories'
+const brandsUrl = 'http://localhost:8000/brands'
 
 const Brands = () => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
   const [products, setProducts] = useState([])
-  const [categories, setCategories] = useState([])
+  const [brands, setBrands] = useState([])
   const [sortBy, setSortBy] = useState(null)
   const [sortOrder, setSortOrder] = useState('asc')
   const [search, setSearch] = useState('')
@@ -103,22 +103,22 @@ const Brands = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(categoriesUrl)
+        const response = await fetch(brandsUrl)
         const data = await response.json()
-        setCategories(data)
+        setBrands(data)
       } catch (error) {
         console.error(error)
       }
     }
     fetchData()
-  }, [categoriesUrl])
+  }, [brandsUrl])
 
   const handleSort = property => {
     const isAscending = sortOrder === 'asc'
     const order = isAscending ? 'desc' : 'asc'
     setSortBy(property)
     setSortOrder(order)
-    categories.sort((a, b) => {
+    brands.sort((a, b) => {
       const valueA = a[property]
       const valueB = b[property]
       const direction = isAscending ? 1 : -1
@@ -127,8 +127,8 @@ const Brands = () => {
     })
   }
 
-  const categoryCounts = categories.reduce((counts, category) => {
-    counts[category.category] = (counts[category.category] || 0) + 1
+  const categoryCounts = brands.reduce((counts, brand) => {
+    counts[brand.brand] = (counts[brand.brand] || 0) + 1
     return counts
   }, {})
 
@@ -204,7 +204,7 @@ const Brands = () => {
             variant='contained'
             onClick={() => setOpenCreate(true)}
           >
-            Create Product Category
+            Create Brand
           </Button>
         </Card>
       </Grid>
@@ -224,7 +224,7 @@ const Brands = () => {
                       direction={sortOrder}
                       onClick={() => handleSort('name')}
                     >
-                      Product Category
+                      Brand Name
                     </TableSortLabel>
                   </StyledTableCell>
                   <StyledTableCell align='left'>
@@ -241,24 +241,23 @@ const Brands = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {categories
+                {brands
                   .filter(
-                    category =>
-                      category.name.toLowerCase().includes(search.toLowerCase()) && category.name !== 'All Categories'
+                    brand => brand.name.toLowerCase().includes(search.toLowerCase()) && brand.name !== 'All Brands'
                   )
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map(category => (
-                    <StyledTableRow key={category.name}>
+                  .map(brand => (
+                    <StyledTableRow key={brand.name}>
                       <StyledTableCell align='left' style={{ width: '70px' }}>
                         <Image src='/images/no-image.png' alt='image' width={30} height={30} draggable={false} />
                       </StyledTableCell>
-                      <StyledTableCell component='th' scope='category'>
+                      <StyledTableCell component='th' scope='brand'>
                         <Typography
                           style={{
                             fontSize: '.8rem'
                           }}
                         >
-                          {category.name}
+                          {brand.name}
                         </Typography>
                       </StyledTableCell>
                       <StyledTableCell align='left'>
@@ -270,7 +269,7 @@ const Brands = () => {
                             textOverflow: 'ellipsis'
                           }}
                         >
-                          {category.count}
+                          {brand.count}
                         </Typography>
                       </StyledTableCell>
                       <StyledTableCell align='left'>
@@ -295,7 +294,7 @@ const Brands = () => {
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component='div'
-            count={categories.length}
+            count={brands.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

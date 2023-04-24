@@ -24,8 +24,9 @@ const Transition = forwardRef(function Transition(props, ref) {
 export default function CreateCategory({ openCreate, setOpenCreate }) {
 
 
-    const [imageFile, setImageFile] = useState(null)
-
+  const [imageFile, setImageFile] = useState(null)
+  const [productBrand, setProductBrand] = useState(null)
+  
     const handleImageChange = event => {
       const file = event.target.files[0]
       setImageFile(file)
@@ -39,14 +40,14 @@ export default function CreateCategory({ openCreate, setOpenCreate }) {
       onClose={() => setOpenCreate(false)}
       aria-describedby='alert-dialog-slide-description'
     >
-      <DialogTitle>{'Create Product Category  '}</DialogTitle>
+      <DialogTitle>{'Create Brand  '}</DialogTitle>
       <form>
         <DialogContent>
           <DialogContentText id='alert-dialog-slide-description'>
             <Grid container spacing={5}>
               <Grid item xs={12}>
                 <Card sx={{ padding: 2 }}>
-                  <TextField fullWidth required autoComplete='off' label='Name' placeholder='Enter Product Name' />
+                  <TextField fullWidth required onChange={e => setProductBrand(e.target.value)} value={productBrand} autoComplete='off' label='Name' placeholder='Enter Product Name' />
                 </Card>
               </Grid>
               <Grid item xs={12}>
@@ -99,6 +100,7 @@ export default function CreateCategory({ openCreate, setOpenCreate }) {
             onClick={() => {
               setOpenCreate(false)
             }}
+            disabled={!productBrand}
           >
             Save
           </Button>
