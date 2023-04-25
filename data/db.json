@@ -363,86 +363,146 @@
   ],
   "categories": [
     {
+      "id": 1,
       "name": "All Categories",
       "count": 0
     },
     {
+      "id": 2,
       "name": "Hand Tools",
       "count": 2
     },
     {
+      "id": 3,
       "name": "Power Tools",
       "count": 2
     },
     {
+      "id": 4,
       "name": "Building Materials",
       "count": 1
     },
     {
+      "id": 5,
       "name": "Fasteners",
       "count": 1
     },
     {
+      "id": 6,
       "name": "Plumbing Supplies",
       "count": 1
     },
     {
+      "id": 7,
       "name": "Electrical Supplies",
       "count": 1
     },
     {
+      "id": 8,
       "name": "Paint and Painting Supplies",
       "count": 1
     },
     {
+      "id": 9,
       "name": "Garden and Outdoor Supplies",
       "count": 1
     },
     {
+      "id": 10,
       "name": "Safety Equipment",
       "count": 1
+    },
+    {
+      "name": "gr",
+      "count": 0,
+      "id": 11
+    },
+    {
+      "name": "new category1",
+      "count": 0,
+      "id": 12
+    },
+    {
+      "name": "new category2",
+      "count": 0,
+      "id": 13
+    },
+    {
+      "name": "new category3",
+      "count": 0,
+      "id": 14
+    },
+    {
+      "name": "new category4",
+      "count": 0,
+      "id": 15
+    },
+    {
+      "name": "new category5",
+      "count": 0,
+      "id": 16
     }
   ],
   "brands": [
     {
+      "id": 1,
       "name": "All Brands",
       "count": 0
     },
     {
+      "id": 2,
       "name": "Bosch",
       "count": 3
     },
     {
+      "id": 3,
       "name": "DeWalt",
       "count": 2
     },
     {
+      "id": 4,
       "name": "Makita",
       "count": 2
     },
     {
+      "id": 5,
       "name": "Milwaukee",
       "count": 1
     },
     {
+      "id": 6,
       "name": "Hitachi",
       "count": 1
     },
     {
+      "id": 7,
       "name": "Black and Decker",
       "count": 1
     },
     {
+      "id": 8,
       "name": "Craftsman",
       "count": 1
     },
     {
+      "id": 9,
       "name": "Stanley",
       "count": 1
     },
     {
+      "id": 10,
       "name": "Ryobi",
       "count": 1
+    },
+    {
+      "name": "new brand",
+      "count": 0,
+      "id": 11
+    },
+    {
+      "name": "new brand 2",
+      "count": 0,
+      "id": 12
     }
   ],
   "quotations": [

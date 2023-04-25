@@ -21,16 +21,42 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
 })
 
-export default function CreateCategory({ openCreate, setOpenCreate }) {
-
-
+export default function CreateCategory({ refresh, setRefresh, brandsUrl, openCreate, setOpenCreate }) {
   const [imageFile, setImageFile] = useState(null)
   const [productBrand, setProductBrand] = useState(null)
-  
-    const handleImageChange = event => {
-      const file = event.target.files[0]
-      setImageFile(file)
-    }
+
+  const handleImageChange = event => {
+    const file = event.target.files[0]
+    setImageFile(file)
+  }
+
+  const saveBrand = brandData => {
+    fetch(brandsUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(brandData)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok')
+        }
+        return response.json()
+      })
+      .then(data => {
+        console.log('Product brand saved successfully:', data)
+        // do something after the product category is saved
+      })
+      .catch(error => {
+        console.error('There was an error saving the product brand category:', error)
+      })
+  }
+
+  const handleSubmit = () => {
+    const brandData = { name: productBrand, count: 0 }
+    saveBrand(brandData)
+  }
 
   return (
     <Dialog
@@ -41,13 +67,21 @@ export default function CreateCategory({ openCreate, setOpenCreate }) {
       aria-describedby='alert-dialog-slide-description'
     >
       <DialogTitle>{'Create Brand  '}</DialogTitle>
-      <form>
+      {/* <form> */}
         <DialogContent>
           <DialogContentText id='alert-dialog-slide-description'>
             <Grid container spacing={5}>
               <Grid item xs={12}>
                 <Card sx={{ padding: 2 }}>
-                  <TextField fullWidth required onChange={e => setProductBrand(e.target.value)} value={productBrand} autoComplete='off' label='Name' placeholder='Enter Product Name' />
+                  <TextField
+                    fullWidth
+                    required
+                    onChange={e => setProductBrand(e.target.value)}
+                    value={productBrand}
+                    autoComplete='off'
+                    label='Name'
+                    placeholder='Enter Product Name'
+                  />
                 </Card>
               </Grid>
               <Grid item xs={12}>
@@ -98,14 +132,17 @@ export default function CreateCategory({ openCreate, setOpenCreate }) {
             variant='contained'
             type='submit'
             onClick={() => {
+              handleSubmit()
               setOpenCreate(false)
+              // router.push('/products/product-categories')
+              setRefresh(!refresh)
             }}
             disabled={!productBrand}
           >
             Save
           </Button>
         </DialogActions>
-      </form>
+      {/* </form> */}
     </Dialog>
   )
 }

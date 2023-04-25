@@ -76,6 +76,8 @@ const ProductCategories = () => {
   const [search, setSearch] = useState('')
   const [openCreate, setOpenCreate] = useState(false)
 
+  const [refresh, setRefresh] = useState(false)
+
   const router = useRouter()
 
   const handleChangePage = (event, newPage) => {
@@ -111,7 +113,7 @@ const ProductCategories = () => {
       }
     }
     fetchData()
-  }, [categoriesUrl])
+  }, [categoriesUrl, refresh])
 
   const handleSort = property => {
     const isAscending = sortOrder === 'asc'
@@ -136,7 +138,13 @@ const ProductCategories = () => {
 
   return (
     <Grid container spacing={2}>
-      <CreateCategory openCreate={openCreate} setOpenCreate={setOpenCreate}/>
+      <CreateCategory
+        refresh={refresh}
+        setRefresh={setRefresh}
+        categoriesUrl={categoriesUrl}
+        openCreate={openCreate}
+        setOpenCreate={setOpenCreate}
+      />
       <Grid item xs={12}>
         <Typography variant='h5'>
           {/* <Link href='https://mui.com/components/tables/' target='_blank'> */}
@@ -295,7 +303,7 @@ const ProductCategories = () => {
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component='div'
-            count={categories.length}
+            count={categories.length - 1}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
