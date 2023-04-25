@@ -441,6 +441,11 @@
       "name": "new category5",
       "count": 0,
       "id": 16
+    },
+    {
+      "name": "category 6",
+      "count": 0,
+      "id": 17
     }
   ],
   "brands": [
@@ -503,6 +508,11 @@
       "name": "new brand 2",
       "count": 0,
       "id": 12
+    },
+    {
+      "name": "new brand 3",
+      "count": 0,
+      "id": 13
     }
   ],
   "quotations": [

@@ -18,7 +18,6 @@ import TableSortLabel from '@mui/material/TableSortLabel'
 import TablePagination from '@mui/material/TablePagination'
 
 import TextField from '@mui/material/TextField'
-import Magnify from 'mdi-material-ui/Magnify'
 import Button from '@mui/material/Button'
 
 import Divider from '@mui/material/Divider'
@@ -33,11 +32,19 @@ import IconButton from '@mui/material/IconButton'
 import MenuItem from '@mui/material/MenuItem'
 
 //icons import
+import Magnify from 'mdi-material-ui/Magnify'
 import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 
 // ** Third Party Imports
-import DatePicker from 'react-datepicker'
+// import DatePicker from 'react-datepicker'
+
+import dayjs from 'dayjs'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers'
+
+dayjs.extend(localizedFormat)
 
 // ** Demo Components Imports
 import TableBasic from 'src/views/tables/TableBasic'
@@ -56,6 +63,8 @@ import { useState, useEffect, forwardRef } from 'react'
 // next import
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+
+const sample = [{ name: 'sample 1' }, { name: 'sample 2' }]
 
 const CustomInput = forwardRef((props, ref) => {
   return <TextField fullWidth {...props} inputRef={ref} label='Birth Date' autoComplete='off' />
@@ -91,14 +100,14 @@ const ccyFormat = num => {
   return `${num.toFixed(2)}`
 }
 
-const priceRow = (qty, unit) => {
-  return qty * unit
+const priceRow = (qty, samp) => {
+  return qty * samp
 }
 
-const createRow = (desc, qty, unit) => {
-  const price = priceRow(qty, unit)
+const createRow = (desc, qty, samp) => {
+  const price = priceRow(qty, samp)
 
-  return { desc, qty, unit, price }
+  return { desc, qty, samp, price }
 }
 
 const subtotal = items => {
@@ -202,6 +211,28 @@ const Create = () => {
     })
   }
 
+  const handleKeyPress = event => {
+    const keyCode = event.keyCode || event.which
+    const keyValue = String.fromCharCode(keyCode)
+
+    if (!/^\d*\.?\d*$/.test(keyValue)) {
+      event.preventDefault()
+    } else if (keyValue === '.' && event.target.value.includes('.')) {
+      event.preventDefault()
+    }
+  }
+
+
+  const [selectedDate, setSelectedDate] = useState(dayjs())
+  const [selectedShelve, setSelectedShelve] = useState()
+  const [selectedCustomer, setSelectedCustomer] = useState()
+  const [discount, setDiscount] = useState()
+  const [shipping, setShipping] = useState()
+  const [selectedStatus, setSelecteStatus] = useState()
+  const [notes, setNotes] = useState()
+
+  console.log(selectedDate)
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={10}>
@@ -216,7 +247,7 @@ const Create = () => {
             fullWidth
             disableElevation
             style={{ textTransform: 'none' }}
-            onClick={() => router.push('/qoutations')}
+            onClick={() => router.push('/quotations')}
             variant='contained'
           >
             Back
@@ -232,16 +263,72 @@ const Create = () => {
             <CardContent>
               <Grid container spacing={5}>
                 <Grid item xs={4}>
-                  <TextField fullWidth label='First Name' placeholder='Leonard' />
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      label='Date'
+                      value={selectedDate}
+                      onChange={date => setSelectedDate(date)}
+                      shouldDisableDate={date => date.isAfter(dayjs(), 'day')}
+                    />
+                  </LocalizationProvider>
+                </Grid>
+
+                <Grid item xs={4}>
+                  <FormControl required fullWidth>
+                    <InputLabel id='demo-multiple-name-label'>Shelve</InputLabel>
+                    <Select
+                      labelId='demo-multiple-name-label'
+                      id='demo-multiple-name'
+                      // multiple
+                      // value={selectedUnit}
+                      onChange={e => setSelectedShelve(e.target.value)}
+                      input={<OutlinedInput label='Shelve' />}
+                    >
+                      {sample.map(samp => (
+                        <MenuItem key={samp.name} value={samp.name}>
+                          {samp.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Grid>
                 <Grid item xs={4}>
-                  <TextField fullWidth label='First Name' placeholder='Leonard' />
-                </Grid>
-                <Grid item xs={4}>
-                  <TextField fullWidth label='First Name' placeholder='Leonard' />
+                  <FormControl required fullWidth>
+                    <InputLabel id='demo-multiple-name-label'>Customer</InputLabel>
+                    <Select
+                      labelId='demo-multiple-name-label'
+                      id='demo-multiple-name'
+                      // multiple
+                      // value={selectedUnit}
+                      onChange={e => setSelectedCustomer(e.target.value)}
+                      input={<OutlinedInput label='Customer' />}
+                    >
+                      {sample.map(samp => (
+                        <MenuItem key={samp.name} value={samp.name}>
+                          {samp.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField fullWidth label='First Name' placeholder='Leonard' />
+                  <TextField
+                    fullWidth
+                    placeholder='Search Product by Code Name'
+                    onChange={e => setSearch(e.target.value)}
+                    InputProps={{
+                      startAdornment: (
+                        <Magnify
+                          sx={{
+                            fontSize: '2rem',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                          }}
+                        />
+                      )
+                    }}
+                  />
                 </Grid>
 
                 {/* table */}
@@ -251,40 +338,39 @@ const Create = () => {
                     <Table sx={{ minWidth: 700 }} aria-label='spanning table'>
                       <TableHead>
                         <TableRow>
-                          <TableCell align='center' colSpan={3}>
-                            Details
-                          </TableCell>
+                          <TableCell>Product</TableCell>
                           <TableCell align='right'>Price</TableCell>
-                        </TableRow>
-                        <TableRow>
-                          <TableCell>Desc</TableCell>
-                          <TableCell align='right'>Qty.</TableCell>
-                          <TableCell align='right'>Unit</TableCell>
-                          <TableCell align='right'>Sum</TableCell>
+                          <TableCell align='right'>Stock</TableCell>
+                          <TableCell align='right'>Qty</TableCell>
+                          <TableCell align='right'>Subtotal</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
                         {rows.map(row => (
                           <TableRow key={row.desc}>
-                            <TableCell>{row.desc}</TableCell>
-                            <TableCell align='right'>{row.qty}</TableCell>
-                            <TableCell align='right'>{row.unit}</TableCell>
-                            <TableCell align='right'>{ccyFormat(row.price)}</TableCell>
+                            <TableCell>{row.desc}name</TableCell>
+                            <TableCell align='right'>{row.qty}price</TableCell>
+                            <TableCell align='right'>{row.samp}stock</TableCell>
+                            <TableCell align='right'>{ccyFormat(row.price)}quantiry</TableCell>
+                            <TableCell align='right'>{ccyFormat(row.price)}subtotal</TableCell>
                           </TableRow>
                         ))}
                         <TableRow>
-                          <TableCell rowSpan={3} />
-                          <TableCell colSpan={2}>Subtotal</TableCell>
-                          <TableCell align='right'>{ccyFormat(invoiceSubtotal)}</TableCell>
+                          <TableCell colSpan={3} rowSpan={4} />
+                          <TableCell>Subtotal</TableCell>
+                          <TableCell align='right'>{ccyFormat(invoiceSubtotal)}subtot</TableCell>
                         </TableRow>
                         <TableRow>
-                          <TableCell>Tax</TableCell>
-                          <TableCell align='right'>{`${(TAX_RATE * 100).toFixed(0)} %`}</TableCell>
-                          <TableCell align='right'>{ccyFormat(invoiceTaxes)}</TableCell>
+                          <TableCell>Discount</TableCell>
+                          <TableCell align='right'>{ccyFormat(invoiceTaxes)}discount</TableCell>
                         </TableRow>
                         <TableRow>
-                          <TableCell colSpan={2}>Total</TableCell>
-                          <TableCell align='right'>{ccyFormat(invoiceTotal)}</TableCell>
+                          <TableCell>Shipping</TableCell>
+                          <TableCell align='right'>{ccyFormat(invoiceTaxes)}shipping</TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell>Total</TableCell>
+                          <TableCell align='right'>{ccyFormat(invoiceTotal)}total</TableCell>
                         </TableRow>
                       </TableBody>
                     </Table>
@@ -292,27 +378,89 @@ const Create = () => {
                 </Grid>
 
                 <Grid item xs={4}>
-                  <TextField fullWidth label='First Name' placeholder='Leonard' />
+                  <TextField
+                    fullWidth
+                    label='Discount'
+                    placeholder='0.00'
+                    value={discount}
+                    onChansge={e => setDiscount(e.target.value)}
+                    InputProps={{
+                      onKeyPress: handleKeyPress,
+                      inputMode: 'numeric',
+                      pattern: '[0-9]*',
+                      startAdornment: (
+                        <InputAdornment position='start'>
+                          <Typography variant='h6' color='textSecondary'>
+                            ₱
+                          </Typography>
+                        </InputAdornment>
+                      )
+                    }}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    variant='outlined'
+                  />
                 </Grid>
                 <Grid item xs={4}>
-                  <TextField fullWidth label='First Name' placeholder='Leonard' />
+                  <TextField
+                    fullWidth
+                    label='Shipping'
+                    placeholder='0.00'
+                    value={shipping}
+                    onChange={e => setShipping(e.target.value)}
+                    InputProps={{
+                      onKeyPress: handleKeyPress,
+                      inputMode: 'numeric',
+                      pattern: '[0-9]*',
+                      startAdornment: (
+                        <InputAdornment position='start'>
+                          <Typography variant='h6' color='textSecondary'>
+                            ₱
+                          </Typography>
+                        </InputAdornment>
+                      )
+                    }}
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                    variant='outlined'
+                  />
                 </Grid>
+
                 <Grid item xs={4}>
-                  <TextField fullWidth label='First Name' placeholder='Leonard' />
+                  <FormControl required fullWidth>
+                    <InputLabel id='demo-multiple-name-label'>Status</InputLabel>
+                    <Select
+                      labelId='demo-multiple-name-label'
+                      id='demo-multiple-name'
+                      // multiple
+                      // value={selectedUnit}
+                      onChange={e => setSelectedStatus(e.target.value)}
+                      input={<OutlinedInput label='Shelve' />}
+                    >
+                      {sample.map(samp => (
+                        <MenuItem key={samp.name} value={samp.name}>
+                          {samp.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                 </Grid>
-                <Grid item xs={4}>
+                {/* <Grid item xs={4}>
                   <TextField fullWidth label='First Name' placeholder='Leonard' />
-                </Grid>
+                </Grid> */}
 
                 <Grid item xs={12}>
                   <TextField
                     fullWidth
                     id='standard-multiline-static'
-                    label='Multiline'
+                    label='Notes'
                     multiline
+                    placeholder='Enter Notes'
                     rows={4}
-                    defaultValue='Default Value'
-                    variant='standard'
+                    // defaultValue='Default Value'
+                    // variant='standard'
                   />
                 </Grid>
 
