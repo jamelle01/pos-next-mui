@@ -28,5 +28,5 @@ To install and run the application locally, follow these steps:
 
 ## Developers
 
-- [@jamelle01](https://github.com/some-user/ThemeSelection)
-- [@ryookkk](https://github.com/some-user/ThemeSelection)
+- [jamelle01](https://github.com/some-user/ThemeSelection)
+- [ryookkk](https://github.com/some-user/ThemeSelection)
