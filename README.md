@@ -28,5 +28,5 @@ To install and run the application locally, follow these steps:
 
 ## Developers
 
-- Jeramelle Tatad ([jamelle01])(https://github.com/jamelle01)
-- Marvin Paongilan ([ryookkk]) (https://github.com/ryookkk)
+- Jeramelle Tatad ([jamelle01](https://github.com/jamelle01))
+- Marvin Paongilan ([ryookkk](https://github.com/ryookkk))
