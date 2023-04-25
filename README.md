@@ -6,8 +6,8 @@ This is a point of sale (POS) system built with Next.js and Material UI. The sys
 
 To install and run the application locally, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/pos-system.git`
-2. Navigate to the project directory: `cd pos-system`
+1. Clone the repository: `git clone https://github.com/jamelle01/pos-next-mui.git`
+2. Navigate to the project directory: `cd pos-next-mui`
 3. Install dependencies: `npm install`
 4. Run the application: `npm run dev`
 5. Open your web browser and navigate to [http://localhost:3000](http://localhost:3000)
@@ -22,7 +22,7 @@ To install and run the application locally, follow these steps:
 
 - Next.js
 - Material UI
-- [ThemeSelection](https://github.com/some-user/ThemeSelection) template
+- [ThemeSelection](https://github.com/themeselection/materio-mui-react-nextjs-admin-template-free) template
 
 ## Contributing
 
