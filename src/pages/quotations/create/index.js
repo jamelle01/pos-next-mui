@@ -492,6 +492,9 @@ const Create = () => {
                       ))}
                     </Select>
                   </FormControl>
+                  {search && !selectedShelve && (
+                    <Typography variant="caption" style={{ color: 'red' }}>Please select shelf</Typography>
+                  )}
                 </Grid>
                 <Grid item xs={4}>
                   <Autocomplete
