@@ -226,7 +226,7 @@ const ProductTable = ({
                     value={product.calories}
                     InputProps={{ disableUnderline: true }}
                     sx={{ fontSize: '14px', fontWeight: 'bold', color: 'secondary.main' }}
-                  /> */}
+                    /> */}
                     <input
                       className='quantValue'
                       type='number'
@@ -332,7 +332,10 @@ const ProductTable = ({
               </Grid>
               <Grid xs={6}>
                 <Typography mr={5} align='right'>
-                  {subTotal}
+                  {subTotal.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })}
                 </Typography>
               </Grid>
             </Grid>
@@ -363,7 +366,10 @@ const ProductTable = ({
               </Grid>
               <Grid xs={6}>
                 <Typography mr={5} align='right'>
-                  {total}
+                  {total.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                  })}
                 </Typography>
               </Grid>
             </Grid>

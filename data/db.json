@@ -10,7 +10,8 @@
       "brand": "Bosch",
       "code": "BOS-18V-DRV-1/2",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 2,
@@ -22,7 +23,8 @@
       "brand": "DeWalt",
       "code": "DEW-20V-CSK",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 3,
@@ -34,7 +36,8 @@
       "brand": "Makita",
       "code": "MAK-18V-CMB-BRS",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 4,
@@ -46,7 +49,8 @@
       "brand": "Milwaukee",
       "code": "MIL-M18-HDR-DRV",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 5,
@@ -58,7 +62,8 @@
       "brand": "Hitachi",
       "code": "HIT-18V-DRV-CMP",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 6,
@@ -70,7 +75,8 @@
       "brand": "Black and Decker",
       "code": "B&D-20V-DRV",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 7,
@@ -82,7 +88,8 @@
       "brand": "Craftsman",
       "code": "CRA-20V-DRV",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 2"
     },
     {
       "id": 8,
@@ -94,7 +101,8 @@
       "brand": "Stanley",
       "code": "SM-001",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 2"
     },
     {
       "id": 9,
@@ -106,7 +114,8 @@
       "brand": "Ryobi",
       "code": "RY-001",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 2"
     },
     {
       "id": 10,
@@ -118,7 +127,8 @@
       "brand": "Bosch",
       "code": "BO-001",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 11,
@@ -130,7 +140,8 @@
       "brand": "DeWalt",
       "code": "DW-001",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 12,
@@ -142,7 +153,8 @@
       "brand": "Makita",
       "code": "MK-001",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 13,
@@ -154,7 +166,8 @@
       "brand": "Milwaukee",
       "code": "ML-001",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 14,
@@ -166,7 +179,8 @@
       "brand": "Hitachi",
       "code": "HI-001",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 15,
@@ -178,7 +192,8 @@
       "brand": "Black and Decker",
       "code": "BND-20VDCCSDK",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 16,
@@ -190,7 +205,8 @@
       "brand": "Craftsman",
       "code": "CRM-20VDCLRS",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 17,
@@ -202,7 +218,8 @@
       "brand": "Stanley",
       "code": "STN-20PCSDD",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 18,
@@ -214,7 +231,8 @@
       "brand": "Ryobi",
       "code": "RYB-18VDCTCK",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 19,
@@ -226,7 +244,8 @@
       "brand": "Bosch",
       "code": "BCH-18VDDBK",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 20,
@@ -238,7 +257,8 @@
       "brand": "DeWalt",
       "code": "DWL-20VDCTCK",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 21,
@@ -250,7 +270,8 @@
       "brand": "Makita",
       "code": "MT-CS-001",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 22,
@@ -262,7 +283,8 @@
       "brand": "Bosch",
       "code": "BT-DDK-001",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 23,
@@ -274,7 +296,8 @@
       "brand": "DeWalt",
       "code": "DW-TS-001",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 24,
@@ -286,7 +309,8 @@
       "brand": "Milwaukee",
       "code": "MK-CM-001",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 25,
@@ -298,7 +322,8 @@
       "brand": "Klein Tools",
       "code": "KT-VCTK-001",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 26,
@@ -310,7 +335,8 @@
       "brand": "Milwaukee",
       "code": "MK-HDIDK-001",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 27,
@@ -322,7 +348,8 @@
       "brand": "Bosch",
       "code": "BT-LLP-001",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 28,
@@ -334,7 +361,8 @@
       "brand": "DeWalt",
       "code": "DT-CS-7",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 29,
@@ -346,7 +374,8 @@
       "brand": "Ryobi",
       "code": "RB-TK-6",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     },
     {
       "id": 30,
@@ -358,7 +387,8 @@
       "brand": "Husky",
       "code": "HS-RT-144",
       "created_on": "2023-04-19",
-      "unit": "pieces"
+      "unit": "pieces",
+      "shelf": "shelf 1"
     }
   ],
   "categories": [
@@ -520,7 +550,7 @@
       "id": 1,
       "reference": "QA_111199",
       "customer": "Ursula Penesula",
-      "warehouse": "Warehouse 3",
+      "shelf": "shelf 1",
       "status": "pending",
       "grand_total": 1200,
       "created_on": "5:41 PM 2023-04-20"
@@ -529,7 +559,7 @@
       "id": 2,
       "reference": "QA_111200",
       "customer": "John Smith",
-      "warehouse": "Warehouse 2",
+      "shelf": "shelf 2",
       "status": "ordered",
       "grand_total": 5000,
       "created_on": "9:15 AM 2023-04-21"
@@ -538,7 +568,7 @@
       "id": 3,
       "reference": "QA_111201",
       "customer": "Jane Doe",
-      "warehouse": "Warehouse 1",
+      "shelf": "shelf 1",
       "status": "pending",
       "grand_total": 5000,
       "created_on": "1:30 PM 2023-04-21"
@@ -547,7 +577,7 @@
       "id": 4,
       "reference": "QA_111202",
       "customer": "Bob Johnson",
-      "warehouse": "Warehouse 4",
+      "shelf": "shelf 2",
       "status": "pending",
       "grand_total": 1500,
       "created_on": "10:20 AM 2023-04-22"
@@ -556,122 +586,116 @@
       "id": 5,
       "reference": "QA_111203",
       "customer": "Emily Wang",
-      "warehouse": "Warehouse 3",
+      "shelf": "shelf 1",
       "status": "ordered",
       "grand_total": 3500,
       "created_on": "3:45 PM 2023-04-22"
+    }
+  ],
+  "customers": [
+    {
+      "id": 1,
+      "name": "Ursula Penesula",
+      "email": "ursula@example.com",
+      "phone": "555-1234",
+      "address": "123 Main St, Anytown USA",
+      "company_info": {
+        "name": "POS",
+        "email": "support@admin.com",
+        "phone": "1234567888",
+        "address": "Location Address"
+      }
     },
     {
-      "id": 6,
-      "reference": "QA_345678",
-      "customer": "Tom Brown",
-      "warehouse": "Warehouse 3",
-      "status": "pending",
-      "grand_total": 1500,
-      "created_on": "3:27 PM 2023-04-18"
+      "id": 2,
+      "name": "John Smith",
+      "email": "john@example.com",
+      "phone": "555-5678",
+      "address": "456 Maple Ave, Anytown USA",
+      "company_info": {
+        "name": "POS",
+        "email": "support@admin.com",
+        "phone": "1234567888",
+        "address": "Location Address"
+      }
     },
     {
-      "id": 7,
-      "reference": "QA_987654",
-      "customer": "Susan Green",
-      "warehouse": "Warehouse 4",
-      "status": "pending",
-      "grand_total": 2000,
-      "created_on": "8:14 AM 2023-04-17"
+      "id": 3,
+      "name": "Jane Doe",
+      "email": "jane@example.com",
+      "phone": "555-9012",
+      "address": "789 Oak St, Anytown USA",
+      "company_info": {
+        "name": "POS",
+        "email": "support@admin.com",
+        "phone": "1234567888",
+        "address": "Location Address"
+      }
     },
     {
-      "id": 8,
-      "reference": "QA_567890",
-      "customer": "David Lee",
-      "warehouse": "Warehouse 2",
-      "status": "ordered",
-      "grand_total": 800,
-      "created_on": "1:59 PM 2023-04-16"
+      "id": 4,
+      "name": "Bob Johnson",
+      "email": "bob@example.com",
+      "phone": "555-3456",
+      "address": "321 Elm St, Anytown USA",
+      "company_info": {
+        "name": "POS",
+        "email": "support@admin.com",
+        "phone": "1234567888",
+        "address": "Location Address"
+      }
     },
     {
-      "id": 9,
-      "reference": "QA_543210",
-      "customer": "Mary Smith",
-      "warehouse": "Warehouse 1",
-      "status": "pending",
-      "grand_total": 600,
-      "created_on": "6:47 PM 2023-04-15"
-    },
-    {
-      "id": 10,
-      "reference": "QA_876543",
-      "customer": "Alex Johnson",
-      "warehouse": "Warehouse 3",
-      "status": "ordered",
-      "grand_total": 4500,
-      "created_on": "11:34 AM 2023-04-15"
-    },
-    {
-      "id": 11,
-      "reference": "QA_235687",
-      "customer": "John Doe",
-      "warehouse": "Warehouse 1",
-      "status": "ordered",
-      "grand_total": 5000,
-      "created_on": "10:23 AM 2023-04-20"
-    },
-    {
-      "id": 12,
-      "reference": "QA_983461",
-      "customer": "Jane Smith",
-      "warehouse": "Warehouse 2",
-      "status": "pending",
-      "grand_total": 1800,
-      "created_on": "2:13 PM 2023-04-19"
-    },
-    {
-      "id": 13,
-      "reference": "QA_776542",
-      "customer": "Bob Johnson",
-      "warehouse": "Warehouse 4",
-      "status": "pending",
-      "grand_total": 900,
-      "created_on": "9:56 AM 2023-04-19"
-    },
-    {
-      "id": 14,
-      "reference": "QA_123456",
-      "customer": "Sarah Lee",
-      "warehouse": "Warehouse 1",
-      "status": "ordered",
-      "grand_total": 3200,
-      "created_on": "11:42 AM 2023-04-18"
+      "id": 5,
+      "name": "Emily Wang",
+      "email": "emily@example.com",
+      "phone": "555-7890",
+      "address": "654 Pine St, Anytown USA",
+      "company_info": {
+        "name": "POS",
+        "email": "support@admin.com",
+        "phone": "1234567888",
+        "address": "Location Address"
+      }
     }
   ],
   "barcodeSymbols": [
     {
+      "id": 1,
       "name": "code 39"
     },
     {
+      "id": 2,
       "name": "code 128"
     }
   ],
   "productUnits": [
     {
+      "id": 1,
       "name": "kg"
     },
     {
+      "id": 2,
       "name": "pieces"
     }
   ],
   "shelves": [
     {
-      "name": "1"
+      "id": 1,
+      "name": "shelf 1"
     },
     {
-      "name": "2"
+      "id": 2,
+      "name": "shelf 2"
     }
   ],
   "suppliers": [
     {
+      "id": 1,
       "name": "supplier 1"
     },
     {
+      "id": 2,
       "name": "supplier 2"
     }
   ]

@@ -54,7 +54,7 @@ const Pos = () => {
   const [selectedProducts, setSelectedProducts] = useState([])
 
   const [totalQuantity, setTotalQuantity] = useState(0)
-  const [subTotal, setSubTotal] = useState('')
+  const [subTotal, setSubTotal] = useState(0)
   const [total, setTotal] = useState(0)
   const [discount, setDiscount] = useState(0)
 

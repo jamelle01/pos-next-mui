@@ -249,17 +249,16 @@ const Create = () => {
     fetchData()
   }, [categoriesUrl, brandsUrl, barcodeSymbolsUrl, productUnitsUrl, shelvesUrl, suppliersUrl])
 
-const handleKeyPress = event => {
-  const keyCode = event.keyCode || event.which
-  const keyValue = String.fromCharCode(keyCode)
+  const handleKeyPress = event => {
+    const keyCode = event.keyCode || event.which
+    const keyValue = String.fromCharCode(keyCode)
 
-  if (!/^\d*\.?\d*$/.test(keyValue)) {
-    event.preventDefault()
-  } else if (keyValue === '.' && event.target.value.includes('.')) {
-    event.preventDefault()
+    if (!/^\d*\.?\d*$/.test(keyValue)) {
+      event.preventDefault()
+    } else if (keyValue === '.' && event.target.value.includes('.')) {
+      event.preventDefault()
+    }
   }
-}
-
 
   const [barcodeSymbols, setBarcodeSymbols] = useState([])
   const [productUnits, setProductUnits] = useState([])

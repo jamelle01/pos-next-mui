@@ -40,6 +40,9 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 //icons import
 import Magnify from 'mdi-material-ui/Magnify'
 import Delete from 'mdi-material-ui/Delete'
+import MinusBox from 'mdi-material-ui/MinusBox'
+import PlusBox from 'mdi-material-ui/PlusBox'
+import TrashCanOutline from 'mdi-material-ui/TrashCanOutline'
 import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 
@@ -213,29 +216,23 @@ const Create = () => {
     showPassword: false,
     showPassword2: false
   })
+  const [highlightedIndex, setHighlightedIndex] = useState(-1)
 
   // data to be sent to database
-
   const [selectedDate, setSelectedDate] = useState(dayjs())
-  const [selectedShelve, setSelectedShelve] = useState()
-
-  const [selectedCustomer, setSelectedCustomer] = useState()
+  const [selectedShelve, setSelectedShelve] = useState('')
   // selected customer details
+  const [selectedCustomer, setSelectedCustomer] = useState()
   const [customerDetails, setCustomerDetails] = useState([])
-  const [search, setSearch] = useState('')
-
   const [selectedProducts, setSelectedProducts] = useState([])
-
   const [discount, setDiscount] = useState(0)
   const [shipping, setShipping] = useState(0)
   const [selectedStatus, setSelectedStatus] = useState()
   const [notes, setNotes] = useState()
 
-  const [highlightedIndex, setHighlightedIndex] = useState(-1)
-
-  const [subTotal, setSubTotal] = useState(0)
   const [total, setTotal] = useState(0)
-
+  const [subTotal, setSubTotal] = useState(0)
+  const [search, setSearch] = useState('')
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
   }
@@ -304,77 +301,79 @@ const Create = () => {
   const filteredProducts = useMemo(() => {
     return products.filter(
       product =>
-        product.code.toLowerCase().includes(search.toLowerCase()) ||
-        product.name.toLowerCase().includes(search.toLowerCase())
+        (product.code.toLowerCase().includes(search.toLowerCase()) ||
+          product.name.toLowerCase().includes(search.toLowerCase())) &&
+        product.shelf.toLowerCase() === selectedShelve.toLowerCase()
     )
-  }, [products, search])
+  }, [products, search, selectedShelve])
 
-  useEffect(async () => {
-    // const totalQuantity = selectedProducts.reduce((acc, product) => acc + product.selectedQuantity, 0)
-    const subTotal = await selectedProducts.reduce((acc, product) => acc + product.subtotal, 0)
-    const total = selectedProducts.reduce((acc, product) => acc + product.subtotal, 0)
-    // console.log(totalQuantity);
-    // setTotalQuantity(totalQuantity)
-    setSubTotal(subTotal)
-
-    setTotal(total - discount)
-    console.log(subTotal)
-  }, [selectedProducts, discount])
+  useEffect(() => {
+    const calculateTotal = async () => {
+      const subTotal = selectedProducts.reduce((acc, product) => acc + product.subtotal, 0)
+      const total = selectedProducts.reduce((acc, product) => acc + product.subtotal, 0)
+      setSubTotal(subTotal)
+      setTotal(total - discount - shipping)
+      selectedProducts.map(item => {
+        console.log(item.subTotal)
+      })
+    }
+    calculateTotal()
+  }, [selectedProducts, discount, shipping])
 
   // functions here
   // Handle Password
-  const handlePasswordChange = prop => event => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
-  const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword })
-  }
-  const handleMouseDownPassword = event => {
-    event.preventDefault()
-  }
-  // Handle Confirm Password
-  const handleConfirmChange = prop => event => {
-    setValues({ ...values, [prop]: event.target.value })
-  }
-  const handleClickShowConfirmPassword = () => {
-    setValues({ ...values, showPassword2: !values.showPassword2 })
-  }
-  const handleMouseDownConfirmPassword = event => {
-    event.preventDefault()
-  }
-  // Handle Select
-  const handleSelectChange = event => {
-    setLanguage(event.target.value)
-  }
-  const handleSort = property => {
-    const isAscending = sortOrder === 'asc'
-    const order = isAscending ? 'desc' : 'asc'
-    setSortBy(property)
-    setSortOrder(order)
-    products.sort((a, b) => {
-      const valueA = a[property]
-      const valueB = b[property]
-      const direction = isAscending ? 1 : -1
+  // const handlePasswordChange = prop => event => {
+  //   setValues({ ...values, [prop]: event.target.value })
+  // }
+  // const handleClickShowPassword = () => {
+  //   setValues({ ...values, showPassword: !values.showPassword })
+  // }
+  // const handleMouseDownPassword = event => {
+  //   event.preventDefault()
+  // }
+  // // Handle Confirm Password
+  // const handleConfirmChange = prop => event => {
+  //   setValues({ ...values, [prop]: event.target.value })
+  // }
+  // const handleClickShowConfirmPassword = () => {
+  //   setValues({ ...values, showPassword2: !values.showPassword2 })
+  // }
+  // const handleMouseDownConfirmPassword = event => {
+  //   event.preventDefault()
+  // }
+  // // Handle Select
+  // const handleSelectChange = event => {
+  //   setLanguage(event.target.value)
+  // }
+  // const handleSort = property => {
+  //   const isAscending = sortOrder === 'asc'
+  //   const order = isAscending ? 'desc' : 'asc'
+  //   setSortBy(property)
+  //   setSortOrder(order)
+  //   products.sort((a, b) => {
+  //     const valueA = a[property]
+  //     const valueB = b[property]
+  //     const direction = isAscending ? 1 : -1
 
-      return valueA < valueB ? -direction : valueA > valueB ? direction : 0
-    })
-  }
-  const handleKeyDown = event => {
-    if (event.key === 'ArrowDown') {
-      event.preventDefault()
-      setHighlightedIndex(prevIndex => (prevIndex === filteredProducts.length - 1 ? 0 : prevIndex + 1))
-    } else if (event.key === 'ArrowUp') {
-      event.preventDefault()
-      setHighlightedIndex(prevIndex => (prevIndex === 0 ? filteredProducts.length - 1 : prevIndex - 1))
-    } else if (event.key === 'Enter' && highlightedIndex !== -1) {
-      // Do something with the selected product
-      console.log(filteredProducts[highlightedIndex])
-    }
-    event.stopPropagation()
-  }
-  const handleFocus = () => {
-    setHighlightedIndex(0)
-  }
+  //     return valueA < valueB ? -direction : valueA > valueB ? direction : 0
+  //   })
+  // }
+  // const handleKeyDown = event => {
+  //   if (event.key === 'ArrowDown') {
+  //     event.preventDefault()
+  //     setHighlightedIndex(prevIndex => (prevIndex === filteredProducts.length - 1 ? 0 : prevIndex + 1))
+  //   } else if (event.key === 'ArrowUp') {
+  //     event.preventDefault()
+  //     setHighlightedIndex(prevIndex => (prevIndex === 0 ? filteredProducts.length - 1 : prevIndex - 1))
+  //   } else if (event.key === 'Enter' && highlightedIndex !== -1) {
+  //     // Do something with the selected product
+  //     console.log(filteredProducts[highlightedIndex])
+  //   }
+  //   event.stopPropagation()
+  // }
+  // const handleFocus = () => {
+  //   setHighlightedIndex(0)
+  // }
 
   const handleKeyPress = event => {
     const keyCode = event.keyCode || event.which
@@ -404,6 +403,35 @@ const Create = () => {
         }
       }
     }
+  }
+
+  const handleProductRemove = productId => {
+    setSelectedProducts(prevSelectedProducts => prevSelectedProducts.filter(product => product.id !== productId))
+  }
+
+  const handleDecrement = id => {
+    setSelectedProducts(prevProducts =>
+      prevProducts.map(product =>
+        product.id === id ? { ...product, selectedQuantity: product.selectedQuantity - 1 } : product
+      )
+    )
+    console.log('hi')
+    console.log(selectedProducts)
+  }
+
+  const handleIncrement = id => {
+    setSelectedProducts(prevProducts =>
+      prevProducts.map(product =>
+        product.id === id ? { ...product, selectedQuantity: product.selectedQuantity + 1 } : product
+      )
+    )
+  }
+
+  const handleQuantChange = (id, e) => {
+    const value = e.target.value === '' ? 0 : parseInt(e.target.value)
+    setSelectedProducts(prevProducts =>
+      prevProducts.map(product => (product.id === id ? { ...product, selectedQuantity: value } : product))
+    )
   }
 
   return (
@@ -452,9 +480,9 @@ const Create = () => {
                     <Select
                       labelId='demo-multiple-name-label'
                       id='demo-multiple-name'
-                      // multiple
                       value={selectedShelve}
                       onChange={e => setSelectedShelve(e.target.value)}
+                      disabled={selectedProducts.length > 0}
                       input={<OutlinedInput label='Shelve' />}
                     >
                       {shelves.map(shelf => (
@@ -498,6 +526,7 @@ const Create = () => {
                     value={search}
                     onChange={e => setSearch(e.target.value)}
                     inputRef={searchInputRef}
+                    autoComplete='off'
                     InputProps={{
                       startAdornment: (
                         <Magnify
@@ -540,8 +569,8 @@ const Create = () => {
                         <TableRow>
                           <TableCell>Product</TableCell>
                           <TableCell align='left'>Price</TableCell>
-                          {/* <TableCell align='right'>Stock</TableCell> */}
-                          <TableCell align='left'>Qty</TableCell>
+                          <TableCell align='left'>Stock</TableCell>
+                          <TableCell align='center'>Qty</TableCell>
                           <TableCell align='left'>Discount</TableCell>
                           <TableCell align='left'>Subtotal</TableCell>
                           <TableCell sx={{ width: '20px' }} align='left'>
@@ -564,8 +593,67 @@ const Create = () => {
                                 maximumFractionDigits: 2
                               })}
                             </TableCell>
-                            {/* <TableCell align='right'>{item.samp}stock</TableCell> */}
-                            <TableCell align='left'>{item.selectedQuantity}</TableCell>
+                            <TableCell align='left'>{item.quantity}</TableCell>
+                            <TableCell align='left'>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  height: '100%',
+                                  justifyContent: 'center',
+                                  alignItems: 'center'
+                                }}
+                              >
+                                <IconButton
+                                  onClick={() => {
+                                    if (item.selectedQuantity > 1) {
+                                      handleDecrement(item.id)
+                                    }
+                                  }}
+                                  disabled={item.selectedQuantity <= 1}
+                                  sx={{
+                                    color: 'red',
+                                    opacity: item.selectedQuantity <= 1 ? '0.5' : '1',
+                                    cursor: item.selectedQuantity <= 1 ? 'not-allowed' : 'pointer'
+                                  }}
+                                >
+                                  <MinusBox />
+                                </IconButton>
+
+                                <input
+                                  className='quantValue'
+                                  type='number'
+                                  value={item.selectedQuantity >= item.quantity ? item.quantity : item.selectedQuantity}
+                                  style={{
+                                    minWidth: '30px',
+                                    maxWidth: '50px',
+                                    textAlign: 'center',
+                                    border: '1px solid transparent',
+                                    // backgroundColor: 'transparent',
+                                    fontSize: '14px',
+                                    fontWeight: 'bold',
+                                    // color: 'secondary.main',
+                                    appearance: 'textfield'
+                                  }}
+                                  onChange={e => handleQuantChange(item.id, e)}
+                                />
+
+                                <IconButton
+                                  sx={{
+                                    color: 'blue',
+                                    opacity: item.selectedQuantity === item.quantity ? '0.5' : '1',
+                                    cursor: item.selectedQuantity === item.quantity ? 'not-allowed' : 'pointer'
+                                  }}
+                                  onClick={() => {
+                                    if (item.selectedQuantity < item.quantity) {
+                                      handleIncrement(item.id)
+                                    }
+                                  }}
+                                  disabled={item.selectedQuantity === item.quantity}
+                                >
+                                  <PlusBox />
+                                </IconButton>
+                              </div>
+                            </TableCell>
                             <TableCell align='left'>
                               {item.discount.toLocaleString(undefined, {
                                 minimumFractionDigits: 2,
@@ -573,20 +661,32 @@ const Create = () => {
                               })}
                             </TableCell>
                             <TableCell align='left'>
-                              {(item.price * item.selectedQuantity).toLocaleString(undefined, {
+                              {(item.subtotal = item.price * item.selectedQuantity).toLocaleString(undefined, {
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2
                               })}
                             </TableCell>
-                            <TableCell align='left'>
-                              <Delete />
+                            <TableCell align='center'>
+                              <IconButton onClick={() => handleProductRemove(item.id)} sx={{ color: 'red' }}>
+                                <Delete />
+                              </IconButton>
                             </TableCell>
                           </TableRow>
                         ))}
+                        {selectedProducts.length == 0 && (
+                          <TableRow>
+                            <TableCell colSpan={7}>
+                              <Typography align='center' variant='subtitle2'>
+                                No Data Available
+                              </Typography>
+                            </TableCell>
+                          </TableRow>
+                        )}
+
                         <TableRow>
                           <TableCell colSpan={4} rowSpan={4} />
                           <TableCell>Subtotal</TableCell>
-                          <TableCell align='left'>
+                          <TableCell colspan={2} align='right'>
                             {subTotal.toLocaleString(undefined, {
                               minimumFractionDigits: 2,
                               maximumFractionDigits: 2
@@ -595,7 +695,7 @@ const Create = () => {
                         </TableRow>
                         <TableRow>
                           <TableCell>Discount</TableCell>
-                          <TableCell align='left'>
+                          <TableCell colspan={2} align='right'>
                             {discount.toLocaleString(undefined, {
                               minimumFractionDigits: 2,
                               maximumFractionDigits: 2
@@ -604,7 +704,7 @@ const Create = () => {
                         </TableRow>
                         <TableRow>
                           <TableCell>Shipping</TableCell>
-                          <TableCell align='left'>
+                          <TableCell colspan={2} align='right'>
                             {shipping.toLocaleString(undefined, {
                               minimumFractionDigits: 2,
                               maximumFractionDigits: 2
@@ -613,7 +713,7 @@ const Create = () => {
                         </TableRow>
                         <TableRow>
                           <TableCell>Total</TableCell>
-                          <TableCell align='left'>
+                          <TableCell colspan={2} align='right'>
                             {total.toLocaleString(undefined, {
                               minimumFractionDigits: 2,
                               maximumFractionDigits: 2
@@ -631,8 +731,15 @@ const Create = () => {
                     label='Discount'
                     placeholder='0.00'
                     value={discount}
-                    type='number'
-                    onChange={e => setDiscount(e.target.value)}
+                    onChange={e => {
+                      let value = e.target.value
+                      if (value === '') {
+                        setDiscount(0)
+                      } else {
+                        value = value.replace(/^0+(?=\d)/, '') // remove leading zeros
+                        setDiscount(value)
+                      }
+                    }}
                     InputProps={{
                       onKeyPress: handleKeyPress,
                       inputMode: 'numeric',
@@ -651,13 +758,22 @@ const Create = () => {
                     variant='outlined'
                   />
                 </Grid>
+
                 <Grid item xs={4}>
                   <TextField
                     fullWidth
                     label='Shipping'
                     placeholder='0.00'
-                    value={shipping}
-                    onChange={e => setShipping(e.target.value)}
+                    value={shipping || 0}
+                    onChange={e => {
+                      let value = e.target.value
+                      if (value === '') {
+                        setShipping(0)
+                      } else {
+                        value = value.replace(/^0+(?=\d)/, '') // remove leading zeros
+                        setShipping(value)
+                      }
+                    }}
                     InputProps={{
                       onKeyPress: handleKeyPress,
                       inputMode: 'numeric',
