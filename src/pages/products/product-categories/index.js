@@ -134,7 +134,7 @@ const ProductCategories = () => {
     return counts
   }, {})
 
-  console.log(categoryCounts)
+  // console.log(categoryCounts)
 
   return (
     <Grid container spacing={2}>

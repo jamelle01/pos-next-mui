@@ -20,13 +20,26 @@ import TablePagination from '@mui/material/TablePagination'
 import TextField from '@mui/material/TextField'
 import Magnify from 'mdi-material-ui/Magnify'
 import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
 
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
+import Fade from '@mui/material/Fade'
+import Menu from '@mui/material/Menu'
+import ListItemIcon from '@mui/material/ListItemIcon'
+
+// icons here
+import DotsVertical from 'mdi-material-ui/DotsVertical'
+import Eye from 'mdi-material-ui/Eye'
+import Delete from 'mdi-material-ui/Delete'
+import FilePdfBox from 'mdi-material-ui/FilePdfBox'
+import Cart from 'mdi-material-ui/Cart'
+import SquareEditOutline from 'mdi-material-ui/SquareEditOutline'
 
 import Image from 'next/image'
+// import Link from 'next/link'
 
 // ** Demo Components Imports
 import TableBasic from 'src/views/tables/TableBasic'
@@ -134,6 +147,9 @@ const Quotations = () => {
     })
   }
 
+  const [anchorEl, setAnchorEl] = useState(null)
+  const open = Boolean(anchorEl)
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -142,7 +158,7 @@ const Quotations = () => {
           quotations
           {/* </Link> */}
         </Typography>
-        {/* <Typography variant='body2'>Tables display sets of data. They can be fully customized</Typography> */}
+        {/* <Typography variant='subtitle2'>Tables display sets of data. They can be fully customized</Typography> */}
       </Grid>
 
       {/* search  */}
@@ -251,10 +267,12 @@ const Quotations = () => {
             fullWidth
             disableElevation
             style={{ textTransform: 'none' }}
-            onClick={() => router.push('/quotations/create')}
+            // onClick={() => router.push('/quotations/create/')}
+            onClick={() => router.push('/quotations/' + 'create')}
+            // onClick={() => router.push('/quotations/details/' + quotation.id)}
             variant='contained'
           >
-            Create quotation
+            Create Quotation
           </Button>
         </Card>
       </Grid>
@@ -289,9 +307,9 @@ const Quotations = () => {
                   <StyledTableCell align='left'>
                     <TableSortLabel
                       fullwidth
-                      active={sortBy === 'warehouse'}
+                      active={sortBy === 'shelf'}
                       direction={sortOrder}
-                      onClick={() => handleSort('warehouse')}
+                      onClick={() => handleSort('shelf')}
                     >
                       Warehouse
                     </TableSortLabel>
@@ -378,7 +396,7 @@ const Quotations = () => {
                             // WebkitLineClamp: 2
                           }}
                         >
-                          {quotation.warehouse}
+                          {quotation.shelf}
                         </Typography>
                       </StyledTableCell>
                       <StyledTableCell align='left'>
@@ -418,16 +436,82 @@ const Quotations = () => {
                       <StyledTableCell align='center'>
                         <Typography
                           style={{
-                            fontSize: '0.8rem',
+                            // fontSize: '0.8rem',
                             whiteSpace: 'nowrap',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis'
                           }}
+                          variant='caption'
                         >
                           {quotation.created_on}
                         </Typography>
                       </StyledTableCell>
-                      <StyledTableCell align='center'>Crud</StyledTableCell>
+                      <StyledTableCell align='center'>
+                        <IconButton
+                          id='fade-button'
+                          aria-controls={open ? 'fade-menu' : undefined}
+                          aria-haspopup='true'
+                          aria-expanded={open ? 'true' : undefined}
+                          onClick={e => setAnchorEl(e.currentTarget)}
+                        >
+                          <DotsVertical />
+                        </IconButton>
+                        <Menu
+                          id='fade-menu'
+                          MenuListProps={{
+                            'aria-labelledby': 'fade-button'
+                          }}
+                          anchorEl={anchorEl}
+                          open={open}
+                          onClose={() => setAnchorEl(null)}
+                          TransitionComponent={Fade}
+                        >
+                          <MenuItem onClick={() => setAnchorEl(null)}>
+                            <Link
+                              sx={{ display: 'flex' }}
+                              onClick={() => router.push('/quotations/details/' + quotation.id)}
+                              key={quotation.id}
+                            >
+                              <ListItemIcon>
+                                <Eye fontSize='small' />
+                              </ListItemIcon>
+                              <Typography variant='subtitle2'>View Quotation</Typography>
+                            </Link>
+                          </MenuItem>
+                          <MenuItem onClick={() => setAnchorEl(null)}>
+                            <ListItemIcon>
+                              <FilePdfBox fontSize='small' />
+                            </ListItemIcon>
+                            <Typography sx={{ display: 'inline' }} variant='subtitle2'>
+                              Download PDF
+                            </Typography>
+                          </MenuItem>
+                          <MenuItem onClick={() => setAnchorEl(null)}>
+                            <ListItemIcon>
+                              <Cart fontSize='small' />
+                            </ListItemIcon>
+                            <Typography sx={{ display: 'inline' }} variant='subtitle2'>
+                              Create Sale
+                            </Typography>
+                          </MenuItem>
+                          <MenuItem onClick={() => setAnchorEl(null)}>
+                            <ListItemIcon>
+                              <SquareEditOutline fontSize='small' />
+                            </ListItemIcon>
+                            <Typography sx={{ display: 'inline' }} variant='subtitle2'>
+                              Edit Quotation
+                            </Typography>
+                          </MenuItem>
+                          <MenuItem onClick={() => setAnchorEl(null)}>
+                            <ListItemIcon>
+                              <Delete fontSize='small' />
+                            </ListItemIcon>
+                            <Typography sx={{ display: 'inline' }} variant='subtitle2'>
+                              Delete Quotation
+                            </Typography>
+                          </MenuItem>
+                        </Menu>
+                      </StyledTableCell>
                     </StyledTableRow>
                   ))}
               </TableBody>

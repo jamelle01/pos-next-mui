@@ -253,7 +253,9 @@ const Create = () => {
     const keyCode = event.keyCode || event.which
     const keyValue = String.fromCharCode(keyCode)
 
-    if (!/^\d+$/.test(keyValue)) {
+    if (!/^\d*\.?\d*$/.test(keyValue)) {
+      event.preventDefault()
+    } else if (keyValue === '.' && event.target.value.includes('.')) {
       event.preventDefault()
     }
   }

@@ -73,7 +73,7 @@ const data = [
 
 const ProductList = ({ handleProductClick, products, categories, brands }) => {
   const { settings, saveSettings } = useSettings()
-  console.log(products)
+  // console.log(products)
   const [categoryValue, setCategoryValue] = useState('All Categories')
   const [brandValue, setBrandValue] = useState('All Brands')
   const [search, setSearch] = useState('')
