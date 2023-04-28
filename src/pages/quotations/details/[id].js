@@ -45,8 +45,13 @@ import PlusBox from 'mdi-material-ui/PlusBox'
 import TrashCanOutline from 'mdi-material-ui/TrashCanOutline'
 import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
+import Account from 'mdi-material-ui/Account'
+import Email from 'mdi-material-ui/Email'
+import Cellphone from 'mdi-material-ui/Cellphone'
+import MapMarker from 'mdi-material-ui/MapMarker'
 
 // ** Third Party Imports
+
 // import DatePicker from 'react-datepicker'
 
 import dayjs from 'dayjs'
@@ -73,6 +78,7 @@ import { useState, useEffect, forwardRef, useMemo, useRef } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { reference } from '@popperjs/core'
+import { DetailsOutlined } from '@mui/icons-material'
 
 // custom style below
 
@@ -95,7 +101,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: theme.palette.action.hover
   },
 
-  // hide last border
+  // this is Comment
+
+  // hide last borer
   '&:last-of-type td, &:last-of-type th': {
     border: 0
   }
@@ -192,26 +200,49 @@ const customersUrl = 'http://localhost:8000/customers'
 const shelvesUrl = 'http://localhost:8000/shelves'
 const quotationsUrl = 'http://localhost:8000/quotations'
 
-const InfoCard = () => {
+const InfoCard = ({ details, text }) => {
   return (
-    <Card>
-      <CardContent>
-        <Typography variant='body1' component='h6'>
-          CUSTOMER INFO
-        </Typography>
-        <Typography variant='caption' component='p'>
-          Tedt
-        </Typography>
-        <Typography variant='caption' component='p'>
-          tedt@gmail.com
-        </Typography>
-        <Typography variant='caption' component='p'>
-          67777777777777777777
-        </Typography>
-        <Typography variant='caption' component='p'>
-          Surat
-        </Typography>
-      </CardContent>
+    <Card sx={{ height: '100%' }}>
+      {text === 'QUOTATION INFO' ? (
+        <CardContent>
+          <Typography variant='body1' component='h6'>
+            {text}
+          </Typography>
+          <Divider />
+          <Typography sx={{ mt: 1, display: 'flex', alignItems: 'left' }} variant='body2' component='p'>
+            Reference : {details.reference}
+          </Typography>
+          <Typography sx={{ mt: 1, display: 'flex', alignItems: 'left' }} variant='body2' component='p'>
+            Status : {details.status}
+          </Typography>
+          <Typography sx={{ mt: 1, display: 'flex', alignItems: 'left' }} variant='body2' component='p'>
+            Shelf : {details.shelf}
+          </Typography>
+        </CardContent>
+      ) : (
+        <CardContent>
+          <Typography variant='body1' component='h6'>
+            {text}
+          </Typography>
+          <Divider />
+          <Typography sx={{ mt: 1, display: 'flex', alignItems: 'left' }} variant='body2' component='p'>
+            <Account sx={{ mr: 1 }} />
+            {text === 'CUSTOMER INFO' ? details?.name : details?.company_info?.name}
+          </Typography>
+          <Typography sx={{ mt: 1, display: 'flex', alignItems: 'left' }} variant='body2' component='p'>
+            <Email sx={{ mr: 1 }} />
+            {text === 'CUSTOMER INFO' ? details?.email : details?.company_info?.email}
+          </Typography>
+          <Typography sx={{ mt: 1, display: 'flex', alignItems: 'left' }} variant='body2' component='p'>
+            <Cellphone sx={{ mr: 1 }} />
+            {text === 'CUSTOMER INFO' ? details?.phone : details?.company_info?.phone}
+          </Typography>
+          <Typography sx={{ mt: 1, display: 'flex', alignItems: 'left' }} variant='body2' component='p'>
+            <MapMarker sx={{ mr: 1 }} />
+            {text === 'CUSTOMER INFO' ? details?.address : details?.company_info?.address}
+          </Typography>
+        </CardContent>
+      )}
     </Card>
   )
 }
@@ -219,7 +250,6 @@ const InfoCard = () => {
 const View = () => {
   const router = useRouter()
   const id = router.query.id
-
   const [quotation, setQuotation] = useState([])
 
   const [selectedProducts, setSelectedProducts] = useState([])
@@ -230,20 +260,24 @@ const View = () => {
   const [total, setTotal] = useState(0)
   const [subTotal, setSubTotal] = useState(0)
 
-  useState(() => {
+  const [customerDetails, setCustomerDetails] = useState([])
+
+  useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch(quotationsUrl + '/' + id)
-        const data = await response.json()
-        setQuotation(data)
+        const quotationsResponse = await fetch(quotationsUrl + '/' + id)
+        const quotationsData = await quotationsResponse.json()
+        setQuotation(quotationsData)
+
+        const customersResponse = await fetch(customersUrl + '/' + quotationsData.customerId)
+        const customersData = await customersResponse.json()
+        setCustomerDetails(customersData)
       } catch (error) {
         console.error(error)
       }
     }
     fetchData()
   }, [])
-
-  console.log(quotation)
 
   return (
     <Grid container spacing={2}>
@@ -278,13 +312,13 @@ const View = () => {
                 </Typography>
               </Grid>
               <Grid item xs={4}>
-                <InfoCard />
+                <InfoCard details={customerDetails} text={'CUSTOMER INFO'} />
               </Grid>
               <Grid item xs={4}>
-                <InfoCard />
+                <InfoCard details={customerDetails} text={'COMPANY INFO'} />
               </Grid>
               <Grid item xs={4}>
-                <InfoCard />
+                <InfoCard details={quotation} text={'QUOTATION INFO'} />
               </Grid>
               <Grid item xs={12}>
                 <Typography variant='body1'>ORDER SUMMARY</Typography>
@@ -296,113 +330,115 @@ const View = () => {
                       <TableRow>
                         <TableCell>Product</TableCell>
                         <TableCell align='left'>Price</TableCell>
-                        <TableCell align='left'>Stock</TableCell>
+                        {/* <TableCell align='left'>Stock</TableCell> */}
                         <TableCell align='center'>Qty</TableCell>
                         <TableCell align='left'>Discount</TableCell>
                         <TableCell align='left'>Subtotal</TableCell>
-                        <TableCell sx={{ width: '20px' }} align='left'>
+                        {/* <TableCell sx={{ width: '20px' }} align='left'>
                           Action
-                        </TableCell>
+                        </TableCell> */}
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {selectedProducts.map(item => (
-                        <TableRow key={item.desc}>
-                          <TableCell>
-                            <Typography variant='subtitle1'>{item.code}</Typography>
+                      {quotation.selectedProducts &&
+                        quotation.selectedProducts.map(item => (
+                          <TableRow key={item.desc}>
+                            <TableCell>
+                              <Typography variant='subtitle1'>{item.code}</Typography>
 
-                            <StyledName sx={{ fontSize: '0.7rem' }}>{item.name}</StyledName>
-                          </TableCell>
+                              <StyledName sx={{ fontSize: '0.7rem' }}>{item.name}</StyledName>
+                            </TableCell>
 
-                          <TableCell align='left'>
-                            {item.price.toLocaleString(undefined, {
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 2
-                            })}
-                          </TableCell>
-                          <TableCell align='left'>{item.quantity}</TableCell>
-                          <TableCell align='left'>
-                            <div
-                              style={{
-                                display: 'flex',
-                                height: '100%',
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                              }}
-                            >
-                              <IconButton
-                                onClick={() => {
-                                  if (item.selectedQuantity > 1) {
-                                    handleDecrement(item.id)
-                                  }
-                                }}
-                                disabled={item.selectedQuantity <= 1}
-                                sx={{
-                                  color: 'red',
-                                  opacity: item.selectedQuantity <= 1 ? '0.5' : '1',
-                                  cursor: item.selectedQuantity <= 1 ? 'not-allowed' : 'pointer'
-                                }}
-                              >
-                                <MinusBox />
-                              </IconButton>
-
-                              <input
-                                className='quantValue'
-                                type='number'
-                                value={item.selectedQuantity}
-                                // value={item.selectedQuantity >= item.quantity ? item.quantity : item.selectedQuantity}
+                            <TableCell align='left'>
+                              {item.price.toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                              })}
+                            </TableCell>
+                            {/* <TableCell align='left'>{item.quantity}</TableCell> */}
+                            <TableCell align='left'>
+                              <Typography>{item.selectedQuantity}</Typography>
+                              {/* <div
                                 style={{
-                                  minWidth: '30px',
-                                  maxWidth: '50px',
-                                  textAlign: 'center',
-                                  border: '1px solid transparent',
-                                  // backgroundColor: 'transparent',
-                                  fontSize: '14px',
-                                  fontWeight: 'bold',
-                                  // color: 'secondary.main',
-                                  appearance: 'textfield'
+                                  display: 'flex',
+                                  height: '100%',
+                                  justifyContent: 'center',
+                                  alignItems: 'center'
                                 }}
-                                onChange={e => handleQuantChange(item.id, e)}
-                              />
-
-                              <IconButton
-                                sx={{
-                                  color: 'blue',
-                                  // opacity: item.selectedQuantity === item.quantity ? '0.5' : '1',
-                                  cursor: 'pointer'
-                                  // cursor: item.selectedQuantity === item.quantity ? 'not-allowed' : 'pointer'
-                                }}
-                                onClick={() => {
-                                  // if (item.selectedQuantity < item.quantity) {
-                                  handleIncrement(item.id)
-                                  // }
-                                }}
-                                // disabled={item.selectedQuantity === item.quantity}
                               >
-                                <PlusBox />
+                                <IconButton
+                                  onClick={() => {
+                                    if (item.selectedQuantity > 1) {
+                                      handleDecrement(item.id)
+                                    }
+                                  }}
+                                  disabled={item.selectedQuantity <= 1}
+                                  sx={{
+                                    color: 'red',
+                                    opacity: item.selectedQuantity <= 1 ? '0.5' : '1',
+                                    cursor: item.selectedQuantity <= 1 ? 'not-allowed' : 'pointer'
+                                  }}
+                                >
+                                  <MinusBox />
+                                </IconButton>
+
+                                <input
+                                  className='quantValue'
+                                  type='number'
+                                  value={item.selectedQuantity}
+                                  // value={item.selectedQuantity >= item.quantity ? item.quantity : item.selectedQuantity}
+                                  style={{
+                                    minWidth: '30px',
+                                    maxWidth: '50px',
+                                    textAlign: 'center',
+                                    border: '1px solid transparent',
+                                    // backgroundColor: 'transparent',
+                                    fontSize: '14px',
+                                    fontWeight: 'bold',
+                                    // color: 'secondary.main',
+                                    appearance: 'textfield'
+                                  }}
+                                  onChange={e => handleQuantChange(item.id, e)}
+                                />
+
+                                <IconButton
+                                  sx={{
+                                    color: 'blue',
+                                    // opacity: item.selectedQuantity === item.quantity ? '0.5' : '1',
+                                    cursor: 'pointer'
+                                    // cursor: item.selectedQuantity === item.quantity ? 'not-allowed' : 'pointer'
+                                  }}
+                                  onClick={() => {
+                                    // if (item.selectedQuantity < item.quantity) {
+                                    handleIncrement(item.id)
+                                    // }
+                                  }}
+                                  // disabled={item.selectedQuantity === item.quantity}
+                                >
+                                  <PlusBox />
+                                </IconButton>
+                              </div> */}
+                            </TableCell>
+                            <TableCell align='left'>
+                              {item.discount.toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                              })}
+                            </TableCell>
+                            <TableCell align='left'>
+                              {(item.subtotal = item.price * item.selectedQuantity).toLocaleString(undefined, {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                              })}
+                            </TableCell>
+                            {/* <TableCell align='center'>
+                              <IconButton onClick={() => handleProductRemove(item.id)} sx={{ color: 'red' }}>
+                                <Delete />
                               </IconButton>
-                            </div>
-                          </TableCell>
-                          <TableCell align='left'>
-                            {item.discount.toLocaleString(undefined, {
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 2
-                            })}
-                          </TableCell>
-                          <TableCell align='left'>
-                            {(item.subtotal = item.price * item.selectedQuantity).toLocaleString(undefined, {
-                              minimumFractionDigits: 2,
-                              maximumFractionDigits: 2
-                            })}
-                          </TableCell>
-                          <TableCell align='center'>
-                            <IconButton onClick={() => handleProductRemove(item.id)} sx={{ color: 'red' }}>
-                              <Delete />
-                            </IconButton>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                      {selectedProducts.length == 0 && (
+                            </TableCell> */}
+                          </TableRow>
+                        ))}
+                      {quotation.selectedProducts && quotation.selectedProducts.length === 0 && (
                         <TableRow>
                           <TableCell colSpan={7}>
                             <Typography align='center' variant='subtitle2'>
@@ -413,9 +449,9 @@ const View = () => {
                       )}
 
                       <TableRow>
-                        <TableCell colSpan={4} rowSpan={4} />
+                        <TableCell colSpan={3} rowSpan={4} />
                         <TableCell>Subtotal</TableCell>
-                        <TableCell colspan={2} align='right'>
+                        <TableCell colspan={1} align='right'>
                           {subTotal.toLocaleString(undefined, {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2
