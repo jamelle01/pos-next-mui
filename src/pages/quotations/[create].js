@@ -47,6 +47,7 @@ import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
 
 // ** Third Party Imports
+
 // import DatePicker from 'react-datepicker'
 
 import dayjs from 'dayjs'
@@ -69,6 +70,7 @@ import { CSVLink } from 'react-csv'
 //react import
 
 import { useState, useEffect, forwardRef, useMemo, useRef } from 'react'
+
 // next import
 import { useRouter } from 'next/router'
 import Image from 'next/image'
@@ -101,12 +103,19 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }))
 
 // const StyledList = styled(List)`
+
 //   position: absolute;
+
 //   z-index: 999;
+
 //   background-color: #fff;
+
 //   border: 1px solid #ccc;
+
 //   margin-top: 8px;
+
 //   width: 100%;
+
 // `
 
 const StyledList = styled(List)(({ theme }) => ({
@@ -133,11 +142,15 @@ const StyledListItem = styled(ListItem)(({ theme }) => ({
 const StyledListItemText = styled(ListItemText)(({ theme }) => ({
   '& .MuiListItemText-primary': {
     fontWeight: theme.typography.fontWeightBold,
-    fontSize: '0.9rem' // Change the font size here
+    fontSize: '0.9rem'
+
+    // Change the font size here
   },
   '& .MuiListItemText-secondary': {
     color: theme.palette.text.secondary,
-    fontSize: '0.8rem' // Change the font size here
+    fontSize: '0.8rem'
+
+    // Change the font size here
   }
 }))
 
@@ -222,6 +235,7 @@ const Create = () => {
   // data to be sent to database
   const [selectedDate, setSelectedDate] = useState(dayjs())
   const [selectedShelve, setSelectedShelve] = useState('')
+
   // selected customer details
   const [selectedCustomer, setSelectedCustomer] = useState()
   const [customerDetails, setCustomerDetails] = useState([])
@@ -234,6 +248,7 @@ const Create = () => {
   const [total, setTotal] = useState(0)
   const [subTotal, setSubTotal] = useState(0)
   const [search, setSearch] = useState('')
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
   }
@@ -294,6 +309,7 @@ const Create = () => {
       }
     }
     document.addEventListener('click', handleClickOutside)
+
     return () => {
       document.removeEventListener('click', handleClickOutside)
     }
@@ -322,58 +338,115 @@ const Create = () => {
   }, [selectedProducts, discount, shipping])
 
   // functions here
+
   // Handle Password
+
   // const handlePasswordChange = prop => event => {
+
   //   setValues({ ...values, [prop]: event.target.value })
+
   // }
+
   // const handleClickShowPassword = () => {
+
   //   setValues({ ...values, showPassword: !values.showPassword })
+
   // }
+
   // const handleMouseDownPassword = event => {
+
   //   event.preventDefault()
+
   // }
-  // // Handle Confirm Password
+
+  //
+
+  // Handle Confirm Password
+
   // const handleConfirmChange = prop => event => {
+
   //   setValues({ ...values, [prop]: event.target.value })
+
   // }
+
   // const handleClickShowConfirmPassword = () => {
+
   //   setValues({ ...values, showPassword2: !values.showPassword2 })
+
   // }
+
   // const handleMouseDownConfirmPassword = event => {
+
   //   event.preventDefault()
+
   // }
-  // // Handle Select
+
+  //
+
+  // Handle Select
+
   // const handleSelectChange = event => {
+
   //   setLanguage(event.target.value)
+
   // }
+
   // const handleSort = property => {
+
   //   const isAscending = sortOrder === 'asc'
+
   //   const order = isAscending ? 'desc' : 'asc'
+
   //   setSortBy(property)
+
   //   setSortOrder(order)
+
   //   products.sort((a, b) => {
+
   //     const valueA = a[property]
+
   //     const valueB = b[property]
+
   //     const direction = isAscending ? 1 : -1
 
   //     return valueA < valueB ? -direction : valueA > valueB ? direction : 0
+
   //   })
+
   // }
+
   // const handleKeyDown = event => {
+
   //   if (event.key === 'ArrowDown') {
+
   //     event.preventDefault()
+
   //     setHighlightedIndex(prevIndex => (prevIndex === filteredProducts.length - 1 ? 0 : prevIndex + 1))
+
   //   } else if (event.key === 'ArrowUp') {
+
   //     event.preventDefault()
+
   //     setHighlightedIndex(prevIndex => (prevIndex === 0 ? filteredProducts.length - 1 : prevIndex - 1))
+
   //   } else if (event.key === 'Enter' && highlightedIndex !== -1) {
-  //     // Do something with the selected product
+
+  //
+
+  // Do something with the selected product
+
   //     console.log(filteredProducts[highlightedIndex])
+
   //   }
+
   //   event.stopPropagation()
+
   // }
+
   // const handleFocus = () => {
+
   //   setHighlightedIndex(0)
+
   // }
 
   const handleKeyPress = event => {
@@ -433,9 +506,13 @@ const Create = () => {
     if (value === '') {
       value = 0
     } else {
-      value = value.replace(/^0+(?=\d)/, '') // remove leading zeros
+      value = value.replace(/^0+(?=\d)/, '')
+
+      // remove leading zeros
+
       // setShipping(value)
     }
+
     // const value = e.target.value === '' ? 0 : parseInt(e.target.value)
     setSelectedProducts(prevProducts =>
       prevProducts.map(product => (product.id === id ? { ...product, selectedQuantity: value } : product))
@@ -448,6 +525,7 @@ const Create = () => {
     const min = Math.pow(10, numDigits - 1)
     const max = Math.pow(10, numDigits) - 1
     const randomNum = Math.floor(Math.random() * (max - min + 1)) + min
+
     return prefix + randomNum.toString()
   }
 
@@ -484,10 +562,12 @@ const Create = () => {
         if (!response.ok) {
           throw new Error('Network response was not ok')
         }
+
         return response.json()
       })
       .then(data => {
         console.log('Quotation saved successfully:', data)
+
         // do something after the product is saved
       })
       .catch(error => {
@@ -581,7 +661,9 @@ const Create = () => {
                         fullWidth
                         inputProps={{
                           ...params.inputProps,
-                          autoComplete: 'new-password' // disable browser auto-complete
+                          autoComplete: 'new-password'
+
+                          // disable browser auto-complete
                         }}
                         variant='outlined'
                       />
@@ -692,15 +774,16 @@ const Create = () => {
                                   className='quantValue'
                                   type='number'
                                   value={item.selectedQuantity}
-                                  // value={item.selectedQuantity >= item.quantity ? item.quantity : item.selectedQuantity}
                                   style={{
                                     minWidth: '30px',
                                     maxWidth: '50px',
                                     textAlign: 'center',
                                     border: '1px solid transparent',
+
                                     // backgroundColor: 'transparent',
                                     fontSize: '14px',
                                     fontWeight: 'bold',
+
                                     // color: 'secondary.main',
                                     appearance: 'textfield'
                                   }}
@@ -710,15 +793,19 @@ const Create = () => {
                                 <IconButton
                                   sx={{
                                     color: 'blue',
+
                                     // opacity: item.selectedQuantity === item.quantity ? '0.5' : '1',
                                     cursor: 'pointer'
+
                                     // cursor: item.selectedQuantity === item.quantity ? 'not-allowed' : 'pointer'
                                   }}
                                   onClick={() => {
                                     // if (item.selectedQuantity < item.quantity) {
                                     handleIncrement(item.id)
+
                                     // }
                                   }}
+
                                   // disabled={item.selectedQuantity === item.quantity}
                                 >
                                   <PlusBox />
@@ -807,7 +894,9 @@ const Create = () => {
                       if (value === '') {
                         setDiscount(0)
                       } else {
-                        value = value.replace(/^0+(?=\d)/, '') // remove leading zeros
+                        value = value.replace(/^0+(?=\d)/, '')
+
+                        // remove leading zeros
                         setDiscount(value)
                       }
                     }}
@@ -841,7 +930,9 @@ const Create = () => {
                       if (value === '') {
                         setShipping(0)
                       } else {
-                        value = value.replace(/^0+(?=\d)/, '') // remove leading zeros
+                        value = value.replace(/^0+(?=\d)/, '')
+
+                        // remove leading zeros
                         setShipping(value)
                       }
                     }}
@@ -870,7 +961,6 @@ const Create = () => {
                     <Select
                       labelId='demo-multiple-name-label'
                       id='demo-multiple-name'
-                      // multiple
                       value={selectedStatus}
                       onChange={e => setSelectedStatus(e.target.value)}
                       input={<OutlinedInput label='Shelve' />}
@@ -896,7 +986,9 @@ const Create = () => {
                     placeholder='Enter Notes'
                     rows={4}
                     onChange={e => setNotes(e.target.value)}
+
                     // defaultValue='Default Value'
+
                     // variant='standard'
                   />
                 </Grid>

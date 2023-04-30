@@ -68,6 +68,7 @@ import Image from 'next/image'
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
+
 const MenuProps = {
   PaperProps: {
     style: {
@@ -205,10 +206,7 @@ const Create = () => {
     const {
       target: { value }
     } = event
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value
-    )
+    setPersonName(typeof value === 'string' ? value.split(',') : value)
   }
 
   useEffect(() => {
@@ -301,10 +299,12 @@ const Create = () => {
         if (!response.ok) {
           throw new Error('Network response was not ok')
         }
+
         return response.json()
       })
       .then(data => {
         console.log('Product saved successfully:', data)
+
         // do something after the product is saved
       })
       .catch(error => {
@@ -434,7 +434,6 @@ const Create = () => {
                         <Select
                           labelId='demo-multiple-name-label'
                           id='demo-multiple-name'
-                          // multiple
                           value={selectedBarcodeSymbol}
                           onChange={e => setSelectedBarcodeSymbol(e.target.value)}
                           input={<OutlinedInput label='Choose Barcode Symbology' />}
@@ -483,8 +482,6 @@ const Create = () => {
                         <Select
                           labelId='demo-multiple-name-label'
                           id='demo-multiple-name'
-                          // multiple
-                          // value={selectedUnit}
                           onChange={e => setSelectedUnit(e.target.value)}
                           input={<OutlinedInput label='Product Unit' />}
                         >
@@ -548,7 +545,6 @@ const Create = () => {
 
                     <Grid item xs={12}>
                       <TextField
-                        // required
                         fullWidth
                         id='standard-multiline-static'
                         label='Notes'
@@ -556,6 +552,7 @@ const Create = () => {
                         onChange={e => setNotes(e.target.value)}
                         multiline
                         rows={4}
+
                         // variant='standard'
                       />
                     </Grid>
@@ -563,13 +560,7 @@ const Create = () => {
                     <Grid item xs={12}>
                       <Divider sx={{ margin: 0 }} />
                       <CardActions sx={{ justifyContent: 'flex-end' }}>
-                        <Button
-                          // onClick={e => handleSubmit(e)}
-                          size='large'
-                          type='submit'
-                          sx={{ mr: 2 }}
-                          variant='contained'
-                        >
+                        <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained'>
                           Save
                         </Button>
                         <Button
@@ -585,7 +576,8 @@ const Create = () => {
                   </Grid>
                 </Grid>
 
-                {/* // image and add stock section */}
+                {/* 
+                // image and add stock section */}
 
                 <Grid item xs={4}>
                   <Grid container spacing={5}>
@@ -646,7 +638,6 @@ const Create = () => {
                         <Select
                           labelId='demo-multiple-name-label'
                           id='demo-multiple-name'
-                          // multiple
                           value={selectedShelve}
                           onChange={e => setSelectedShelve(e.target.value)}
                           input={<OutlinedInput label='Shelve' />}
@@ -665,7 +656,6 @@ const Create = () => {
                         <Select
                           labelId='demo-multiple-name-label'
                           id='demo-multiple-name'
-                          // multiple
                           value={selectedSupplier}
                           onChange={e => setSelectedSupplier(e.target.value)}
                           input={<OutlinedInput label='Supplier' />}

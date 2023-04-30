@@ -131,6 +131,7 @@ const Brands = () => {
 
   const categoryCounts = brands.reduce((counts, brand) => {
     counts[brand.brand] = (counts[brand.brand] || 0) + 1
+
     return counts
   }, {})
 
@@ -204,8 +205,6 @@ const Brands = () => {
           <Button
             sx={{ height: '100%', whiteSpace: 'nowrap' }}
             align='center'
-            // size='large'
-            // type='submit'
             fullWidth
             disableElevation
             style={{ textTransform: 'none' }}
@@ -302,7 +301,7 @@ const Brands = () => {
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component='div'
-            count={brands.length-1}
+            count={brands.length - 1}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

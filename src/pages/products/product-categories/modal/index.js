@@ -51,11 +51,11 @@ export default function CreateCategory({ refresh, setRefresh, categoriesUrl, ope
         if (!response.ok) {
           throw new Error('Network response was not ok')
         }
+
         return response.json()
       })
       .then(data => {
         console.log('Product category saved successfully:', data)
-        // do something after the product category is saved
       })
       .catch(error => {
         console.error('There was an error saving the product category:', error)
@@ -144,7 +144,6 @@ export default function CreateCategory({ refresh, setRefresh, categoriesUrl, ope
           onClick={() => {
             handleSubmit()
             setOpenCreate(false)
-            // router.push('/products/product-categories')
             setRefresh(!refresh)
           }}
         >

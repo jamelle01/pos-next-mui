@@ -39,6 +39,7 @@ import Cart from 'mdi-material-ui/Cart'
 import SquareEditOutline from 'mdi-material-ui/SquareEditOutline'
 
 import Image from 'next/image'
+
 // import Link from 'next/link'
 
 // ** Demo Components Imports
@@ -154,7 +155,8 @@ const Quotations = () => {
     <Grid container spacing={2}>
       <Grid item xs={12}>
         <Typography variant='h5'>
-          {/* <Link href='https://mui.com/components/tables/' target='_blank'> */}
+          {/* <Link href='https:
+          //mui.com/components/tables/' target='_blank'> */}
           quotations
           {/* </Link> */}
         </Typography>
@@ -262,14 +264,10 @@ const Quotations = () => {
           <Button
             sx={{ height: '100%', whiteSpace: 'nowrap' }}
             align='center'
-            // size='large'
-            // type='submit'
             fullWidth
             disableElevation
             style={{ textTransform: 'none' }}
-            // onClick={() => router.push('/quotations/create/')}
             onClick={() => router.push('/quotations/' + 'create')}
-            // onClick={() => router.push('/quotations/details/' + quotation.id)}
             variant='contained'
           >
             Create Quotation
@@ -358,12 +356,20 @@ const Quotations = () => {
                         <Typography
                           style={{
                             fontSize: '.8rem'
+
                             // lineHeight: 1,
-                            // // maxHeight: '2.4rem',
+
+                            //
+                            // maxHeight: '2.4rem',
+
                             // overflow: 'hidden',
+
                             // textOverflow: 'ellipsis',
+
                             // display: '-webkit-box',
+
                             // WebkitBoxOrient: 'vertical'
+
                             // WebkitLineClamp: 2
                           }}
                         >
@@ -388,11 +394,13 @@ const Quotations = () => {
                           style={{
                             fontSize: '0.8rem',
                             lineHeight: 1,
+
                             // maxHeight: '2.4rem',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
                             display: '-webkit-box',
                             WebkitBoxOrient: 'vertical'
+
                             // WebkitLineClamp: 2
                           }}
                         >
@@ -404,11 +412,13 @@ const Quotations = () => {
                           style={{
                             fontSize: '0.8rem',
                             lineHeight: 1,
+
                             // maxHeight: '2.4rem',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
                             display: '-webkit-box',
                             WebkitBoxOrient: 'vertical'
+
                             // WebkitLineClamp: 2
                           }}
                         >
@@ -535,4 +545,5 @@ const Quotations = () => {
 export default Quotations
 
 // to run json
+
 // npx json-server --watch data/db.json --port 8000

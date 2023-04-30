@@ -131,6 +131,7 @@ const ProductCategories = () => {
 
   const categoryCounts = categories.reduce((counts, category) => {
     counts[category.category] = (counts[category.category] || 0) + 1
+
     return counts
   }, {})
 
@@ -204,8 +205,6 @@ const ProductCategories = () => {
           <Button
             sx={{ height: '100%', whiteSpace: 'nowrap' }}
             align='center'
-            // size='large'
-            // type='submit'
             fullWidth
             disableElevation
             style={{ textTransform: 'none' }}

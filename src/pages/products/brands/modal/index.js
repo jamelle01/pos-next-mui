@@ -42,10 +42,12 @@ export default function CreateCategory({ refresh, setRefresh, brandsUrl, openCre
         if (!response.ok) {
           throw new Error('Network response was not ok')
         }
+        
         return response.json()
       })
       .then(data => {
         console.log('Product brand saved successfully:', data)
+
         // do something after the product category is saved
       })
       .catch(error => {
@@ -68,80 +70,79 @@ export default function CreateCategory({ refresh, setRefresh, brandsUrl, openCre
     >
       <DialogTitle>{'Create Brand  '}</DialogTitle>
       {/* <form> */}
-        <DialogContent>
-          <DialogContentText id='alert-dialog-slide-description'>
-            <Grid container spacing={5}>
-              <Grid item xs={12}>
-                <Card sx={{ padding: 2 }}>
-                  <TextField
-                    fullWidth
-                    required
-                    onChange={e => setProductBrand(e.target.value)}
-                    value={productBrand}
-                    autoComplete='off'
-                    label='Name'
-                    placeholder='Enter Product Name'
-                  />
-                </Card>
-              </Grid>
-              <Grid item xs={12}>
-                <FormControl fullWidth>
-                  <Button variant='contained' component='label'>
-                    Choose Image
-                    <input type='file' accept='.png,.jpg,.jpeg' hidden onChange={handleImageChange} />
-                  </Button>
-                  {imageFile && (
-                    <div
-                      style={{
-                        position: 'relative',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        marginTop: '10px'
-                      }}
-                    >
-                      <IconButton
-                        style={{
-                          position: 'absolute',
-                          top: 0,
-                          right: 0,
-                          zIndex: 1,
-                          borderRadius: '50%'
-                        }}
-                        onClick={() => setImageFile(null)}
-                      >
-                        <CloseCircle />
-                      </IconButton>
-                      <img
-                        src={URL.createObjectURL(imageFile)}
-                        alt='Selected'
-                        width='150'
-                        height='auto'
-                        style={{ margin: '0 auto' }}
-                      />
-                    </div>
-                  )}
-                </FormControl>
-              </Grid>
+      <DialogContent>
+        <DialogContentText id='alert-dialog-slide-description'>
+          <Grid container spacing={5}>
+            <Grid item xs={12}>
+              <Card sx={{ padding: 2 }}>
+                <TextField
+                  fullWidth
+                  required
+                  onChange={e => setProductBrand(e.target.value)}
+                  value={productBrand}
+                  autoComplete='off'
+                  label='Name'
+                  placeholder='Enter Product Name'
+                />
+              </Card>
             </Grid>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenCreate(false)}>Cancel</Button>
-          <Button
-            color='info'
-            variant='contained'
-            type='submit'
-            onClick={() => {
-              handleSubmit()
-              setOpenCreate(false)
-              // router.push('/products/product-categories')
-              setRefresh(!refresh)
-            }}
-            disabled={!productBrand}
-          >
-            Save
-          </Button>
-        </DialogActions>
+            <Grid item xs={12}>
+              <FormControl fullWidth>
+                <Button variant='contained' component='label'>
+                  Choose Image
+                  <input type='file' accept='.png,.jpg,.jpeg' hidden onChange={handleImageChange} />
+                </Button>
+                {imageFile && (
+                  <div
+                    style={{
+                      position: 'relative',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      marginTop: '10px'
+                    }}
+                  >
+                    <IconButton
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        right: 0,
+                        zIndex: 1,
+                        borderRadius: '50%'
+                      }}
+                      onClick={() => setImageFile(null)}
+                    >
+                      <CloseCircle />
+                    </IconButton>
+                    <img
+                      src={URL.createObjectURL(imageFile)}
+                      alt='Selected'
+                      width='150'
+                      height='auto'
+                      style={{ margin: '0 auto' }}
+                    />
+                  </div>
+                )}
+              </FormControl>
+            </Grid>
+          </Grid>
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => setOpenCreate(false)}>Cancel</Button>
+        <Button
+          color='info'
+          variant='contained'
+          type='submit'
+          onClick={() => {
+            handleSubmit()
+            setOpenCreate(false)
+            setRefresh(!refresh)
+          }}
+          disabled={!productBrand}
+        >
+          Save
+        </Button>
+      </DialogActions>
       {/* </form> */}
     </Dialog>
   )

@@ -74,6 +74,7 @@ import { CSVLink } from 'react-csv'
 //react import
 
 import { useState, useEffect, forwardRef, useMemo, useRef } from 'react'
+
 // next import
 import { useRouter } from 'next/router'
 import Image from 'next/image'
@@ -277,7 +278,7 @@ const View = () => {
       }
     }
     fetchData()
-  }, [])
+  })
 
   return (
     <Grid container spacing={2}>

@@ -207,8 +207,6 @@ const Products = () => {
           <Button
             sx={{ height: '100%', whiteSpace: 'nowrap' }}
             align='center'
-            // size='large'
-            // type='submit'
             fullWidth
             disableElevation
             style={{ textTransform: 'none' }}
@@ -287,13 +285,6 @@ const Products = () => {
                         <Typography
                           style={{
                             fontSize: '.8rem'
-                            // lineHeight: 1,
-                            // // maxHeight: '2.4rem',
-                            // overflow: 'hidden',
-                            // textOverflow: 'ellipsis',
-                            // display: '-webkit-box',
-                            // WebkitBoxOrient: 'vertical'
-                            // WebkitLineClamp: 2
                           }}
                         >
                           {product.name}
@@ -316,12 +307,10 @@ const Products = () => {
                           style={{
                             fontSize: '0.8rem',
                             lineHeight: 1,
-                            // maxHeight: '2.4rem',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
                             display: '-webkit-box',
                             WebkitBoxOrient: 'vertical'
-                            // WebkitLineClamp: 2
                           }}
                         >
                           {product.brand}
@@ -342,13 +331,6 @@ const Products = () => {
                         <Typography
                           style={{
                             fontSize: '0.8rem'
-                            // lineHeight: 1,
-                            // // maxHeight: '2.4rem',
-                            // overflow: 'hidden',
-                            // textOverflow: 'ellipsis',
-                            // display: '-webkit-box',
-                            // WebkitBoxOrient: 'vertical'
-                            // WebkitLineClamp: 2
                           }}
                         >
                           {product.unit}

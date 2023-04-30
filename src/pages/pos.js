@@ -95,7 +95,6 @@ const Pos = () => {
     const totalQuantity = selectedProducts.reduce((acc, product) => acc + product.selectedQuantity, 0)
     const subTotal = selectedProducts.reduce((acc, product) => acc + product.subtotal, 0)
     const total = selectedProducts.reduce((acc, product) => acc + product.subtotal, 0)
-    // console.log(totalQuantity);
     setTotalQuantity(totalQuantity)
     setSubTotal(subTotal)
 
