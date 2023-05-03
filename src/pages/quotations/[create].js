@@ -201,7 +201,7 @@ const status = [
 
 const quotationsUrl = 'http://localhost:8000/quotations'
 
-const Create = data => {
+const Create = () => {
   const router = useRouter()
   const searchInputRef = useRef(null)
 
@@ -210,9 +210,9 @@ const Create = data => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
   // data from json | choices data
-  const [products, setProducts] = useState(data.products)
-  const [customers, setCustomers] = useState(data.customers)
-  const [shelves, setShelves] = useState(data.shelves)
+  const [products, setProducts] = useState([])
+  const [customers, setCustomers] = useState([])
+  const [shelves, setShelves] = useState([])
 
   const [sortBy, setSortBy] = useState(null)
   const [sortOrder, setSortOrder] = useState('asc')
@@ -255,6 +255,43 @@ const Create = data => {
     setPage(0)
   }
 
+  // * use memo here
+
+  const filteredProducts = useMemo(() => {
+    return products.filter(
+      product =>
+        (product.code.toLowerCase().includes(search.toLowerCase()) ||
+          product.name.toLowerCase().includes(search.toLowerCase())) &&
+        product.shelf.toLowerCase() === selectedShelve.toLowerCase()
+    )
+  }, [products, search, selectedShelve])
+
+  useEffect(() => {
+    async function fetchData() {
+      const productsUrl = 'http://localhost:8000/products'
+      const customersUrl = 'http://localhost:8000/customers'
+      const shelvesUrl = 'http://localhost:8000/shelves'
+
+      const [productsRes, customersRes, shelvesRes] = await Promise.all([
+        fetch(productsUrl),
+        fetch(customersUrl),
+        fetch(shelvesUrl)
+      ])
+
+      const [productsData, customersData, shelvesData] = await Promise.all([
+        productsRes.json(),
+        customersRes.json(),
+        shelvesRes.json()
+      ])
+
+      setProducts(productsData)
+      setCustomers(customersData)
+      setShelves(shelvesData)
+    }
+
+    fetchData()
+  }, [])
+
   useEffect(() => {
     // add event listener to document for click events
     const handleClickOutside = e => {
@@ -272,15 +309,6 @@ const Create = data => {
       document.removeEventListener('click', handleClickOutside)
     }
   }, [])
-
-  const filteredProducts = useMemo(() => {
-    return products.filter(
-      product =>
-        (product.code.toLowerCase().includes(search.toLowerCase()) ||
-          product.name.toLowerCase().includes(search.toLowerCase())) &&
-        product.shelf.toLowerCase() === selectedShelve.toLowerCase()
-    )
-  }, [products, search, selectedShelve])
 
   useEffect(() => {
     const calculateTotal = async () => {
@@ -990,26 +1018,35 @@ const Create = data => {
   )
 }
 
-export async function getServerSideProps() {
-  const productsUrl = 'http://localhost:8000/products'
-  const customersUrl = 'http://localhost:8000/customers'
-  const shelvesUrl = 'http://localhost:8000/shelves'
+// export const getStaticPaths = () => {
+//   const paths = ['create']
+//   return { paths, fallback: false }
+// }
 
-  const [productsRes, customersRes, shelvesRes] = await Promise.all([
-    fetch(productsUrl),
-    fetch(customersUrl),
-    fetch(shelvesUrl)
-  ])
+// export async function getServerSideProps() {
+//   const productsUrl = 'http://localhost:8000/products'
+//   const customersUrl = 'http://localhost:8000/customers'
+//   const shelvesUrl = 'http://localhost:8000/shelves'
 
-  const [products, customers, shelves] = await Promise.all([productsRes.json(), customersRes.json(), shelvesRes.json()])
+//   const [productsRes, customersRes, shelvesRes] = await Promise.all([
+//     fetch(productsUrl),
+//     fetch(customersUrl),
+//     fetch(shelvesUrl)
+//   ])
 
-  return {
-    props: {
-      products,
-      customers,
-      shelves
-    }
-  }
-}
+//   const [productsData, customersData, shelvesData] = await Promise.all([
+//     productsRes.json(),
+//     customersRes.json(),
+//     shelvesRes.json()
+//   ])
+
+//   return {
+//     props: {
+//       productsData,
+//       customersData,
+//       shelvesData
+//     }
+//   }
+// }
 
 export default Create
