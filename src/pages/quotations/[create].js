@@ -555,6 +555,7 @@ const Create = () => {
       .then(data => {
         console.log('Quotation saved successfully:', data)
         router.push('/quotations')
+       
         // do something after the product is saved
       })
       .catch(error => {

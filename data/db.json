@@ -905,6 +905,36 @@
       "status": "pending",
       "notes": "try",
       "id": 9
+    },
+    {
+      "reference": "QA_332009",
+      "created_on": "2023-05-03T14:57:12.820Z",
+      "shelf": "shelf 1",
+      "customer": "John Smith",
+      "customerId": 2,
+      "selectedProducts": [
+        {
+          "id": 13,
+          "name": "Milwaukee M18 FUEL 18-Volt Lithium-Ion Cordless Jig Saw",
+          "quantity": 2,
+          "price": 300,
+          "subtotal": 300,
+          "category": "Power Tools",
+          "brand": "Milwaukee",
+          "code": "ML-001",
+          "created_on": "2023-04-19",
+          "unit": "pieces",
+          "shelf": "shelf 1",
+          "selectedQuantity": 1,
+          "discount": 0
+        }
+      ],
+      "discount": 0,
+      "shipping": 0,
+      "grand_total": 300,
+      "status": "pending",
+      "notes": "",
+      "id": 10
     }
   ],
   "customers": [
