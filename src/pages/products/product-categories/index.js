@@ -66,11 +66,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const url = 'http://localhost:8000/products'
 const categoriesUrl = 'http://localhost:8000/categories'
 
-const ProductCategories = data => {
+const ProductCategories = () => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [products, setProducts] = useState(data.products)
-  const [categories, setCategories] = useState(data.categories)
+  const [products, setProducts] = useState([])
+  const [categories, setCategories] = useState([])
   const [sortBy, setSortBy] = useState(null)
   const [sortOrder, setSortOrder] = useState('asc')
   const [search, setSearch] = useState('')
@@ -109,31 +109,31 @@ const ProductCategories = data => {
     return counts
   }, {})
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const response = await fetch(url)
-  //       const data = await response.json()
-  //       setProducts(data)
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }
-  //   fetchData()
-  // }, [url])
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(url)
+        const data = await response.json()
+        setProducts(data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+  }, [url])
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const response = await fetch(categoriesUrl)
-  //       const data = await response.json()
-  //       setCategories(data)
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }
-  //   fetchData()
-  // }, [categoriesUrl, refresh])
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(categoriesUrl)
+        const data = await response.json()
+        setCategories(data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+  }, [categoriesUrl, refresh])
 
   // console.log(categoryCounts)
 
@@ -314,33 +314,33 @@ const ProductCategories = data => {
   )
 }
 
-export async function getServerSideProps() {
-  const url = 'http://localhost:8000/products'
-  const categoriesUrl = 'http://localhost:8000/categories'
+// export async function getServerSideProps() {
+//   const url = 'http://localhost:8000/products'
+//   const categoriesUrl = 'http://localhost:8000/categories'
 
-  try {
-    const response = await fetch(url)
-    const products = await response.json()
+//   try {
+//     const response = await fetch(url)
+//     const products = await response.json()
 
-    const categoriesResponse = await fetch(categoriesUrl)
-    const categories = await categoriesResponse.json()
+//     const categoriesResponse = await fetch(categoriesUrl)
+//     const categories = await categoriesResponse.json()
 
-    return {
-      props: {
-        products,
-        categories
-      }
-    }
-  } catch (error) {
-    console.error(error)
+//     return {
+//       props: {
+//         products,
+//         categories
+//       }
+//     }
+//   } catch (error) {
+//     console.error(error)
 
-    return {
-      props: {
-        products: [],
-        categories: []
-      }
-    }
-  }
-}
+//     return {
+//       props: {
+//         products: [],
+//         categories: []
+//       }
+//     }
+//   }
+// }
 
 export default ProductCategories

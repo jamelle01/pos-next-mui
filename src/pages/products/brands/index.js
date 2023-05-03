@@ -66,11 +66,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const url = 'http://localhost:8000/products'
 const brandsUrl = 'http://localhost:8000/brands'
 
-const Brands = data => {
+const Brands = () => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [products, setProducts] = useState(data.products)
-  const [brands, setBrands] = useState(data.brands)
+  const [products, setProducts] = useState([])
+  const [brands, setBrands] = useState([])
   const [sortBy, setSortBy] = useState(null)
   const [sortOrder, setSortOrder] = useState('asc')
   const [search, setSearch] = useState('')
@@ -89,31 +89,31 @@ const Brands = data => {
     setPage(0)
   }
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const response = await fetch(url)
-  //       const data = await response.json()
-  //       setProducts(data)
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }
-  //   fetchData()
-  // }, [url])
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(url)
+        const data = await response.json()
+        setProducts(data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+  }, [url])
 
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       const response = await fetch(brandsUrl)
-  //       const data = await response.json()
-  //       setBrands(data)
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }
-  //   fetchData()
-  // }, [brandsUrl, refresh])
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(brandsUrl)
+        const data = await response.json()
+        setBrands(data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+  }, [brandsUrl, refresh])
 
   const handleSort = property => {
     const isAscending = sortOrder === 'asc'
@@ -314,18 +314,18 @@ const Brands = data => {
   )
 }
 
-export async function getServerSideProps(context) {
-  const url = 'http://localhost:8000/products'
-  const brandsUrl = 'http://localhost:8000/brands'
-  const [productsRes, brandsRes] = await Promise.all([fetch(url), fetch(brandsUrl)])
-  const [productsData, brandsData] = await Promise.all([productsRes.json(), brandsRes.json()])
+// export async function getServerSideProps(context) {
+//   const url = 'http://localhost:8000/products'
+//   const brandsUrl = 'http://localhost:8000/brands'
+//   const [productsRes, brandsRes] = await Promise.all([fetch(url), fetch(brandsUrl)])
+//   const [productsData, brandsData] = await Promise.all([productsRes.json(), brandsRes.json()])
 
-  return {
-    props: {
-      products: productsData,
-      brands: brandsData
-    }
-  }
-}
+//   return {
+//     props: {
+//       products: productsData,
+//       brands: brandsData
+//     }
+//   }
+// }
 
 export default Brands
