@@ -534,6 +534,7 @@ const Create = () => {
       notes
     }
     saveQuotation(quotationData)
+
   }
 
   const saveQuotation = quotationData => {
@@ -553,7 +554,7 @@ const Create = () => {
       })
       .then(data => {
         console.log('Quotation saved successfully:', data)
-
+        router.push('/quotations')
         // do something after the product is saved
       })
       .catch(error => {
