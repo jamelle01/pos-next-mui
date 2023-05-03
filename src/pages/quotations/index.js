@@ -91,10 +91,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 const url = 'http://localhost:8000/quotations'
 
-const Quotations = () => {
+const Quotations = data => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [quotations, setQuotations] = useState([])
+  const [quotations, setQuotations] = useState(data.quotations)
   const [sortBy, setSortBy] = useState(null)
   const [sortOrder, setSortOrder] = useState('asc')
   const [search, setSearch] = useState('')
@@ -103,6 +103,9 @@ const Quotations = () => {
   const [dateFilter, setDateFilter] = useState()
 
   const router = useRouter()
+
+  const [anchorEl, setAnchorEl] = useState(null)
+  const open = Boolean(anchorEl)
 
   const handleChangeDateFilter = event => {
     setDateFilter(event.target.value)
@@ -121,18 +124,18 @@ const Quotations = () => {
     setPage(0)
   }
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch(url)
-        const data = await response.json()
-        setQuotations(data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    fetchData()
-  }, [url])
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const response = await fetch(url)
+  //       const data = await response.json()
+  //       setQuotations(data)
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+  //   }
+  //   fetchData()
+  // }, [url])
 
   const handleSort = property => {
     const isAscending = sortOrder === 'asc'
@@ -147,9 +150,6 @@ const Quotations = () => {
       return valueA < valueB ? -direction : valueA > valueB ? direction : 0
     })
   }
-
-  const [anchorEl, setAnchorEl] = useState(null)
-  const open = Boolean(anchorEl)
 
   return (
     <Grid container spacing={2}>
@@ -540,6 +540,21 @@ const Quotations = () => {
       </Grid>
     </Grid>
   )
+}
+
+export async function getServerSideProps() {
+  const url = 'http://localhost:8000/quotations'
+
+  try {
+    const response = await fetch(url)
+    const quotations = await response.json()
+
+    return { props: { quotations } }
+  } catch (error) {
+    console.error(error)
+
+    return { props: { quotations: [] } }
+  }
 }
 
 export default Quotations

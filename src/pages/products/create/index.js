@@ -121,8 +121,38 @@ const Create = () => {
   const [sortOrder, setSortOrder] = useState('asc')
   const [search, setSearch] = useState('')
 
+  // data to be up
+  const [barcodeSymbols, setBarcodeSymbols] = useState([])
+  const [productUnits, setProductUnits] = useState([])
+  const [shelves, setShelves] = useState([])
+  const [suppliers, setSuppliers] = useState([])
+
+  const [categories, setCategories] = useState([])
+  const [brands, setBrands] = useState([])
+
+  const [name, setName] = useState()
+  const [code, setCode] = useState()
+  const [selectedCategory, setSelectedCategory] = useState()
+  const [selectedBrand, setSelectedBrand] = useState()
+  const [selectedBarcodeSymbol, setSelectedBarcodeSymbol] = useState()
+  const [cost, setSelectedCost] = useState()
+  const [price, setSelectedPrice] = useState()
+  const [selectedUnit, setSelectedUnit] = useState()
+  const [stockAlert, setStockAlert] = useState()
+  const [notes, setNotes] = useState()
+  const [selectedShelve, setSelectedShelve] = useState()
+  const [selectedSupplier, setSelectedSupplier] = useState()
+  const [quantity, setQuantity] = useState()
+
+  const [imageFile, setImageFile] = useState(null)
+
   const router = useRouter()
 
+  // ** States
+  const [language, setLanguage] = useState([])
+  const [date, setDate] = useState(null)
+
+  // * functions below
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
   }
@@ -131,23 +161,6 @@ const Create = () => {
     setRowsPerPage(+event.target.value)
     setPage(0)
   }
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch(url)
-        const data = await response.json()
-        setProducts(data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    fetchData()
-  }, [url])
-
-  // ** States
-  const [language, setLanguage] = useState([])
-  const [date, setDate] = useState(null)
 
   const [values, setValues] = useState({
     password: '',
@@ -200,6 +213,7 @@ const Create = () => {
       return valueA < valueB ? -direction : valueA > valueB ? direction : 0
     })
   }
+
   const [personName, setPersonName] = useState([])
 
   const handleChange = event => {
@@ -208,6 +222,88 @@ const Create = () => {
     } = event
     setPersonName(typeof value === 'string' ? value.split(',') : value)
   }
+
+  const handleImageChange = event => {
+    const file = event.target.files[0]
+    setImageFile(file)
+  }
+
+  function saveProduct(productData) {
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(productData)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok')
+        }
+
+        return response.json()
+      })
+      .then(data => {
+        console.log('Product saved successfully:', data)
+
+        // do something after the product is saved
+      })
+      .catch(error => {
+        console.error('There was an error saving the product:', error)
+      })
+  }
+
+  const handleKeyPress = event => {
+    const keyCode = event.keyCode || event.which
+    const keyValue = String.fromCharCode(keyCode)
+
+    if (!/^\d*\.?\d*$/.test(keyValue)) {
+      event.preventDefault()
+    } else if (keyValue === '.' && event.target.value.includes('.')) {
+      event.preventDefault()
+    }
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault()
+    const currentDate = new Date().toISOString().substr(0, 10)
+    const sub = Number(price) * Number(quantity)
+    console.log(price, typeof price)
+    console.log(quantity)
+
+    const productData = {
+      name,
+      code,
+      category: selectedCategory,
+      brand: selectedBrand,
+      barcodeSymbol: selectedBarcodeSymbol,
+      cost: Number(cost),
+      price: Number(price),
+      unit: selectedUnit,
+      stockAlert,
+      notes,
+      shelve: Number(selectedShelve),
+      supplier: selectedSupplier,
+      quantity,
+      subtotal: sub,
+      created_on: currentDate
+    }
+
+    saveProduct(productData)
+  }
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(url)
+        const data = await response.json()
+        setProducts(data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    fetchData()
+  }, [url])
 
   useEffect(() => {
     async function fetchData() {
@@ -246,99 +342,6 @@ const Create = () => {
     }
     fetchData()
   }, [categoriesUrl, brandsUrl, barcodeSymbolsUrl, productUnitsUrl, shelvesUrl, suppliersUrl])
-
-  const handleKeyPress = event => {
-    const keyCode = event.keyCode || event.which
-    const keyValue = String.fromCharCode(keyCode)
-
-    if (!/^\d*\.?\d*$/.test(keyValue)) {
-      event.preventDefault()
-    } else if (keyValue === '.' && event.target.value.includes('.')) {
-      event.preventDefault()
-    }
-  }
-
-  const [barcodeSymbols, setBarcodeSymbols] = useState([])
-  const [productUnits, setProductUnits] = useState([])
-  const [shelves, setShelves] = useState([])
-  const [suppliers, setSuppliers] = useState([])
-
-  const [categories, setCategories] = useState([])
-  const [brands, setBrands] = useState([])
-
-  const [name, setName] = useState()
-  const [code, setCode] = useState()
-  const [selectedCategory, setSelectedCategory] = useState()
-  const [selectedBrand, setSelectedBrand] = useState()
-  const [selectedBarcodeSymbol, setSelectedBarcodeSymbol] = useState()
-  const [cost, setSelectedCost] = useState()
-  const [price, setSelectedPrice] = useState()
-  const [selectedUnit, setSelectedUnit] = useState()
-  const [stockAlert, setStockAlert] = useState()
-  const [notes, setNotes] = useState()
-  const [selectedShelve, setSelectedShelve] = useState()
-  const [selectedSupplier, setSelectedSupplier] = useState()
-  const [quantity, setQuantity] = useState()
-
-  const [imageFile, setImageFile] = useState(null)
-
-  const handleImageChange = event => {
-    const file = event.target.files[0]
-    setImageFile(file)
-  }
-
-  function saveProduct(productData) {
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(productData)
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok')
-        }
-
-        return response.json()
-      })
-      .then(data => {
-        console.log('Product saved successfully:', data)
-
-        // do something after the product is saved
-      })
-      .catch(error => {
-        console.error('There was an error saving the product:', error)
-      })
-  }
-
-  async function handleSubmit(event) {
-    event.preventDefault()
-    const currentDate = new Date().toISOString().substr(0, 10)
-    const sub = Number(price) * Number(quantity)
-    console.log(price, typeof price)
-    console.log(quantity)
-
-    const productData = {
-      name,
-      code,
-      category: selectedCategory,
-      brand: selectedBrand,
-      barcodeSymbol: selectedBarcodeSymbol,
-      cost: Number(cost),
-      price: Number(price),
-      unit: selectedUnit,
-      stockAlert,
-      notes,
-      shelve: Number(selectedShelve),
-      supplier: selectedSupplier,
-      quantity,
-      subtotal: sub,
-      created_on: currentDate
-    }
-
-    saveProduct(productData)
-  }
 
   return (
     <Grid container spacing={2}>

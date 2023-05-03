@@ -66,11 +66,11 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 const url = 'http://localhost:8000/products'
 const categoriesUrl = 'http://localhost:8000/categories'
 
-const ProductCategories = () => {
+const ProductCategories = data => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(10)
-  const [products, setProducts] = useState([])
-  const [categories, setCategories] = useState([])
+  const [products, setProducts] = useState(data.products)
+  const [categories, setCategories] = useState(data.categories)
   const [sortBy, setSortBy] = useState(null)
   const [sortOrder, setSortOrder] = useState('asc')
   const [search, setSearch] = useState('')
@@ -88,32 +88,6 @@ const ProductCategories = () => {
     setRowsPerPage(+event.target.value)
     setPage(0)
   }
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch(url)
-        const data = await response.json()
-        setProducts(data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    fetchData()
-  }, [url])
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch(categoriesUrl)
-        const data = await response.json()
-        setCategories(data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    fetchData()
-  }, [categoriesUrl, refresh])
 
   const handleSort = property => {
     const isAscending = sortOrder === 'asc'
@@ -134,6 +108,32 @@ const ProductCategories = () => {
 
     return counts
   }, {})
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const response = await fetch(url)
+  //       const data = await response.json()
+  //       setProducts(data)
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+  //   }
+  //   fetchData()
+  // }, [url])
+
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const response = await fetch(categoriesUrl)
+  //       const data = await response.json()
+  //       setCategories(data)
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+  //   }
+  //   fetchData()
+  // }, [categoriesUrl, refresh])
 
   // console.log(categoryCounts)
 
@@ -312,6 +312,35 @@ const ProductCategories = () => {
       </Grid>
     </Grid>
   )
+}
+
+export async function getServerSideProps() {
+  const url = 'http://localhost:8000/products'
+  const categoriesUrl = 'http://localhost:8000/categories'
+
+  try {
+    const response = await fetch(url)
+    const products = await response.json()
+
+    const categoriesResponse = await fetch(categoriesUrl)
+    const categories = await categoriesResponse.json()
+
+    return {
+      props: {
+        products,
+        categories
+      }
+    }
+  } catch (error) {
+    console.error(error)
+
+    return {
+      props: {
+        products: [],
+        categories: []
+      }
+    }
+  }
 }
 
 export default ProductCategories

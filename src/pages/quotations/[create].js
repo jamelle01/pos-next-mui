@@ -199,12 +199,9 @@ const status = [
   { id: 2, name: 'pending' }
 ]
 
-const productsUrl = 'http://localhost:8000/products'
-const customersUrl = 'http://localhost:8000/customers'
-const shelvesUrl = 'http://localhost:8000/shelves'
 const quotationsUrl = 'http://localhost:8000/quotations'
 
-const Create = () => {
+const Create = data => {
   const router = useRouter()
   const searchInputRef = useRef(null)
 
@@ -213,9 +210,9 @@ const Create = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10)
 
   // data from json | choices data
-  const [products, setProducts] = useState([])
-  const [customers, setCustomers] = useState([])
-  const [shelves, setShelves] = useState([])
+  const [products, setProducts] = useState(data.products)
+  const [customers, setCustomers] = useState(data.customers)
+  const [shelves, setShelves] = useState(data.shelves)
 
   const [sortBy, setSortBy] = useState(null)
   const [sortOrder, setSortOrder] = useState('asc')
@@ -257,45 +254,6 @@ const Create = () => {
     setRowsPerPage(+event.target.value)
     setPage(0)
   }
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch(productsUrl)
-        const data = await response.json()
-        setProducts(data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    fetchData()
-  }, [productsUrl])
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch(customersUrl)
-        const data = await response.json()
-        setCustomers(data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    fetchData()
-  }, [customersUrl])
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch(shelvesUrl)
-        const data = await response.json()
-        setShelves(data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    fetchData()
-  }, [shelvesUrl])
 
   useEffect(() => {
     // add event listener to document for click events
@@ -1030,6 +988,28 @@ const Create = () => {
       </Grid>
     </Grid>
   )
+}
+
+export async function getServerSideProps() {
+  const productsUrl = 'http://localhost:8000/products'
+  const customersUrl = 'http://localhost:8000/customers'
+  const shelvesUrl = 'http://localhost:8000/shelves'
+
+  const [productsRes, customersRes, shelvesRes] = await Promise.all([
+    fetch(productsUrl),
+    fetch(customersUrl),
+    fetch(shelvesUrl)
+  ])
+
+  const [products, customers, shelves] = await Promise.all([productsRes.json(), customersRes.json(), shelvesRes.json()])
+
+  return {
+    props: {
+      products,
+      customers,
+      shelves
+    }
+  }
 }
 
 export default Create
