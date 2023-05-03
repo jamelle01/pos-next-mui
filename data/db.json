@@ -935,6 +935,36 @@
       "status": "pending",
       "notes": "",
       "id": 10
+    },
+    {
+      "reference": "QA_751135",
+      "created_on": "2023-05-03T15:20:02.469Z",
+      "shelf": "shelf 2",
+      "customer": "Bob Johnson",
+      "customerId": 4,
+      "selectedProducts": [
+        {
+          "id": 8,
+          "name": "Stanley 25-Feet FatMax Tape Measure",
+          "quantity": 2,
+          "price": 17,
+          "subtotal": 17,
+          "category": "Garden and Outdoor Supplies",
+          "brand": "Stanley",
+          "code": "SM-001",
+          "created_on": "2023-04-19",
+          "unit": "pieces",
+          "shelf": "shelf 2",
+          "selectedQuantity": 1,
+          "discount": 0
+        }
+      ],
+      "discount": 0,
+      "shipping": 0,
+      "grand_total": 17,
+      "status": "pending",
+      "notes": "",
+      "id": 11
     }
   ],
   "customers": [
