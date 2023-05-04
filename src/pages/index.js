@@ -42,7 +42,7 @@ const Dashboard = () => {
           <Grid container spacing={6}>
             <Grid item xs={6}>
               <CardStatisticsVerticalComponent
-                stats='$25.6k'
+                stats='₱25.6k'
                 icon={<Poll />}
                 color='success'
                 trendNumber='+42%'
@@ -52,7 +52,7 @@ const Dashboard = () => {
             </Grid>
             <Grid item xs={6}>
               <CardStatisticsVerticalComponent
-                stats='$78'
+                stats='₱78'
                 title='Refunds'
                 trend='negative'
                 color='secondary'
@@ -82,25 +82,14 @@ const Dashboard = () => {
                 icon={<HelpCircleOutline />}
               />
             </Grid>
-            <Grid item xs={6}>
-              <CardStatisticsVerticalComponent
-                stats='15'
-                color='warning'
-                trend='negative'
-                trendNumber='-18%'
-                subtitle='Last Week'
-                title='Sales Queries'
-                icon={<HelpCircleOutline />}
-              />
-            </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        {/* <Grid item xs={12} md={6} lg={4}>
           <SalesByCountries />
-        </Grid>
-        <Grid item xs={12} md={12} lg={8}>
+        </Grid> */}
+        {/* <Grid item xs={12} md={12} lg={8}>
           <DepositWithdraw />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12}>
           <Table />
         </Grid>

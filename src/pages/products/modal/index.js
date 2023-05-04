@@ -17,13 +17,17 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import Paper from '@mui/material/Paper'
 
-// loaidng 
+import Slide from '@mui/material/Slide'
+
+// loaidng
 import CircularProgress from '@mui/material/CircularProgress'
 
 // react import
-import { useEffect, useState } from 'react'
-import { Image } from 'mdi-material-ui'
-import { TableContainer } from '@material-ui/core'
+import { useEffect, useState, forwardRef } from 'react'
+
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction='up' ref={ref} {...props} />
+})
 
 const DialogView = ({ open, handleClose, viewProduct }) => {
   const [product, setProduct] = useState([])
@@ -50,18 +54,27 @@ const DialogView = ({ open, handleClose, viewProduct }) => {
   }, [url, viewProduct])
 
   return (
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      // maxWidth='md'
+      sx={{ m: 0, p: 2 }}
+      TransitionComponent={Transition}
+      keepMounted
+      BackdropProps={{ style: { opacity: 0.2 } }}
+    >
       {loading && (
         <CircularProgress
-          style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+          style={{ position: 'absolute', top: '50%', left: '45%', transform: 'translate(-50%, -50%)' }}
         />
       )}
-      <DialogTitle>
-        Product Details
+      <DialogTitle style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <span>Product Details</span>
         <IconButton onClick={handleClose}>
           <CloseIcon />
         </IconButton>
       </DialogTitle>
+
       <DialogContent>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -104,26 +117,30 @@ const DialogView = ({ open, handleClose, viewProduct }) => {
             {product.stockAlert}
           </Grid>
           <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-            <img style={{ minHeight: '100px', backgroundColor: 'gray' }} alt='sample image' src='#' loading='lazy' />
+            <img
+              style={{ minHeight: '100px', backgroundColor: '#f2f2f2' }}
+              alt='sample image'
+              src='/images/no-image.png'
+              loading='lazy'
+            />
           </Grid>
           <Grid item xs={12}>
-            <TableContainer component={paper}>
+            <TableContainer component={Paper}>
               <Table aria-label='simple table'>
                 <TableHead>
                   <TableRow>
-                    <TableCell>
-                      Shelf
-                    </TableCell>
-                    <TableCell>
-                      quantity
-                    </TableCell>
+                    <TableCell>Shelf</TableCell>
+                    <TableCell>quantity</TableCell>
                   </TableRow>
                 </TableHead>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>{product.shelf}</TableCell>
+                    <TableCell>{product.quantity + ' ' + product.unit}</TableCell>
+                  </TableRow>
+                </TableBody>
               </Table>
             </TableContainer>
-          </Grid>
-          <Grid item xs={6}>
-            {product.stockAlert}
           </Grid>
         </Grid>
       </DialogContent>

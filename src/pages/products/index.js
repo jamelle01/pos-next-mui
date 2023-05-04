@@ -19,7 +19,13 @@ import TablePagination from '@mui/material/TablePagination'
 
 import TextField from '@mui/material/TextField'
 import Magnify from 'mdi-material-ui/Magnify'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
 import Button from '@mui/material/Button'
+
+import CloseIcon from '@mui/icons-material/Close'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
 
 // next import
 import { useRouter } from 'next/router'
@@ -33,12 +39,22 @@ import TableCustomized from 'src/views/tables/TableCustomized'
 import TableCollapsible from 'src/views/tables/TableCollapsible'
 import TableStickyHeader from 'src/views/tables/TableStickyHeader'
 
+// icons import
+import SquareEditOutline from 'mdi-material-ui/SquareEditOutline'
+import Eye from 'mdi-material-ui/Eye'
+import Delete from 'mdi-material-ui/Delete'
+import IconButton from '@mui/material/IconButton'
+
+// components import
+import DialogView from './modal'
+import DialogEdit from './modal/edit'
+
 // third party import
 import { CSVLink } from 'react-csv'
 
 //react import
-
 import { useState, useEffect } from 'react'
+import { EditAttributesOutlined } from '@mui/icons-material'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -70,6 +86,8 @@ const Products = () => {
   const [sortBy, setSortBy] = useState(null)
   const [sortOrder, setSortOrder] = useState('asc')
   const [search, setSearch] = useState('')
+
+  const [viewProduct, setViewProduct] = useState('')
 
   const router = useRouter()
 
@@ -109,14 +127,32 @@ const Products = () => {
     })
   }
 
+  // modal / dialog things
+  const [openView, setOpenView] = useState(false)
+  const [openEdit, setOpenEdit] = useState(false)
+
+  const handleOpenView = id => {
+    setViewProduct(id)
+    setOpenView(true)
+  }
+
+  const handleOpenEdit = id => {
+    setViewProduct(id)
+    setOpenEdit(true)
+  }
+
+  const handleCloseView = () => setOpenView(false)
+  const handleCloseEdit = () => setOpenEdit(false)
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <Typography variant='h5'>
-          <Link href='https://mui.com/components/tables/' target='_blank'>
-            Products
-          </Link>
+        <Typography variant='h5' style={{ color: '#0000FF' }}>
+          {/* <Link href='https://mui.com/components/tables/' target='_blank'> */}
+          Products
+          {/* </Link> */}
         </Typography>
+
         {/* <Typography variant='body2'>Tables display sets of data. They can be fully customized</Typography> */}
       </Grid>
 
@@ -349,7 +385,33 @@ const Products = () => {
                           {product.created_on}
                         </Typography>
                       </StyledTableCell>
-                      <StyledTableCell align='center'>Crud</StyledTableCell>
+                      <StyledTableCell
+                        style={{
+                          whiteSpace: 'nowrap'
+                        }}
+                      >
+                        <div>
+                          <DialogView open={openView} handleClose={handleCloseView} viewProduct={viewProduct} />
+                          <DialogEdit open={openEdit} handleClose={handleCloseEdit} viewProduct={viewProduct} />
+                          <IconButton
+                            onClick={() => {
+                              handleOpenView(product.id)
+                            }}
+                          >
+                            <Eye style={{ fontSize: '1.2rem' }} />
+                          </IconButton>
+                          <IconButton
+                            onClick={() => {
+                              handleOpenEdit(product.id)
+                            }}
+                          >
+                            <SquareEditOutline style={{ fontSize: '1.2rem' }} />
+                          </IconButton>
+                          <IconButton>
+                            <Delete style={{ fontSize: '1.2rem' }} />
+                          </IconButton>
+                        </div>
+                      </StyledTableCell>
                     </StyledTableRow>
                   ))}
               </TableBody>

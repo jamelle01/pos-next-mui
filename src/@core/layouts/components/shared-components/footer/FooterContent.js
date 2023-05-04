@@ -11,15 +11,15 @@ const FooterContent = () => {
   return (
     <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
       <Typography sx={{ mr: 2 }}>
-        {`© ${new Date().getFullYear()}, Made using `}
-        <Box component='span' sx={{ color: 'error.main' }}>
+        {`zionlab © ${new Date().getFullYear()} `}
+        {/* <Box component='span' sx={{ color: 'error.main' }}> */}
           {/* ❤️ */}
-        </Box>
+        {/* </Box> */}
         {/* {` by `} */}
-        <Link target='_blank' href='https://themeselection.com/'>
-          ThemeSelection
-        </Link>
-        {' template'}
+        {/* <Link target='_blank' href='https://themeselection.com/'> */}
+          {/* ThemeSelection */}
+        {/* </Link> */}
+        {/* {' template'} */}
       </Typography>
       {/* {hidden ? null : (
         <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', '& :not(:last-child)': { mr: 4 } }}>
