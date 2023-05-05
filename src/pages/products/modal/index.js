@@ -57,7 +57,6 @@ const DialogView = ({ open, handleClose, viewProduct }) => {
     <Dialog
       open={open}
       onClose={handleClose}
-      // maxWidth='md'
       sx={{ m: 0, p: 2 }}
       TransitionComponent={Transition}
       keepMounted

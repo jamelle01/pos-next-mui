@@ -128,6 +128,7 @@ export async function getServerSideProps(context) {
     }
   } catch (error) {
     console.error(error)
+    
     return {
       props: {
         product: null
@@ -296,7 +297,6 @@ const Edit = ({ product }) => {
     event.preventDefault()
     const currentDate = new Date().toISOString().substr(0, 10)
     const sub = Number(price) * Number(quantity)
-    // console.log(price, typeof price)
     console.log(id)
 
     const productData = {
