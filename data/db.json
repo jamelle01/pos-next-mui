@@ -12,7 +12,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 2,
@@ -26,7 +30,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 3,
@@ -40,7 +48,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 4,
@@ -54,7 +66,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 5,
@@ -68,7 +84,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 6,
@@ -82,7 +102,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 7,
@@ -95,7 +119,11 @@
       "code": "CRA-20V-DRV",
       "created_on": "2023-04-19",
       "unit": "pieces",
-      "shelf": "shelf 2"
+      "shelf": "shelf 2",
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 8,
@@ -108,7 +136,11 @@
       "code": "SM-001",
       "created_on": "2023-04-19",
       "unit": "pieces",
-      "shelf": "shelf 2"
+      "shelf": "shelf 2",
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 9,
@@ -121,7 +153,11 @@
       "code": "RY-001",
       "created_on": "2023-04-19",
       "unit": "pieces",
-      "shelf": "shelf 2"
+      "shelf": "shelf 2",
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 10,
@@ -135,7 +171,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 11,
@@ -149,7 +189,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 12,
@@ -163,7 +207,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 13,
@@ -177,7 +225,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 14,
@@ -191,7 +243,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 15,
@@ -205,7 +261,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 16,
@@ -219,7 +279,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 17,
@@ -233,7 +297,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 18,
@@ -247,7 +315,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 19,
@@ -261,7 +333,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 20,
@@ -275,7 +351,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 21,
@@ -289,7 +369,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 22,
@@ -303,7 +387,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 23,
@@ -317,7 +405,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 24,
@@ -331,7 +423,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 25,
@@ -345,7 +441,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 26,
@@ -359,7 +459,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 27,
@@ -373,7 +477,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 28,
@@ -387,7 +495,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 29,
@@ -401,7 +513,11 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
     },
     {
       "id": 30,
@@ -415,7 +531,29 @@
       "created_on": "2023-04-19",
       "unit": "pieces",
       "shelf": "shelf 1",
-      "stockAlert": 10
+      "stockAlert": 10,
+      "supplier": "supplier 1",
+      "notes": "sample product",
+      "barcodeSymbol": "code 128",
+      "cost": 34
+    },
+    {
+      "name": "sample product",
+      "code": "1232",
+      "category": "Safety Equipment",
+      "brand": "Hitachi",
+      "barcodeSymbol": "code 128",
+      "cost": 90,
+      "price": 100,
+      "unit": "pieces",
+      "stockAlert": "20",
+      "notes": "sample",
+      "shelf": "shelf 2",
+      "supplier": "supplier 2",
+      "quantity": "30",
+      "subtotal": 3000,
+      "created_on": "2023-05-04",
+      "id": 31
     }
   ],
   "categories": [
