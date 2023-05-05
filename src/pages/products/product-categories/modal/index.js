@@ -56,6 +56,8 @@ export default function CreateCategory({ refresh, setRefresh, categoriesUrl, ope
       })
       .then(data => {
         console.log('Product category saved successfully:', data)
+        setOpenCreate(false)
+        setRefresh(!refresh)
       })
       .catch(error => {
         console.error('There was an error saving the product category:', error)
@@ -143,8 +145,6 @@ export default function CreateCategory({ refresh, setRefresh, categoriesUrl, ope
           type='submit'
           onClick={() => {
             handleSubmit()
-            setOpenCreate(false)
-            setRefresh(!refresh)
           }}
         >
           Save

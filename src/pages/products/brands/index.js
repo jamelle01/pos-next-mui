@@ -21,6 +21,13 @@ import TextField from '@mui/material/TextField'
 import Magnify from 'mdi-material-ui/Magnify'
 import Button from '@mui/material/Button'
 
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContentText from '@mui/material/DialogContentText'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import Slide from '@mui/material/Slide'
+
 // next import
 import { useRouter } from 'next/router'
 import Image from 'next/image'
@@ -33,14 +40,20 @@ import TableCustomized from 'src/views/tables/TableCustomized'
 import TableCollapsible from 'src/views/tables/TableCollapsible'
 import TableStickyHeader from 'src/views/tables/TableStickyHeader'
 
+//icon import
+import SquareEditOutline from 'mdi-material-ui/SquareEditOutline'
+import Delete from 'mdi-material-ui/Delete'
+import IconButton from '@mui/material/IconButton'
+
 // third party import
 import { CSVLink } from 'react-csv'
 
 // modal import
-import CreateCategory from './modal'
+import CreateBrand from './modal'
 
 //react import
-import { useState, useEffect } from 'react'
+import { useState, useEffect, forwardRef } from 'react'
+import EditBrand from './modal/edit'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -63,6 +76,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   }
 }))
 
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction='up' ref={ref} {...props} />
+})
+
 const url = 'http://localhost:8000/products'
 const brandsUrl = 'http://localhost:8000/brands'
 
@@ -74,9 +91,17 @@ const Brands = () => {
   const [sortBy, setSortBy] = useState(null)
   const [sortOrder, setSortOrder] = useState('asc')
   const [search, setSearch] = useState('')
+
+  //modal purps
   const [openCreate, setOpenCreate] = useState(false)
 
+  const [openEdit, setOpenEdit] = useState(false)
+  const [id, setId] = useState(null)
+  const [brand, setBrand] = useState()
+  const [count, setCount] = useState()
   const [refresh, setRefresh] = useState(false)
+
+  const [openDelete, setOpenDelete] = useState(false)
 
   const router = useRouter()
 
@@ -136,16 +161,82 @@ const Brands = () => {
     return counts
   }, {})
 
+  function deleteBrand(id) {
+    const newBrand = brands.filter(brand => brand.id !== id)
+
+    fetch(`${brandsUrl}/${id}`, {
+      method: 'DELETE'
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok')
+        }
+
+        return response.json()
+      })
+      .then(data => {
+        console.log('Brand deleted successfully:', data)
+
+        // Update the state to remove the deleted product
+        setBrands(newBrand)
+        setOpenDelete(false)
+      })
+      .catch(error => {
+        console.error('There was an error deleting the product:', error)
+      })
+  }
+
   // console.log(categoryCounts)
 
   return (
     <Grid container spacing={2}>
-      <CreateCategory
+      <Dialog
+        open={openDelete}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={() => setOpenDelete(false)}
+        aria-describedby='alert-dialog-slide-description'
+      >
+        <DialogTitle>{'Confirm Delete  '}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id='alert-dialog-slide-description'>
+            This action will delete the selected brand.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setOpenDelete(false)
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            color='info'
+            variant='contained'
+            onClick={() => {
+              deleteBrand(id)
+            }}
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <CreateBrand
         refresh={refresh}
         setRefresh={setRefresh}
         brandsUrl={brandsUrl}
         openCreate={openCreate}
         setOpenCreate={setOpenCreate}
+      />
+      <EditBrand
+        count={count}
+        brand={brand}
+        id={id}
+        openEdit={openEdit}
+        setOpenEdit={setOpenEdit}
+        refresh={refresh}
+        setRefresh={setRefresh}
       />
       <Grid item xs={12}>
         <Typography variant='h5'>
@@ -291,7 +382,24 @@ const Brands = () => {
                             WebkitBoxOrient: 'vertical'
                           }}
                         >
-                          action
+                          <IconButton
+                            onClick={async () => {
+                              setBrand(brand.name)
+                              setCount(brand.count)
+                              setId(brand.id)
+                              setOpenEdit(true)
+                            }}
+                          >
+                            <SquareEditOutline style={{ fontSize: '1.2rem' }} />
+                          </IconButton>
+                          <IconButton
+                            onClick={() => {
+                              setId(brand.id)
+                              setOpenDelete(true)
+                            }}
+                          >
+                            <Delete style={{ fontSize: '1.2rem' }} />
+                          </IconButton>
                         </Typography>
                       </StyledTableCell>
                     </StyledTableRow>

@@ -21,7 +21,7 @@ const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
 })
 
-export default function CreateCategory({ refresh, setRefresh, brandsUrl, openCreate, setOpenCreate }) {
+export default function CreateBrand({ refresh, setRefresh, brandsUrl, openCreate, setOpenCreate }) {
   const [imageFile, setImageFile] = useState(null)
   const [productBrand, setProductBrand] = useState(null)
 

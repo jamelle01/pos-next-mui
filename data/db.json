@@ -1,22 +1,22 @@
 {
   "products": [
     {
-      "id": 1,
       "name": "Bosch 18V Compact 1/2-Inch Drill/Driver Kit",
-      "quantity": 18,
-      "price": 10,
-      "subtotal": 180,
+      "code": "BOS-18V-DRV-1/2",
       "category": "Hand Tools",
       "brand": "Bosch",
-      "code": "BOS-18V-DRV-1/2",
-      "created_on": "2023-04-19",
-      "unit": "pieces",
-      "shelf": "shelf 1",
-      "stockAlert": 10,
-      "supplier": "supplier 1",
-      "notes": "sample product",
       "barcodeSymbol": "code 128",
-      "cost": 34
+      "cost": 34,
+      "price": 10,
+      "unit": "pieces",
+      "stockAlert": 10,
+      "notes": "sample product updated",
+      "shelf": "shelf 1",
+      "supplier": "supplier 1",
+      "quantity": 18,
+      "subtotal": 180,
+      "created_on": "2023-05-05",
+      "id": 1
     },
     {
       "id": 2,
@@ -538,21 +538,21 @@
       "cost": 34
     },
     {
-      "name": "sample product",
-      "code": "1232",
-      "category": "Safety Equipment",
-      "brand": "Hitachi",
+      "name": "sample prod",
+      "code": "samp 1232",
+      "category": "Power Tools",
+      "brand": "DeWalt",
       "barcodeSymbol": "code 128",
-      "cost": 90,
-      "price": 100,
+      "cost": 120,
+      "price": 130,
       "unit": "pieces",
       "stockAlert": "20",
-      "notes": "sample",
+      "notes": "sample product",
       "shelf": "shelf 2",
       "supplier": "supplier 2",
-      "quantity": "30",
-      "subtotal": 3000,
-      "created_on": "2023-05-04",
+      "quantity": "90",
+      "subtotal": 11700,
+      "created_on": "2023-05-05",
       "id": 31
     }
   ],
@@ -608,39 +608,9 @@
       "count": 1
     },
     {
-      "name": "gr",
+      "name": "grtf",
       "count": 0,
       "id": 11
-    },
-    {
-      "name": "new category1",
-      "count": 0,
-      "id": 12
-    },
-    {
-      "name": "new category2",
-      "count": 0,
-      "id": 13
-    },
-    {
-      "name": "new category3",
-      "count": 0,
-      "id": 14
-    },
-    {
-      "name": "new category4",
-      "count": 0,
-      "id": 15
-    },
-    {
-      "name": "new category5",
-      "count": 0,
-      "id": 16
-    },
-    {
-      "name": "category 6",
-      "count": 0,
-      "id": 17
     }
   ],
   "brands": [
@@ -695,7 +665,7 @@
       "count": 1
     },
     {
-      "name": "new brand",
+      "name": "new brand 1",
       "count": 0,
       "id": 11
     },
@@ -703,11 +673,6 @@
       "name": "new brand 2",
       "count": 0,
       "id": 12
-    },
-    {
-      "name": "new brand 3",
-      "count": 0,
-      "id": 13
     }
   ],
   "quotations": [

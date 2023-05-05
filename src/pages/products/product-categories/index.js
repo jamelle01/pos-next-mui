@@ -21,9 +21,22 @@ import TextField from '@mui/material/TextField'
 import Magnify from 'mdi-material-ui/Magnify'
 import Button from '@mui/material/Button'
 
+import CloseIcon from '@mui/icons-material/Close'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContentText from '@mui/material/DialogContentText'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import Slide from '@mui/material/Slide'
+
 // next import
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+
+//icon import
+import SquareEditOutline from 'mdi-material-ui/SquareEditOutline'
+import Delete from 'mdi-material-ui/Delete'
+import IconButton from '@mui/material/IconButton'
 
 // ** Demo Components Imports
 import TableBasic from 'src/views/tables/TableBasic'
@@ -40,7 +53,8 @@ import { CSVLink } from 'react-csv'
 import CreateCategory from './modal'
 
 //react import
-import { useState, useEffect } from 'react'
+import { useState, useEffect, forwardRef } from 'react'
+import EditCategory from './modal/edit'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -63,6 +77,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   }
 }))
 
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction='up' ref={ref} {...props} />
+})
+
 const url = 'http://localhost:8000/products'
 const categoriesUrl = 'http://localhost:8000/categories'
 
@@ -74,9 +92,17 @@ const ProductCategories = () => {
   const [sortBy, setSortBy] = useState(null)
   const [sortOrder, setSortOrder] = useState('asc')
   const [search, setSearch] = useState('')
-  const [openCreate, setOpenCreate] = useState(false)
 
+  // modal purposes
+  const [openCreate, setOpenCreate] = useState(false)
+  
+  const [openEdit, setOpenEdit] = useState(false)
+  const [id, setId] = useState(null)
+  const [category, setCategory] = useState()
+  const [count, setCount] = useState()
   const [refresh, setRefresh] = useState(false)
+
+  const [openDelete, setOpenDelete] = useState(false)
 
   const router = useRouter()
 
@@ -109,6 +135,30 @@ const ProductCategories = () => {
     return counts
   }, {})
 
+  function deleteCategory(id) {
+    const newCategories = categories.filter(category => category.id !== id)
+
+    fetch(`${categoriesUrl}/${id}`, {
+      method: 'DELETE'
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok')
+        }
+
+        return response.json()
+      })
+      .then(data => {
+        console.log('Category deleted successfully:', data)
+
+        // Update the state to remove the deleted product
+        setCategories(newCategories)
+      })
+      .catch(error => {
+        console.error('There was an error deleting the product:', error)
+      })
+  }
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -139,6 +189,39 @@ const ProductCategories = () => {
 
   return (
     <Grid container spacing={2}>
+      <Dialog
+        open={openDelete}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={() => setOpenDelete(false)}
+        aria-describedby='alert-dialog-slide-description'
+      >
+        <DialogTitle>{'Confirm Delete  '}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id='alert-dialog-slide-description'>
+            This action will delete the selected category.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setOpenDelete(false)
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            color='info'
+            variant='contained'
+            onClick={() => {
+              deleteCategory(id)
+              setOpenDelete(false)
+            }}
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
       <CreateCategory
         refresh={refresh}
         setRefresh={setRefresh}
@@ -146,10 +229,19 @@ const ProductCategories = () => {
         openCreate={openCreate}
         setOpenCreate={setOpenCreate}
       />
+      <EditCategory
+        count={count}
+        category={category}
+        id={id}
+        openEdit={openEdit}
+        setOpenEdit={setOpenEdit}
+        refresh={refresh}
+        setRefresh={setRefresh}
+      />
       <Grid item xs={12}>
-        <Typography variant='h5'>
+        <Typography variant='h5' style={{ color: 'blue' }}>
           {/* <Link href='https://mui.com/components/tables/' target='_blank'> */}
-          Products
+          Product Categories
           {/* </Link> */}
         </Typography>
         {/* <Typography variant='body2'>Tables display sets of data. They can be fully customized</Typography> */}
@@ -291,7 +383,26 @@ const ProductCategories = () => {
                             WebkitBoxOrient: 'vertical'
                           }}
                         >
-                          action
+                          <div>
+                            <IconButton
+                              onClick={async () => {
+                                setCategory(category.name)
+                                setCount(category.count)
+                                setId(category.id)
+                                setOpenEdit(true)
+                              }}
+                            >
+                              <SquareEditOutline style={{ fontSize: '1.2rem' }} />
+                            </IconButton>
+                            <IconButton
+                              onClick={() => {
+                                setId(category.id)
+                                setOpenDelete(true)
+                              }}
+                            >
+                              <Delete style={{ fontSize: '1.2rem' }} />
+                            </IconButton>
+                          </div>
                         </Typography>
                       </StyledTableCell>
                     </StyledTableRow>

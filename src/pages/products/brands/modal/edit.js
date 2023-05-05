@@ -113,7 +113,7 @@ const EditBrand = ({ count, brand, id, openEdit, setOpenEdit, refresh, setRefres
                   label='Name'
                   placeholder='Enter Product Name'
                   value={productBrand}
-                  onChange={e => setProductCategory(e.target.value)}
+                  onChange={e => setProductBrand(e.target.value)}
                 />
               </Card>
             </Grid>

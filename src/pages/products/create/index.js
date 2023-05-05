@@ -246,6 +246,8 @@ const Create = () => {
       .then(data => {
         console.log('Product saved successfully:', data)
 
+        router.push('/products')
+
         // do something after the product is saved
       })
       .catch(error => {
@@ -282,7 +284,7 @@ const Create = () => {
       unit: selectedUnit,
       stockAlert,
       notes,
-      shelve: Number(selectedShelve),
+      shelf: selectedShelve,
       supplier: selectedSupplier,
       quantity,
       subtotal: sub,
@@ -538,7 +540,7 @@ const Create = () => {
                       <TextField
                         required
                         value={stockAlert}
-                        onChange={e => e.target.value}
+                        onChange={e => setStockAlert(e.target.value)}
                         fullWidth
                         type='number'
                         label='Stock Alert'

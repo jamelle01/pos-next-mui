@@ -26,6 +26,8 @@ import Button from '@mui/material/Button'
 import CloseIcon from '@mui/icons-material/Close'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
+import DialogContentText from '@mui/material/DialogContentText'
+import Slide from '@mui/material/Slide'
 
 // next import
 import { useRouter } from 'next/router'
@@ -47,13 +49,12 @@ import IconButton from '@mui/material/IconButton'
 
 // components import
 import DialogView from './modal'
-import DialogEdit from './modal/edit'
 
 // third party import
 import { CSVLink } from 'react-csv'
 
 //react import
-import { useState, useEffect } from 'react'
+import { useState, useEffect, forwardRef } from 'react'
 import { EditAttributesOutlined } from '@mui/icons-material'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -77,6 +78,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   }
 }))
 
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction='up' ref={ref} {...props} />
+})
+
 const url = 'http://localhost:8000/products'
 
 const Products = () => {
@@ -98,6 +103,30 @@ const Products = () => {
   const handleChangeRowsPerPage = event => {
     setRowsPerPage(+event.target.value)
     setPage(0)
+  }
+
+  function deleteProduct(id) {
+    const newProducts = products.filter(product => product.id !== id)
+
+    fetch(`${url}/${id}`, {
+      method: 'DELETE'
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok')
+        }
+
+        return response.json()
+      })
+      .then(data => {
+        console.log('Product deleted successfully:', data)
+
+        // Update the state to remove the deleted product
+        setProducts(newProducts)
+      })
+      .catch(error => {
+        console.error('There was an error deleting the product:', error)
+      })
   }
 
   useEffect(() => {
@@ -136,16 +165,46 @@ const Products = () => {
     setOpenView(true)
   }
 
-  const handleOpenEdit = id => {
-    setViewProduct(id)
-    setOpenEdit(true)
-  }
-
   const handleCloseView = () => setOpenView(false)
-  const handleCloseEdit = () => setOpenEdit(false)
+
+  const [openDelete, setOpenDelete] = useState(false)
+  const [id, setId] = useState(null)
 
   return (
     <Grid container spacing={2}>
+      <Dialog
+        open={openDelete}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={() => setOpenDelete(false)}
+        aria-describedby='alert-dialog-slide-description'
+      >
+        <DialogTitle>{'Confirm Delete  '}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id='alert-dialog-slide-description'>
+            This action will delete the selected product.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setOpenDelete(false)
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            color='info'
+            variant='contained'
+            onClick={() => {
+              deleteProduct(id)
+              setOpenDelete(false)
+            }}
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Grid item xs={12}>
         <Typography variant='h5' style={{ color: '#0000FF' }}>
           {/* <Link href='https://mui.com/components/tables/' target='_blank'> */}
@@ -304,7 +363,16 @@ const Products = () => {
                       In Stock
                     </TableSortLabel>
                   </StyledTableCell>
-                  <StyledTableCell align='center'>Created On</StyledTableCell>
+                  <StyledTableCell align='center'>
+                    <TableSortLabel
+                      fullwidth
+                      active={sortBy === 'created_on'}
+                      direction={sortOrder}
+                      onClick={() => handleSort('created_on')}
+                    >
+                      Created On
+                    </TableSortLabel>
+                  </StyledTableCell>
                   <StyledTableCell align='center'>Action</StyledTableCell>
                 </TableRow>
               </TableHead>
@@ -392,7 +460,7 @@ const Products = () => {
                       >
                         <div>
                           <DialogView open={openView} handleClose={handleCloseView} viewProduct={viewProduct} />
-                          <DialogEdit open={openEdit} handleClose={handleCloseEdit} viewProduct={viewProduct} />
+                          {/* <DialogEdit open={openEdit} handleClose={handleCloseEdit} viewProduct={viewProduct} /> */}
                           <IconButton
                             onClick={() => {
                               handleOpenView(product.id)
@@ -400,14 +468,15 @@ const Products = () => {
                           >
                             <Eye style={{ fontSize: '1.2rem' }} />
                           </IconButton>
-                          <IconButton
-                            onClick={() => {
-                              handleOpenEdit(product.id)
-                            }}
-                          >
+                          <IconButton onClick={() => router.push('/products/edit/' + product.id)}>
                             <SquareEditOutline style={{ fontSize: '1.2rem' }} />
                           </IconButton>
-                          <IconButton>
+                          <IconButton
+                            onClick={() => {
+                              setId(product.id)
+                              setOpenDelete(true)
+                            }}
+                          >
                             <Delete style={{ fontSize: '1.2rem' }} />
                           </IconButton>
                         </div>
