@@ -48,12 +48,6 @@ const navigation = () => {
       icon: AccountCogOutline,
       path: '/account-settings'
     },
-
-    {
-      title: 'Towns',
-      icon: Account,
-      path: '/towns'
-    },
     {
       sectionTitle: 'Pages'
     },

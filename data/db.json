@@ -611,6 +611,11 @@
       "name": "grtf",
       "count": 0,
       "id": 11
+    },
+    {
+      "name": "io",
+      "count": 0,
+      "id": 12
     }
   ],
   "brands": [
@@ -852,7 +857,7 @@
           "discount": 0
         }
       ],
-      "discount": 0,
+      "discount": 10,
       "shipping": 0,
       "notes": "try"
     },

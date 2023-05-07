@@ -80,6 +80,7 @@ import { useRouter } from 'next/router'
 import Image from 'next/image'
 import { reference } from '@popperjs/core'
 import { DetailsOutlined } from '@mui/icons-material'
+import { Quora } from 'mdi-material-ui'
 
 // custom style below
 
@@ -278,7 +279,29 @@ const View = () => {
       }
     }
     fetchData()
-  })
+  }, [])
+
+  useEffect(() => {
+    const calculateTotal = async () => {
+      if (quotation.selectedProducts) {
+        const subTotal = quotation.selectedProducts.reduce((acc, product) => acc + product.subtotal, 0)
+        const total = quotation.selectedProducts.reduce((acc, product) => acc + product.subtotal, 0)
+        setSubTotal(subTotal)
+        setTotal(total - discount - shipping)
+        quotation.selectedProducts.map(item => {
+          console.log(item.subTotal)
+        })
+      }
+    }
+    calculateTotal()
+  }, [quotation.selectedProducts, discount, shipping])
+
+  useEffect(() => {
+    setShipping(quotation.shipping)
+    setDiscount(quotation.discount)
+  }, [quotation])
+
+  console.log(quotation)
 
   return (
     <Grid container spacing={2}>
@@ -330,11 +353,11 @@ const View = () => {
                     <TableHead>
                       <TableRow>
                         <TableCell>Product</TableCell>
-                        <TableCell align='left'>Price</TableCell>
+                        <TableCell align='right'>Price</TableCell>
                         {/* <TableCell align='left'>Stock</TableCell> */}
-                        <TableCell align='center'>Qty</TableCell>
-                        <TableCell align='left'>Discount</TableCell>
-                        <TableCell align='left'>Subtotal</TableCell>
+                        <TableCell align='right'>Qty</TableCell>
+                        <TableCell align='right'>Discount</TableCell>
+                        <TableCell align='right'>Subtotal</TableCell>
                         {/* <TableCell sx={{ width: '20px' }} align='left'>
                           Action
                         </TableCell> */}
@@ -343,21 +366,21 @@ const View = () => {
                     <TableBody>
                       {quotation.selectedProducts &&
                         quotation.selectedProducts.map(item => (
-                          <TableRow key={item.desc}>
+                          <TableRow key={item.id}>
                             <TableCell>
                               <Typography variant='subtitle1'>{item.code}</Typography>
 
                               <StyledName sx={{ fontSize: '0.7rem' }}>{item.name}</StyledName>
                             </TableCell>
 
-                            <TableCell align='left'>
+                            <TableCell align='right'>
                               {item.price.toLocaleString(undefined, {
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2
                               })}
                             </TableCell>
                             {/* <TableCell align='left'>{item.quantity}</TableCell> */}
-                            <TableCell align='left'>
+                            <TableCell align='right'>
                               <Typography>{item.selectedQuantity}</Typography>
                               {/* <div
                                 style={{
@@ -420,13 +443,13 @@ const View = () => {
                                 </IconButton>
                               </div> */}
                             </TableCell>
-                            <TableCell align='left'>
+                            <TableCell align='right'>
                               {item.discount.toLocaleString(undefined, {
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2
                               })}
                             </TableCell>
-                            <TableCell align='left'>
+                            <TableCell align='right'>
                               {(item.subtotal = item.price * item.selectedQuantity).toLocaleString(undefined, {
                                 minimumFractionDigits: 2,
                                 maximumFractionDigits: 2
@@ -461,25 +484,27 @@ const View = () => {
                       </TableRow>
                       <TableRow>
                         <TableCell>Discount</TableCell>
-                        <TableCell colspan={2} align='right'>
-                          {discount.toLocaleString(undefined, {
+                        <TableCell align='right'>
+                          {/* {discount.toLocaleString(undefined, {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2
-                          })}
+                          })} */}
+                          {discount}
                         </TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell>Shipping</TableCell>
-                        <TableCell colspan={2} align='right'>
-                          {shipping.toLocaleString(undefined, {
+                        <TableCell align='right'>
+                          {/* {shipping.toLocaleString(undefined, {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2
-                          })}
+                          })} */}
+                          {shipping}
                         </TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell>Total</TableCell>
-                        <TableCell colspan={2} align='right'>
+                        <TableCell align='right'>
                           {total.toLocaleString(undefined, {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2

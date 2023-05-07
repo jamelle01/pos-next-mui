@@ -32,6 +32,7 @@ import Select from '@mui/material/Select'
 import Plus from 'mdi-material-ui/Plus'
 import Minus from 'mdi-material-ui/Minus'
 import TrashCanOutline from 'mdi-material-ui/TrashCanOutline'
+import IconButton from '@mui/material/IconButton'
 
 // react import
 import { useState, forwardRef } from 'react'
@@ -205,22 +206,25 @@ const ProductTable = ({
                       alignItems: 'center'
                     }}
                   >
-                    <Minus
+                    <IconButton
                       onClick={() => {
                         if (product.selectedQuantity > 1) {
                           handleDecrement(product.id)
                         }
                       }}
-                      fontSize='small'
-                      sx={{
-                        color: 'red',
-                        border: '1px solid red',
-                        borderRadius: '5px',
-                        opacity: product.selectedQuantity === 1 ? '0.5' : '1',
-                        cursor: product.selectedQuantity === 1 ? 'not-allowed' : 'pointer'
-                      }}
                       disabled={product.selectedQuantity === 1}
-                    />
+                    >
+                      <Minus
+                        fontSize='small'
+                        sx={{
+                          color: 'red',
+                          border: '1px solid red',
+                          borderRadius: '5px',
+                          opacity: product.selectedQuantity === 1 ? '0.5' : '1',
+                          cursor: product.selectedQuantity === 1 ? 'not-allowed' : 'pointer'
+                        }}
+                      />
+                    </IconButton>
 
                     {/* <TextField
                     value={product.calories}
@@ -240,30 +244,31 @@ const ProductTable = ({
                         minWidth: '30px',
                         maxWidth: '50px',
                         textAlign: 'center',
-                        border: '1px solid transparent',
-                        backgroundColor: 'transparent'
+                        border: '1px solid transparent'
                       }}
                       onChange={e => handleQuantChange(product.id, e)}
                     />
 
                     {/* {product.calories} */}
-
-                    <Plus
+                    <IconButton
                       onClick={() => {
                         if (product.selectedQuantity < product.quantity) {
                           handleIncrement(product.id)
                         }
                       }}
-                      fontSize='small'
-                      sx={{
-                        color: 'blue',
-                        border: '1px solid blue',
-                        borderRadius: '5px',
-                        opacity: product.selectedQuantity === product.quantity ? '0.5' : '1',
-                        cursor: product.selectedQuantity === product.quantity ? 'not-allowed' : 'pointer'
-                      }}
                       disabled={product.selectedQuantity === product.quantity}
-                    />
+                    >
+                      <Plus
+                        fontSize='small'
+                        sx={{
+                          color: 'blue',
+                          border: '1px solid blue',
+                          borderRadius: '5px',
+                          opacity: product.selectedQuantity === product.quantity ? '0.5' : '1',
+                          cursor: product.selectedQuantity === product.quantity ? 'not-allowed' : 'pointer'
+                        }}
+                      />
+                    </IconButton>
                   </div>
                 </TableCell>
 
