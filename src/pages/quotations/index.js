@@ -67,6 +67,7 @@ import { useState, useEffect } from 'react'
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
 import { CSVLink } from 'react-csv'
+import EditQuotation from './modal'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -106,6 +107,8 @@ const Quotations = () => {
 
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
+
+  const [openEdit, setOpenEdit] = useState(false)
 
   const handleChangeDateFilter = event => {
     setDateFilter(event.target.value)
@@ -153,6 +156,7 @@ const Quotations = () => {
 
   return (
     <Grid container spacing={2}>
+      <EditQuotation openEdit={openEdit} setOpenEdit={setOpenEdit} />
       <Grid item xs={12}>
         <Typography variant='h5'>
           {/* <Link href='https:
@@ -504,7 +508,12 @@ const Quotations = () => {
                               Create Sale
                             </Typography>
                           </MenuItem>
-                          <MenuItem onClick={() => setAnchorEl(null)}>
+                          <MenuItem
+                            onClick={() => {
+                              setAnchorEl(null)
+                              setOpenEdit(true)
+                            }}
+                          >
                             <ListItemIcon>
                               <SquareEditOutline fontSize='small' />
                             </ListItemIcon>
