@@ -38,6 +38,14 @@ import FilePdfBox from 'mdi-material-ui/FilePdfBox'
 import Cart from 'mdi-material-ui/Cart'
 import SquareEditOutline from 'mdi-material-ui/SquareEditOutline'
 
+import CloseIcon from '@mui/icons-material/Close'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContentText from '@mui/material/DialogContentText'
+import Dialog from '@mui/material/Dialog'
+import DialogTitle from '@mui/material/DialogTitle'
+import Slide from '@mui/material/Slide'
+
 import Image from 'next/image'
 
 // import Link from 'next/link'
@@ -62,11 +70,12 @@ import FormLayoutsAlignment from 'src/views/form-layouts/FormLayoutsAlignment'
 import { useRouter } from 'next/router'
 
 //react import
-import { useState, useEffect } from 'react'
+import { useState, useEffect, forwardRef } from 'react'
 
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
 import { CSVLink } from 'react-csv'
+import EditQuotation from './modal/edit'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -89,6 +98,10 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   }
 }))
 
+const Transition = forwardRef(function Transition(props, ref) {
+  return <Slide direction='up' ref={ref} {...props} />
+})
+
 const url = 'http://localhost:8000/quotations'
 
 const Quotations = () => {
@@ -106,6 +119,41 @@ const Quotations = () => {
 
   const [anchorEl, setAnchorEl] = useState(null)
   const open = Boolean(anchorEl)
+
+  const [openEdit, setOpenEdit] = useState(false)
+
+  // * this are the data to be change/ update used in edit page
+  const [id, setId] = useState(null)
+  const [reference, setReference] = useState()
+  const [shelf, setShelf] = useState()
+  const [customer, setCustomer] = useState()
+  const [customerId, setCustomerId] = useState()
+  const [selectedProducts, setSelectedProducts] = useState([])
+  const [discount, setDiscount] = useState()
+  const [shipping, setShipping] = useState()
+  const [grandTotal, setGrandTotal] = useState()
+  const [status, setStatus] = useState()
+  const [notes, setNotes] = useState()
+
+  const [refresh, setRefresh] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false)
+
+  const handleQuotation = quotation => {
+    setId(quotation.id)
+    setReference(quotation.reference)
+    setShelf(quotation.shelf)
+    setCustomer(quotation.customer)
+    setCustomerId(quotation.customerId)
+    setSelectedProducts(quotation.selectedProducts)
+    setDiscount(quotation.discount)
+    setShipping(quotation.shipping)
+    setGrandTotal(quotation.grand_total)
+    setStatus(quotation.status)
+    setNotes(quotation.notes)
+
+    // Read the quotation object first, then set openEdit
+    console.log(quotation.customerId)
+  }
 
   const handleChangeDateFilter = event => {
     setDateFilter(event.target.value)
@@ -135,7 +183,7 @@ const Quotations = () => {
       }
     }
     fetchData()
-  }, [url])
+  }, [refresh])
 
   const handleSort = property => {
     const isAscending = sortOrder === 'asc'
@@ -151,16 +199,84 @@ const Quotations = () => {
     })
   }
 
+  const deleteQuotation = id => {
+    const newQuotations = quotations.filter(quotation => quotation.id !== id)
+
+    fetch(`${url}/${id}`, {
+      method: 'DELETE'
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok')
+        }
+
+        return response.json()
+      })
+      .then(data => {
+        console.log('quotation deleted successfully:', data)
+
+        // Update the state to remove the deleted product
+        setQuotations(newQuotations)
+      })
+      .catch(error => {
+        console.error('There was an error deleting the quotation:', error)
+      })
+  }
+
   return (
     <Grid container spacing={2}>
+      <Dialog
+        open={openDelete}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={() => setOpenDelete(false)}
+        aria-describedby='alert-dialog-slide-description'
+      >
+        <DialogTitle>{'Confirm Delete  '}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id='alert-dialog-slide-description'>
+            This action will delete the selected quotation.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setOpenDelete(false)
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            color='info'
+            variant='contained'
+            onClick={() => {
+              deleteQuotation(id)
+              setOpenDelete(false)
+            }}
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <EditQuotation
+        setRefresh={setRefresh}
+        refresh={refresh}
+        quotationId={id}
+        quotationReference={reference}
+        quotationShelf={shelf}
+        quotationCustomer={customer}
+        quotationCustomerId={customerId}
+        quotationSelectedProducts={selectedProducts}
+        quotationDiscount={discount}
+        quotationShipping={shipping}
+        quotationGrandTotal={grandTotal}
+        quotationStatus={status}
+        quotationNotes={notes}
+        openEdit={openEdit}
+        setOpenEdit={setOpenEdit}
+      />
       <Grid item xs={12}>
-        <Typography variant='h5'>
-          {/* <Link href='https:
-          //mui.com/components/tables/' target='_blank'> */}
-          quotations
-          {/* </Link> */}
-        </Typography>
-        {/* <Typography variant='subtitle2'>Tables display sets of data. They can be fully customized</Typography> */}
+        <Typography variant='h5'>quotations</Typography>
       </Grid>
 
       {/* search  */}
@@ -356,27 +472,11 @@ const Quotations = () => {
                         <Typography
                           style={{
                             fontSize: '.8rem'
-
-                            // lineHeight: 1,
-
-                            //
-                            // maxHeight: '2.4rem',
-
-                            // overflow: 'hidden',
-
-                            // textOverflow: 'ellipsis',
-
-                            // display: '-webkit-box',
-
-                            // WebkitBoxOrient: 'vertical'
-
-                            // WebkitLineClamp: 2
                           }}
                         >
                           {quotation.reference}
                         </Typography>
                       </StyledTableCell>
-
                       <StyledTableCell align='left'>
                         <Typography
                           style={{
@@ -394,14 +494,10 @@ const Quotations = () => {
                           style={{
                             fontSize: '0.8rem',
                             lineHeight: 1,
-
-                            // maxHeight: '2.4rem',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
                             display: '-webkit-box',
                             WebkitBoxOrient: 'vertical'
-
-                            // WebkitLineClamp: 2
                           }}
                         >
                           {quotation.shelf}
@@ -412,14 +508,10 @@ const Quotations = () => {
                           style={{
                             fontSize: '0.8rem',
                             lineHeight: 1,
-
-                            // maxHeight: '2.4rem',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
                             display: '-webkit-box',
                             WebkitBoxOrient: 'vertical'
-
-                            // WebkitLineClamp: 2
                           }}
                         >
                           {quotation.status}
@@ -442,11 +534,9 @@ const Quotations = () => {
                           </span>
                         </div>
                       </StyledTableCell>
-
                       <StyledTableCell align='center'>
                         <Typography
                           style={{
-                            // fontSize: '0.8rem',
                             whiteSpace: 'nowrap',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis'
@@ -462,7 +552,12 @@ const Quotations = () => {
                           aria-controls={open ? 'fade-menu' : undefined}
                           aria-haspopup='true'
                           aria-expanded={open ? 'true' : undefined}
-                          onClick={e => setAnchorEl(e.currentTarget)}
+                          onClick={e => {
+                            handleQuotation(quotation)
+                            setAnchorEl(e.currentTarget)
+
+                            console.log(quotation.id)
+                          }}
                         >
                           <DotsVertical />
                         </IconButton>
@@ -479,8 +574,10 @@ const Quotations = () => {
                           <MenuItem onClick={() => setAnchorEl(null)}>
                             <Link
                               sx={{ display: 'flex' }}
-                              onClick={() => router.push('/quotations/details/' + quotation.id)}
-                              key={quotation.id}
+                              onClick={() => {
+                                router.push('/quotations/details/' + id)
+                                console.log(id)
+                              }}
                             >
                               <ListItemIcon>
                                 <Eye fontSize='small' />
@@ -504,7 +601,12 @@ const Quotations = () => {
                               Create Sale
                             </Typography>
                           </MenuItem>
-                          <MenuItem onClick={() => setAnchorEl(null)}>
+                          <MenuItem
+                            onClick={() => {
+                              setAnchorEl(null)
+                              setOpenEdit(true)
+                            }}
+                          >
                             <ListItemIcon>
                               <SquareEditOutline fontSize='small' />
                             </ListItemIcon>
@@ -512,7 +614,12 @@ const Quotations = () => {
                               Edit Quotation
                             </Typography>
                           </MenuItem>
-                          <MenuItem onClick={() => setAnchorEl(null)}>
+                          <MenuItem
+                            onClick={() => {
+                              setAnchorEl(null)
+                              setOpenDelete(true)
+                            }}
+                          >
                             <ListItemIcon>
                               <Delete fontSize='small' />
                             </ListItemIcon>

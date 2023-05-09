@@ -686,24 +686,24 @@
       "reference": "QA_111199",
       "customer": "Ursula Penesula",
       "customerId": 1,
-      "shelf": "shelf 1",
+      "shelf": "shelf 2",
       "status": "pending",
-      "grand_total": 1200,
-      "created_on": "2023-04-27T13:59:38.335Z",
+      "grand_total": 112,
+      "created_on": "2023-05-09T16:46:48.571Z",
       "selectedProducts": [
         {
           "id": 7,
           "name": "Craftsman 20V MAX Lithium-Ion Cordless Drill/Driver",
           "quantity": 3,
           "price": 11,
-          "subtotal": 11,
+          "subtotal": 22,
           "category": "Paint and Painting Supplies",
           "brand": "Craftsman",
           "code": "CRA-20V-DRV",
           "created_on": "2023-04-19",
           "unit": "pieces",
           "shelf": "shelf 2",
-          "selectedQuantity": 1,
+          "selectedQuantity": 2,
           "discount": 0
         },
         {
@@ -722,9 +722,9 @@
           "discount": 0
         }
       ],
-      "discount": 0,
-      "shipping": 0,
-      "notes": "try"
+      "discount": 10,
+      "shipping": 20,
+      "notes": "try 123 updated"
     },
     {
       "id": 2,
@@ -732,23 +732,23 @@
       "customer": "John Smith",
       "customerId": 2,
       "shelf": "shelf 2",
-      "status": "ordered",
-      "grand_total": 5000,
-      "created_on": "2023-04-27T13:59:38.335Z",
+      "status": "pending",
+      "grand_total": 142,
+      "created_on": "2023-05-09T16:53:19.424Z",
       "selectedProducts": [
         {
           "id": 7,
           "name": "Craftsman 20V MAX Lithium-Ion Cordless Drill/Driver",
           "quantity": 3,
           "price": 11,
-          "subtotal": 11,
+          "subtotal": 22,
           "category": "Paint and Painting Supplies",
           "brand": "Craftsman",
           "code": "CRA-20V-DRV",
           "created_on": "2023-04-19",
           "unit": "pieces",
           "shelf": "shelf 2",
-          "selectedQuantity": 1,
+          "selectedQuantity": 2,
           "discount": 0
         },
         {
@@ -776,24 +776,24 @@
       "reference": "QA_111201",
       "customer": "Jane Doe",
       "customerId": 3,
-      "shelf": "shelf 1",
+      "shelf": "shelf 2",
       "status": "pending",
-      "grand_total": 5000,
-      "created_on": "2023-04-27T13:59:38.335Z",
+      "grand_total": 197,
+      "created_on": "2023-05-09T16:50:40.624Z",
       "selectedProducts": [
         {
           "id": 7,
           "name": "Craftsman 20V MAX Lithium-Ion Cordless Drill/Driver",
           "quantity": 3,
           "price": 11,
-          "subtotal": 11,
+          "subtotal": 77,
           "category": "Paint and Painting Supplies",
           "brand": "Craftsman",
           "code": "CRA-20V-DRV",
           "created_on": "2023-04-19",
           "unit": "pieces",
           "shelf": "shelf 2",
-          "selectedQuantity": 1,
+          "selectedQuantity": 7,
           "discount": 0
         },
         {
@@ -823,8 +823,8 @@
       "customerId": 4,
       "shelf": "shelf 2",
       "status": "pending",
-      "grand_total": 1500,
-      "created_on": "2023-04-27T13:59:38.335Z",
+      "grand_total": 121,
+      "created_on": "2023-05-09T16:53:19.424Z",
       "selectedProducts": [
         {
           "id": 7,
@@ -866,10 +866,10 @@
       "reference": "QA_111203",
       "customer": "Emily Wang",
       "customerId": 5,
-      "shelf": "shelf 1",
-      "status": "ordered",
-      "grand_total": 3500,
-      "created_on": "2023-04-27T13:59:38.335Z",
+      "shelf": "shelf 2",
+      "status": "pending",
+      "grand_total": 131,
+      "created_on": "2023-05-09T16:53:19.424Z",
       "selectedProducts": [
         {
           "id": 7,
@@ -952,34 +952,34 @@
       "id": 6
     },
     {
+      "id": 7,
       "reference": "QA_348984",
-      "created_on": "2023-04-28T03:19:52.005Z",
-      "shelf": "shelf 2",
       "customer": "Emily Wang",
       "customerId": 5,
+      "shelf": "shelf 2",
+      "status": "sent",
+      "grand_total": 33,
+      "created_on": "2023-05-09T16:53:19.424Z",
       "selectedProducts": [
         {
           "id": 7,
           "name": "Craftsman 20V MAX Lithium-Ion Cordless Drill/Driver",
           "quantity": 3,
           "price": 11,
-          "subtotal": 11,
+          "subtotal": 33,
           "category": "Paint and Painting Supplies",
           "brand": "Craftsman",
           "code": "CRA-20V-DRV",
           "created_on": "2023-04-19",
           "unit": "pieces",
           "shelf": "shelf 2",
-          "selectedQuantity": 1,
+          "selectedQuantity": 3,
           "discount": 0
         }
       ],
       "discount": 0,
       "shipping": 0,
-      "grand_total": 11,
-      "status": "sent",
-      "notes": "",
-      "id": 7
+      "notes": ""
     },
     {
       "reference": "QA_767481",
@@ -1012,34 +1012,34 @@
       "id": 8
     },
     {
+      "id": 9,
       "reference": "QA_767106",
-      "created_on": "2023-05-03T14:46:15.837Z",
-      "shelf": "shelf 1",
       "customer": "Emily Wang",
       "customerId": 5,
+      "shelf": "shelf 1",
+      "status": "pending",
+      "grand_total": 48,
+      "created_on": "2023-05-09T16:53:19.424Z",
       "selectedProducts": [
         {
           "id": 4,
           "name": "Milwaukee M18 FUEL 1/2\" Hammer Drill/Driver Kit",
           "quantity": 4,
           "price": 12,
-          "subtotal": 12,
+          "subtotal": 48,
           "category": "Fasteners",
           "brand": "Milwaukee",
           "code": "MIL-M18-HDR-DRV",
           "created_on": "2023-04-19",
           "unit": "pieces",
           "shelf": "shelf 1",
-          "selectedQuantity": 1,
+          "selectedQuantity": 4,
           "discount": 0
         }
       ],
       "discount": 0,
       "shipping": 0,
-      "grand_total": 12,
-      "status": "pending",
-      "notes": "try",
-      "id": 9
+      "notes": "try"
     },
     {
       "reference": "QA_332009",
