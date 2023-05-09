@@ -95,7 +95,7 @@ const ProductCategories = () => {
 
   // modal purposes
   const [openCreate, setOpenCreate] = useState(false)
-  
+
   const [openEdit, setOpenEdit] = useState(false)
   const [id, setId] = useState(null)
   const [category, setCategory] = useState()
@@ -170,7 +170,7 @@ const ProductCategories = () => {
       }
     }
     fetchData()
-  }, [url])
+  }, [])
 
   useEffect(() => {
     async function fetchData() {
@@ -183,7 +183,7 @@ const ProductCategories = () => {
       }
     }
     fetchData()
-  }, [categoriesUrl, refresh])
+  }, [refresh])
 
   // console.log(categoryCounts)
 

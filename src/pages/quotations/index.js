@@ -183,7 +183,7 @@ const Quotations = () => {
       }
     }
     fetchData()
-  }, [url, refresh])
+  }, [refresh])
 
   const handleSort = property => {
     const isAscending = sortOrder === 'asc'
@@ -199,7 +199,7 @@ const Quotations = () => {
     })
   }
 
-  const deleteQuotation = (id) => {
+  const deleteQuotation = id => {
     const newQuotations = quotations.filter(quotation => quotation.id !== id)
 
     fetch(`${url}/${id}`, {
@@ -555,8 +555,6 @@ const Quotations = () => {
                           onClick={e => {
                             handleQuotation(quotation)
                             setAnchorEl(e.currentTarget)
-                            // setAnchorEl(null)
-                            // setOpenEdit(true)
 
                             console.log(quotation.id)
                           }}
@@ -616,10 +614,12 @@ const Quotations = () => {
                               Edit Quotation
                             </Typography>
                           </MenuItem>
-                          <MenuItem onClick={() => {
-                            setAnchorEl(null)
-                            setOpenDelete(true)
-                          }}>
+                          <MenuItem
+                            onClick={() => {
+                              setAnchorEl(null)
+                              setOpenDelete(true)
+                            }}
+                          >
                             <ListItemIcon>
                               <Delete fontSize='small' />
                             </ListItemIcon>

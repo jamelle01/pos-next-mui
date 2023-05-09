@@ -279,7 +279,7 @@ const View = () => {
       }
     }
     fetchData()
-  }, [])
+  }, [id])
 
   useEffect(() => {
     const calculateTotal = async () => {

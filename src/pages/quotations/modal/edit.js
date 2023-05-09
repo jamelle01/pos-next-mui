@@ -149,7 +149,6 @@ const EditQuotation = ({
   // selected customer details
   const [selectedCustomer, setSelectedCustomer] = useState(quotationCustomer)
   const [selectedCustomerId, setSelectedCustomerId] = useState(quotationCustomerId)
-  // const [customerDetails, setCustomerDetails] = useState(quotation)
   const [selectedProducts, setSelectedProducts] = useState(quotationSelectedProducts)
   const [discount, setDiscount] = useState(quotationDiscount)
   const [shipping, setShipping] = useState(quotationShipping)
@@ -159,8 +158,6 @@ const EditQuotation = ({
   const [total, setTotal] = useState(0)
   const [subTotal, setSubTotal] = useState(0)
   const [search, setSearch] = useState('')
-
-  // console.log(quotationCustomerId)
 
   useEffect(() => {
     setSelectedCustomer(quotationCustomer)
@@ -177,6 +174,7 @@ const EditQuotation = ({
     openEdit,
     quotationShelf,
     quotationCustomer,
+    quotationCustomerId,
     quotationSelectedProducts,
     quotationDiscount,
     quotationShipping,
@@ -193,7 +191,7 @@ const EditQuotation = ({
           product.name.toLowerCase().includes(search.toLowerCase())) &&
         product.shelf.toLowerCase() === selectedShelve?.toLowerCase()
     )
-  }, [products, search, selectedShelve, quotationShelf])
+  }, [products, search, selectedShelve])
 
   useEffect(() => {
     async function fetchData() {
@@ -256,6 +254,7 @@ const EditQuotation = ({
 
   const handleSubmit = e => {
     e.preventDefault()
+
     const quotationData = {
       id: quotationId,
       reference: quotationReference,
