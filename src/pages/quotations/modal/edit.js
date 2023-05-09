@@ -38,11 +38,6 @@ import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 import TableCell, { tableCellClasses } from '@mui/material/TableCell'
 
-import dayjs from 'dayjs'
-import localizedFormat from 'dayjs/plugin/localizedFormat'
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers'
-
 //icons import
 import Magnify from 'mdi-material-ui/Magnify'
 import Delete from 'mdi-material-ui/Delete'
@@ -53,7 +48,19 @@ import CloseIcon from '@mui/icons-material/Close'
 //next imports
 import { useRouter } from 'next/router'
 
+// ** Third Party Imports
+
+// import DatePicker from 'react-datepicker'
+
+import dayjs from 'dayjs'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers'
+
+dayjs.extend(localizedFormat)
+
 import { useState, forwardRef, useEffect, useMemo, useRef } from 'react'
+import { IdeogramCjk } from 'mdi-material-ui'
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
@@ -108,7 +115,25 @@ const status = [
   { id: 2, name: 'pending' }
 ]
 
-const EditQuotation = ({ openEdit, setOpenEdit, quotation, id }) => {
+const quotationsUrl = 'http://localhost:8000/quotations'
+
+const EditQuotation = ({
+  setRefresh,
+  refresh,
+  openEdit,
+  setOpenEdit,
+  quotationId,
+  quotationReference,
+  quotationShelf,
+  quotationCustomer,
+  quotationCustomerId,
+  quotationSelectedProducts,
+  quotationDiscount,
+  quotationShipping,
+  quotationGrandTotal,
+  quotationStatus,
+  quotationNotes
+}) => {
   const router = useRouter()
   const searchInputRef = useRef(null)
 
@@ -118,27 +143,162 @@ const EditQuotation = ({ openEdit, setOpenEdit, quotation, id }) => {
   const [shelves, setShelves] = useState([])
 
   // data to be sent to database
-  const [selectedDate, setSelectedDate] = useState('')
-  const [selectedShelve, setSelectedShelve] = useState('')
+  const [selectedDate, setSelectedDate] = useState(dayjs())
+  const [selectedShelve, setSelectedShelve] = useState(quotationShelf)
 
   // selected customer details
-  const [selectedCustomer, setSelectedCustomer] = useState()
-  const [customerDetails, setCustomerDetails] = useState([])
-  const [selectedProducts, setSelectedProducts] = useState([])
-  const [discount, setDiscount] = useState(0)
-  const [shipping, setShipping] = useState(0)
-  const [selectedStatus, setSelectedStatus] = useState()
-  const [notes, setNotes] = useState('')
+  const [selectedCustomer, setSelectedCustomer] = useState(quotationCustomer)
+  const [selectedCustomerId, setSelectedCustomerId] = useState(quotationCustomerId)
+  // const [customerDetails, setCustomerDetails] = useState(quotation)
+  const [selectedProducts, setSelectedProducts] = useState(quotationSelectedProducts)
+  const [discount, setDiscount] = useState(quotationDiscount)
+  const [shipping, setShipping] = useState(quotationShipping)
+  const [selectedStatus, setSelectedStatus] = useState(quotationStatus)
+  const [notes, setNotes] = useState(quotationNotes)
 
   const [total, setTotal] = useState(0)
   const [subTotal, setSubTotal] = useState(0)
   const [search, setSearch] = useState('')
 
-  const [selectedQuot, setSelectedQuot] = useState([])
+  // console.log(quotationCustomerId)
 
   useEffect(() => {
-    setSelectedDate(quotation.selectedDate)
-  }, [id, quotation])
+    setSelectedCustomer(quotationCustomer)
+    if (quotationShelf !== undefined) {
+      setSelectedShelve(quotationShelf)
+    }
+    setSelectedCustomerId(quotationCustomerId)
+    setSelectedProducts(quotationSelectedProducts)
+    setDiscount(quotationDiscount)
+    setShipping(quotationShipping)
+    setSelectedStatus(quotationStatus)
+    setNotes(quotationNotes)
+  }, [
+    openEdit,
+    quotationShelf,
+    quotationCustomer,
+    quotationSelectedProducts,
+    quotationDiscount,
+    quotationShipping,
+    quotationStatus,
+    quotationNotes
+  ])
+
+  // * use memo here
+
+  const filteredProducts = useMemo(() => {
+    return products.filter(
+      product =>
+        (product.code.toLowerCase().includes(search.toLowerCase()) ||
+          product.name.toLowerCase().includes(search.toLowerCase())) &&
+        product.shelf.toLowerCase() === selectedShelve?.toLowerCase()
+    )
+  }, [products, search, selectedShelve, quotationShelf])
+
+  useEffect(() => {
+    async function fetchData() {
+      const productsUrl = 'http://localhost:8000/products'
+      const customersUrl = 'http://localhost:8000/customers'
+      const shelvesUrl = 'http://localhost:8000/shelves'
+
+      const [productsRes, customersRes, shelvesRes] = await Promise.all([
+        fetch(productsUrl),
+        fetch(customersUrl),
+        fetch(shelvesUrl)
+      ])
+
+      const [productsData, customersData, shelvesData] = await Promise.all([
+        productsRes.json(),
+        customersRes.json(),
+        shelvesRes.json()
+      ])
+
+      setProducts(productsData)
+      setCustomers(customersData)
+      setShelves(shelvesData)
+    }
+
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    // add event listener to document for click events
+    const handleClickOutside = e => {
+      if (
+        searchInputRef.current &&
+        !searchInputRef.current.contains(e.target) &&
+        !document.getElementsByClassName('MuiList-root')[0].contains(e.target)
+      ) {
+        setSearch('')
+      }
+    }
+    document.addEventListener('click', handleClickOutside)
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside)
+    }
+  }, [])
+
+  useEffect(() => {
+    const calculateTotal = async () => {
+      if (selectedProducts) {
+        const subTotal = selectedProducts.reduce((acc, product) => acc + product.subtotal, 0)
+        const total = selectedProducts.reduce((acc, product) => acc + product.subtotal, 0)
+        setSubTotal(subTotal)
+        setTotal(total - discount - shipping)
+        selectedProducts.map(item => {
+          console.log(item.subTotal)
+        })
+      }
+    }
+    calculateTotal()
+  }, [selectedProducts, discount, shipping])
+
+  const handleSubmit = e => {
+    e.preventDefault()
+    const quotationData = {
+      id: quotationId,
+      reference: quotationReference,
+      customer: selectedCustomer,
+      customerId: selectedCustomerId,
+      shelf: selectedShelve,
+      status: selectedStatus,
+      grand_total: total,
+      created_on: selectedDate,
+      selectedProducts,
+      discount,
+      shipping,
+      notes
+    }
+    updateQuotation(quotationData)
+  }
+
+  const updateQuotation = quotationData => {
+    fetch(`${quotationsUrl}/${quotationData.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(quotationData)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok')
+        }
+
+        return response.json()
+      })
+      .then(data => {
+        console.log('quotation updated successfully:', data)
+        setOpenEdit(false)
+        setRefresh(!refresh)
+
+        // do something after the product is updated
+      })
+      .catch(error => {
+        console.error('There was an error updating the quotation:', error)
+      })
+  }
 
   const handleKeyPress = event => {
     const keyCode = event.keyCode || event.which
@@ -149,6 +309,65 @@ const EditQuotation = ({ openEdit, setOpenEdit, quotation, id }) => {
     } else if (keyValue === '.' && event.target.value.includes('.')) {
       event.preventDefault()
     }
+  }
+
+  const handleProductClick = product => {
+    // console.log(product.quantity);
+    const productIndex = selectedProducts.findIndex(p => p.id === product.id)
+    if (productIndex === -1 && product.quantity) {
+      // product does not exist, add it to the array
+      const newProduct = { ...product, selectedQuantity: 1, subtotal: 0, discount: 0 }
+      setSelectedProducts([...selectedProducts, newProduct])
+    } else {
+      // product exists, increment its quantity
+      const updatedProducts = [...selectedProducts]
+      if (product.quantity) {
+        if (updatedProducts[productIndex].selectedQuantity !== product.quantity) {
+          updatedProducts[productIndex].selectedQuantity += 1
+          setSelectedProducts(updatedProducts)
+        }
+      }
+    }
+  }
+
+  const handleProductRemove = productId => {
+    setSelectedProducts(prevSelectedProducts => prevSelectedProducts.filter(product => product.id !== productId))
+  }
+
+  const handleDecrement = id => {
+    setSelectedProducts(prevProducts =>
+      prevProducts.map(product =>
+        product.id === id ? { ...product, selectedQuantity: product.selectedQuantity - 1 } : product
+      )
+    )
+    console.log('hi')
+    console.log(selectedProducts)
+  }
+
+  const handleIncrement = id => {
+    setSelectedProducts(prevProducts =>
+      prevProducts.map(product =>
+        product.id === id ? { ...product, selectedQuantity: product.selectedQuantity + 1 } : product
+      )
+    )
+  }
+
+  const handleQuantChange = (id, e) => {
+    let value = e.target.value
+    if (value === '') {
+      value = 0
+    } else {
+      value = value.replace(/^0+(?=\d)/, '')
+
+      // remove leading zeros
+
+      // setShipping(value)
+    }
+
+    // const value = e.target.value === '' ? 0 : parseInt(e.target.value)
+    setSelectedProducts(prevProducts =>
+      prevProducts.map(product => (product.id === id ? { ...product, selectedQuantity: value } : product))
+    )
   }
 
   return (
@@ -163,7 +382,7 @@ const EditQuotation = ({ openEdit, setOpenEdit, quotation, id }) => {
       sx={{ m: 0, p: 2 }}
     >
       <DialogTitle style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        {'Edit Quotation'}
+        {`Edit Quotation ${quotationReference}`}
         <IconButton onClick={() => setOpenEdit(false)}>
           <CloseIcon />
         </IconButton>
@@ -189,60 +408,55 @@ const EditQuotation = ({ openEdit, setOpenEdit, quotation, id }) => {
                       </LocalizationProvider>
                     </Grid>
 
-                    <Grid item xs={4}>
-                      <FormControl required fullWidth>
-                        <InputLabel id='demo-multiple-name-label'>Shelve</InputLabel>
-                        <Select
-                          labelId='demo-multiple-name-label'
-                          id='demo-multiple-name'
-                          value={selectedShelve}
-                          onChange={e => setSelectedShelve(e.target.value)}
-                          disabled={selectedProducts.length > 0}
-                          input={<OutlinedInput label='Shelve' />}
-                        >
-                          {shelves.map(shelf => (
-                            <MenuItem key={shelf.id} value={shelf.name}>
-                              {shelf.name}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                      {search && !selectedShelve && (
-                        <Typography variant='caption' style={{ color: 'red' }}>
-                          Please select shelf
-                        </Typography>
-                      )}
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Autocomplete
-                        id='combo-box-demo'
-                        options={customers}
-                        getOptionLabel={option => option.name}
-                        onChange={(event, value) => {
-                          if (value) {
-                            setSelectedCustomer(value.name)
-                            setCustomerDetails({ customerId: value.id, name: value.name })
-                          } else {
-                            setSelectedCustomer('')
-                          }
-                        }}
-                        renderInput={params => (
-                          <TextField
-                            {...params}
-                            label='Customer'
-                            required
-                            fullWidth
-                            inputProps={{
-                              ...params.inputProps,
-                              autoComplete: 'new-password'
-
-                              // disable browser auto-complete
-                            }}
-                            variant='outlined'
-                          />
+                    {selectedShelve && (
+                      <Grid item xs={4}>
+                        <FormControl required fullWidth>
+                          <InputLabel id='demo-multiple-name-label'>Shelve</InputLabel>
+                          <Select
+                            labelId='demo-multiple-name-label'
+                            id='demo-multiple-name'
+                            defaultValue={selectedShelve}
+                            onChange={e => setSelectedShelve(e.target.value)}
+                            disabled={selectedProducts.length > 0}
+                            input={<OutlinedInput label='Shelve' />}
+                          >
+                            {shelves.map(shelf => (
+                              <MenuItem key={shelf.id} value={shelf.name}>
+                                {shelf.name}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                        {search && !selectedShelve && (
+                          <Typography variant='caption' style={{ color: 'red' }}>
+                            Please select shelf
+                          </Typography>
                         )}
-                      />
-                    </Grid>
+                      </Grid>
+                    )}
+                    {selectedCustomer && customers && (
+                      <Grid item xs={4}>
+                        <Autocomplete
+                          id='combo-box-demo'
+                          autoComplete='off'
+                          disableClearable
+                          options={customers}
+                          value={customers.find(customer => customer.name === selectedCustomer)}
+                          getOptionLabel={option => option.name}
+                          onChange={(event, value) => {
+                            if (value) {
+                              setSelectedCustomer(value.name)
+                              setSelectedCustomerId(value.id)
+                            } else {
+                              setSelectedCustomer('')
+                            }
+                          }}
+                          renderInput={params => (
+                            <TextField {...params} label='Customer' required fullWidth variant='outlined' />
+                          )}
+                        />
+                      </Grid>
+                    )}
                     <Grid item xs={12} sx={{ position: 'relative' }}>
                       <TextField
                         fullWidth
@@ -427,19 +641,21 @@ const EditQuotation = ({ openEdit, setOpenEdit, quotation, id }) => {
                             <TableRow>
                               <TableCell>Discount</TableCell>
                               <TableCell colspan={2} align='right'>
-                                {discount.toLocaleString(undefined, {
+                                {/* {discount.toLocaleString(undefined, {
                                   minimumFractionDigits: 2,
                                   maximumFractionDigits: 2
-                                })}
+                                })} */}
+                                {discount}
                               </TableCell>
                             </TableRow>
                             <TableRow>
                               <TableCell>Shipping</TableCell>
                               <TableCell colspan={2} align='right'>
-                                {shipping.toLocaleString(undefined, {
+                                {/* {shipping.toLocaleString(undefined, {
                                   minimumFractionDigits: 2,
                                   maximumFractionDigits: 2
-                                })}
+                                })} */}
+                                {shipping}
                               </TableCell>
                             </TableRow>
                             <TableRow>
@@ -529,22 +745,24 @@ const EditQuotation = ({ openEdit, setOpenEdit, quotation, id }) => {
                     </Grid>
 
                     <Grid item xs={4}>
-                      <FormControl required fullWidth>
-                        <InputLabel id='demo-multiple-name-label'>Status</InputLabel>
-                        <Select
-                          labelId='demo-multiple-name-label'
-                          id='demo-multiple-name'
-                          value={selectedStatus}
-                          onChange={e => setSelectedStatus(e.target.value)}
-                          input={<OutlinedInput label='Shelve' />}
-                        >
-                          {status.map(stat => (
-                            <MenuItem key={stat.id} value={stat.name}>
-                              {stat.name}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
+                      {selectedStatus && (
+                        <FormControl required fullWidth>
+                          <InputLabel id='demo-multiple-name-label'>Status</InputLabel>
+                          <Select
+                            labelId='demo-multiple-name-label'
+                            id='demo-multiple-name'
+                            value={selectedStatus}
+                            onChange={e => setSelectedStatus(e.target.value)}
+                            input={<OutlinedInput label='Shelve' />}
+                          >
+                            {status.map(stat => (
+                              <MenuItem key={stat.id} value={stat.name}>
+                                {stat.name}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      )}
                     </Grid>
                     {/* <Grid item xs={4}>
                   <TextField fullWidth label='First Name' placeholder='Leonard' />
@@ -552,17 +770,15 @@ const EditQuotation = ({ openEdit, setOpenEdit, quotation, id }) => {
 
                     <Grid item xs={12}>
                       <TextField
-                        fullWidth
-                        id='standard-multiline-static'
+                        id='filled-textarea'
                         label='Notes'
-                        multiline
                         placeholder='Enter Notes'
+                        fullWidth
+                        multiline
+                        variant='filled'
                         rows={4}
+                        value={notes}
                         onChange={e => setNotes(e.target.value)}
-
-                        // defaultValue='Default Value'
-
-                        // variant='standard'
                       />
                     </Grid>
 
@@ -584,7 +800,7 @@ const EditQuotation = ({ openEdit, setOpenEdit, quotation, id }) => {
                             !selectedStatus
                           }
                         >
-                          Save
+                          update
                         </Button>
                         <Button onClick={() => setOpenEdit(false)} size='large' color='secondary' variant='outlined'>
                           Cancel
