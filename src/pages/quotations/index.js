@@ -113,7 +113,7 @@ const Quotations = () => {
   const [search, setSearch] = useState('')
 
   const [statusFilter, setStatusFilter] = useState('All')
-  const [dateFilter, setDateFilter] = useState()
+  // const [dateFilter, setDateFilter] = useState()
 
   const router = useRouter()
 
@@ -155,9 +155,9 @@ const Quotations = () => {
     console.log(quotation.customerId)
   }
 
-  const handleChangeDateFilter = event => {
-    setDateFilter(event.target.value)
-  }
+  // const handleChangeDateFilter = event => {
+  //   setDateFilter(event.target.value)
+  // }
 
   const handleChangeStatus = event => {
     setStatusFilter(event.target.value)
@@ -190,7 +190,7 @@ const Quotations = () => {
     const order = isAscending ? 'desc' : 'asc'
     setSortBy(property)
     setSortOrder(order)
-    quotations.sort((a, b) => {
+    filteredQuotations.sort((a, b) => {
       const valueA = a[property]
       const valueB = b[property]
       const direction = isAscending ? 1 : -1
@@ -221,6 +221,84 @@ const Quotations = () => {
       .catch(error => {
         console.error('There was an error deleting the quotation:', error)
       })
+  }
+
+  // create a function to get the start and end dates based on the selected date filter
+  const getDateRange = dateFilter => {
+    const today = new Date()
+    const start = new Date(today)
+    const end = new Date(today)
+
+    switch (dateFilter) {
+      case 'Today':
+        // set start to today and end to tomorrow
+        end.setDate(today.getDate() + 1)
+        break
+      case 'This Week':
+        // set start to the beginning of the current week and end to the beginning of next week
+        start.setDate(today.getDate() - today.getDay())
+        end.setDate(start.getDate() + 7)
+        break
+      case 'Last Week':
+        // set start to the beginning of the previous week and end to the beginning of this week
+        start.setDate(today.getDate() - today.getDay() - 7)
+        end.setDate(start.getDate() + 7)
+        break
+      case 'This Month':
+        // set start to the beginning of the current month and end to the beginning of next month
+        start.setDate(1)
+        end.setMonth(start.getMonth() + 1)
+        end.setDate(1)
+        break
+      case 'Last Month':
+        // set start to the beginning of the previous month and end to the beginning of this month
+        start.setDate(1)
+        start.setMonth(start.getMonth() - 1)
+        end.setDate(1)
+        break
+      default:
+        // no filter selected, return null
+        return null
+    }
+
+    return {
+      start: start.toISOString(),
+      end: end.toISOString()
+    }
+  }
+
+  // add a state variable to hold the selected date filter
+  const [dateFilter, setDateFilter] = useState(null)
+
+  // add a state variable to hold the filtered quotations
+  const [filteredQuotations, setFilteredQuotations] = useState([])
+
+  // add a useEffect hook to filter the quotations whenever the date filter changes
+  useEffect(() => {
+    const dateRange = getDateRange(dateFilter)
+
+    if (dateRange) {
+      const filtered = quotations.filter(quotation => {
+        const createdOn = new Date(quotation.created_on)
+        return createdOn >= new Date(dateRange.start) && createdOn < new Date(dateRange.end)
+      })
+
+      setFilteredQuotations(filtered)
+    } else {
+      setFilteredQuotations(quotations)
+    }
+  }, [dateFilter, quotations])
+
+  // add an event handler to handle the date filter change
+  const handleChangeDateFilter = event => {
+    setDateFilter(event.target.value)
+  }
+
+  const filterQuotationsByStatus = (quotations, status) => {
+    if (status === 'All') {
+      return quotations
+    }
+    return quotations.filter(quotation => quotation.status === status)
   }
 
   return (
@@ -326,15 +404,6 @@ const Quotations = () => {
       </Grid> */}
 
       <Grid item xs={2}>
-        {/* <Card sx={{ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}> */}
-        {/* <Button
-            sx={{ height: '100%', whiteSpace: 'nowrap' }}
-            align='center'
-            fullWidth
-            disableElevation
-            variant='contained'
-            style={{ textTransform: 'none' }}
-          > */}
         <FormControl sx={{ padding: 0.5 }} size='small' fullWidth>
           <InputLabel id='demo-simple-select-label'>Filter by Status</InputLabel>
           <Select
@@ -345,20 +414,17 @@ const Quotations = () => {
             onChange={handleChangeStatus}
           >
             <MenuItem value={'All'}>All</MenuItem>
-            <MenuItem value={'Received'}>Received</MenuItem>
-            <MenuItem value={'Pending'}>Pending</MenuItem>
-            <MenuItem value={'Ordered'}>Ordered</MenuItem>
+            <MenuItem value={'sent'}>Sent</MenuItem>
+            <MenuItem value={'pending'}>Pending</MenuItem>
           </Select>
         </FormControl>
-        {/* </Button> */}
-        {/* </Card> */}
       </Grid>
 
       {/* full screen button */}
 
       <Grid item xs={2}>
         <FormControl sx={{ padding: 0.5 }} size='small' fullWidth>
-          <InputLabel id='demo-simple-select-label'>Filter by Status</InputLabel>
+          <InputLabel id='demo-simple-select-label'>Filter by Date</InputLabel>
           <Select
             labelId='demo-simple-select-label'
             id='demo-simple-select'
@@ -463,7 +529,7 @@ const Quotations = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {quotations
+                {filterQuotationsByStatus(filteredQuotations, statusFilter)
                   .filter(quotation => quotation.reference.toLowerCase().includes(search.toLowerCase()))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map(quotation => (
@@ -637,7 +703,7 @@ const Quotations = () => {
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component='div'
-            count={quotations.length}
+            count={filteredQuotations.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
