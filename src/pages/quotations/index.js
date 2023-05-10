@@ -532,174 +532,175 @@ const Quotations = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {filterQuotationsByStatus(filteredQuotations, statusFilter)
-                  .filter(quotation => quotation.reference.toLowerCase().includes(search.toLowerCase()))
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map(quotation => (
-                    <StyledTableRow key={quotation.id}>
-                      <StyledTableCell align='left'>
-                        <Typography
-                          style={{
-                            fontSize: '.8rem'
-                          }}
-                        >
-                          {quotation.reference}
-                        </Typography>
-                      </StyledTableCell>
-                      <StyledTableCell align='left'>
-                        <Typography
-                          style={{
-                            fontSize: '0.8rem',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis'
-                          }}
-                        >
-                          {quotation.customer}
-                        </Typography>
-                      </StyledTableCell>
-                      <StyledTableCell align='left'>
-                        <Typography
-                          style={{
-                            fontSize: '0.8rem',
-                            lineHeight: 1,
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            display: '-webkit-box',
-                            WebkitBoxOrient: 'vertical'
-                          }}
-                        >
-                          {quotation.shelf}
-                        </Typography>
-                      </StyledTableCell>
-                      <StyledTableCell align='left'>
-                        <Typography
-                          style={{
-                            fontSize: '0.8rem',
-                            lineHeight: 1,
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            display: '-webkit-box',
-                            WebkitBoxOrient: 'vertical'
-                          }}
-                        >
-                          {quotation.status}
-                        </Typography>
-                      </StyledTableCell>
-                      <StyledTableCell align='center'>
-                        <div
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            gap: '0.5rem'
-                          }}
-                        >
-                          <span style={{ alignSelf: 'flex-start' }}>₱&nbsp;</span>
-                          <span style={{ alignSelf: 'flex-end' }}>
-                            {parseFloat(quotation.grand_total)
-                              .toFixed(2)
-                              .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                          </span>
-                        </div>
-                      </StyledTableCell>
-                      <StyledTableCell align='center'>
-                        <Typography
-                          style={{
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis'
-                          }}
-                          variant='caption'
-                        >
-                          {quotation.created_on}
-                        </Typography>
-                      </StyledTableCell>
-                      <StyledTableCell align='center'>
-                        <IconButton
-                          id='fade-button'
-                          aria-controls={open ? 'fade-menu' : undefined}
-                          aria-haspopup='true'
-                          aria-expanded={open ? 'true' : undefined}
-                          onClick={e => {
-                            handleQuotation(quotation)
-                            setAnchorEl(e.currentTarget)
+                {filteredQuotations &&
+                  filterQuotationsByStatus(filteredQuotations, statusFilter)
+                    .filter(quotation => quotation.reference.toLowerCase().includes(search.toLowerCase()))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map(quotation => (
+                      <StyledTableRow key={quotation.id}>
+                        <StyledTableCell align='left'>
+                          <Typography
+                            style={{
+                              fontSize: '.8rem'
+                            }}
+                          >
+                            {quotation.reference}
+                          </Typography>
+                        </StyledTableCell>
+                        <StyledTableCell align='left'>
+                          <Typography
+                            style={{
+                              fontSize: '0.8rem',
+                              whiteSpace: 'nowrap',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis'
+                            }}
+                          >
+                            {quotation.customer}
+                          </Typography>
+                        </StyledTableCell>
+                        <StyledTableCell align='left'>
+                          <Typography
+                            style={{
+                              fontSize: '0.8rem',
+                              lineHeight: 1,
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              display: '-webkit-box',
+                              WebkitBoxOrient: 'vertical'
+                            }}
+                          >
+                            {quotation.shelf}
+                          </Typography>
+                        </StyledTableCell>
+                        <StyledTableCell align='left'>
+                          <Typography
+                            style={{
+                              fontSize: '0.8rem',
+                              lineHeight: 1,
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              display: '-webkit-box',
+                              WebkitBoxOrient: 'vertical'
+                            }}
+                          >
+                            {quotation.status}
+                          </Typography>
+                        </StyledTableCell>
+                        <StyledTableCell align='center'>
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'center',
+                              gap: '0.5rem'
+                            }}
+                          >
+                            <span style={{ alignSelf: 'flex-start' }}>₱&nbsp;</span>
+                            <span style={{ alignSelf: 'flex-end' }}>
+                              {parseFloat(quotation.grand_total)
+                                .toFixed(2)
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            </span>
+                          </div>
+                        </StyledTableCell>
+                        <StyledTableCell align='center'>
+                          <Typography
+                            style={{
+                              whiteSpace: 'nowrap',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis'
+                            }}
+                            variant='caption'
+                          >
+                            {quotation.created_on}
+                          </Typography>
+                        </StyledTableCell>
+                        <StyledTableCell align='center'>
+                          <IconButton
+                            id='fade-button'
+                            aria-controls={open ? 'fade-menu' : undefined}
+                            aria-haspopup='true'
+                            aria-expanded={open ? 'true' : undefined}
+                            onClick={e => {
+                              handleQuotation(quotation)
+                              setAnchorEl(e.currentTarget)
 
-                            console.log(quotation.id)
-                          }}
-                        >
-                          <DotsVertical />
-                        </IconButton>
-                        <Menu
-                          id='fade-menu'
-                          MenuListProps={{
-                            'aria-labelledby': 'fade-button'
-                          }}
-                          anchorEl={anchorEl}
-                          open={open}
-                          onClose={() => setAnchorEl(null)}
-                          TransitionComponent={Fade}
-                        >
-                          <MenuItem onClick={() => setAnchorEl(null)}>
-                            <Link
-                              sx={{ display: 'flex' }}
+                              console.log(quotation.id)
+                            }}
+                          >
+                            <DotsVertical />
+                          </IconButton>
+                          <Menu
+                            id='fade-menu'
+                            MenuListProps={{
+                              'aria-labelledby': 'fade-button'
+                            }}
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={() => setAnchorEl(null)}
+                            TransitionComponent={Fade}
+                          >
+                            <MenuItem onClick={() => setAnchorEl(null)}>
+                              <Link
+                                sx={{ display: 'flex' }}
+                                onClick={() => {
+                                  router.push('/quotations/details/' + id)
+                                  console.log(id)
+                                }}
+                              >
+                                <ListItemIcon>
+                                  <Eye fontSize='small' />
+                                </ListItemIcon>
+                                <Typography variant='subtitle2'>View Quotation</Typography>
+                              </Link>
+                            </MenuItem>
+                            <MenuItem onClick={() => setAnchorEl(null)}>
+                              <ListItemIcon>
+                                <FilePdfBox fontSize='small' />
+                              </ListItemIcon>
+                              <Typography sx={{ display: 'inline' }} variant='subtitle2'>
+                                Download PDF
+                              </Typography>
+                            </MenuItem>
+                            <MenuItem onClick={() => setAnchorEl(null)}>
+                              <ListItemIcon>
+                                <Cart fontSize='small' />
+                              </ListItemIcon>
+                              <Typography sx={{ display: 'inline' }} variant='subtitle2'>
+                                Create Sale
+                              </Typography>
+                            </MenuItem>
+                            <MenuItem
                               onClick={() => {
-                                router.push('/quotations/details/' + id)
-                                console.log(id)
+                                setAnchorEl(null)
+                                setOpenEdit(true)
                               }}
                             >
                               <ListItemIcon>
-                                <Eye fontSize='small' />
+                                <SquareEditOutline fontSize='small' />
                               </ListItemIcon>
-                              <Typography variant='subtitle2'>View Quotation</Typography>
-                            </Link>
-                          </MenuItem>
-                          <MenuItem onClick={() => setAnchorEl(null)}>
-                            <ListItemIcon>
-                              <FilePdfBox fontSize='small' />
-                            </ListItemIcon>
-                            <Typography sx={{ display: 'inline' }} variant='subtitle2'>
-                              Download PDF
-                            </Typography>
-                          </MenuItem>
-                          <MenuItem onClick={() => setAnchorEl(null)}>
-                            <ListItemIcon>
-                              <Cart fontSize='small' />
-                            </ListItemIcon>
-                            <Typography sx={{ display: 'inline' }} variant='subtitle2'>
-                              Create Sale
-                            </Typography>
-                          </MenuItem>
-                          <MenuItem
-                            onClick={() => {
-                              setAnchorEl(null)
-                              setOpenEdit(true)
-                            }}
-                          >
-                            <ListItemIcon>
-                              <SquareEditOutline fontSize='small' />
-                            </ListItemIcon>
-                            <Typography sx={{ display: 'inline' }} variant='subtitle2'>
-                              Edit Quotation
-                            </Typography>
-                          </MenuItem>
-                          <MenuItem
-                            onClick={() => {
-                              setAnchorEl(null)
-                              setOpenDelete(true)
-                            }}
-                          >
-                            <ListItemIcon>
-                              <Delete fontSize='small' />
-                            </ListItemIcon>
-                            <Typography sx={{ display: 'inline' }} variant='subtitle2'>
-                              Delete Quotation
-                            </Typography>
-                          </MenuItem>
-                        </Menu>
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  ))}
+                              <Typography sx={{ display: 'inline' }} variant='subtitle2'>
+                                Edit Quotation
+                              </Typography>
+                            </MenuItem>
+                            <MenuItem
+                              onClick={() => {
+                                setAnchorEl(null)
+                                setOpenDelete(true)
+                              }}
+                            >
+                              <ListItemIcon>
+                                <Delete fontSize='small' />
+                              </ListItemIcon>
+                              <Typography sx={{ display: 'inline' }} variant='subtitle2'>
+                                Delete Quotation
+                              </Typography>
+                            </MenuItem>
+                          </Menu>
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    ))}
               </TableBody>
             </Table>
           </TableContainer>
