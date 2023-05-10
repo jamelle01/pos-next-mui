@@ -1100,6 +1100,40 @@
       "status": "pending",
       "notes": "",
       "id": 11
+    },
+    {
+      "reference": "QA_315298",
+      "created_on": "2023-05-09T19:31:26.311Z",
+      "shelf": "shelf 2",
+      "customer": "Emily Wang",
+      "customerId": 5,
+      "selectedProducts": [
+        {
+          "id": 7,
+          "name": "Craftsman 20V MAX Lithium-Ion Cordless Drill/Driver",
+          "quantity": 3,
+          "price": 11,
+          "subtotal": 1100,
+          "category": "Paint and Painting Supplies",
+          "brand": "Craftsman",
+          "code": "CRA-20V-DRV",
+          "created_on": "2023-04-19",
+          "unit": "pieces",
+          "shelf": "shelf 2",
+          "supplier": "supplier 1",
+          "notes": "sample product",
+          "barcodeSymbol": "code 128",
+          "cost": 34,
+          "selectedQuantity": "100",
+          "discount": 0
+        }
+      ],
+      "discount": "6",
+      "shipping": "19",
+      "grand_total": 1075,
+      "status": "pending",
+      "notes": "new quot",
+      "id": 12
     }
   ],
   "customers": [
