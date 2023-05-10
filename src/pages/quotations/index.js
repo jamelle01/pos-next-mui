@@ -316,7 +316,7 @@ const Quotations = () => {
         <DialogTitle>{'Confirm Delete  '}</DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-slide-description'>
-            This action will delete the selected quotation.
+            This action will delete the selected Quotation.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
