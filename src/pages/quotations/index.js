@@ -113,6 +113,7 @@ const Quotations = () => {
   const [search, setSearch] = useState('')
 
   const [statusFilter, setStatusFilter] = useState('All')
+
   // const [dateFilter, setDateFilter] = useState()
 
   const router = useRouter()
@@ -280,6 +281,7 @@ const Quotations = () => {
     if (dateRange) {
       const filtered = quotations.filter(quotation => {
         const createdOn = new Date(quotation.created_on)
+
         return createdOn >= new Date(dateRange.start) && createdOn < new Date(dateRange.end)
       })
 
@@ -298,6 +300,7 @@ const Quotations = () => {
     if (status === 'All') {
       return quotations
     }
+
     return quotations.filter(quotation => quotation.status === status)
   }
 
