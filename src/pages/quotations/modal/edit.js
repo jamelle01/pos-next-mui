@@ -416,7 +416,7 @@ const EditQuotation = ({
                             id='demo-multiple-name'
                             defaultValue={selectedShelve}
                             onChange={e => setSelectedShelve(e.target.value)}
-                            disabled={selectedProducts.length > 0}
+                            disabled={selectedProducts && selectedProducts.length > 0}
                             input={<OutlinedInput label='Shelve' />}
                           >
                             {shelves.map(shelf => (
@@ -516,108 +516,109 @@ const EditQuotation = ({
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {selectedProducts && selectedProducts.map(item => (
-                              <TableRow key={item.desc}>
-                                <TableCell>
-                                  <Typography variant='subtitle1'>{item.code}</Typography>
+                            {selectedProducts &&
+                              selectedProducts.map(item => (
+                                <TableRow key={item.desc}>
+                                  <TableCell>
+                                    <Typography variant='subtitle1'>{item.code}</Typography>
 
-                                  <StyledName sx={{ fontSize: '0.7rem' }}>{item.name}</StyledName>
-                                </TableCell>
+                                    <StyledName sx={{ fontSize: '0.7rem' }}>{item.name}</StyledName>
+                                  </TableCell>
 
-                                <TableCell align='left'>
-                                  {item.price.toLocaleString(undefined, {
-                                    minimumFractionDigits: 2,
-                                    maximumFractionDigits: 2
-                                  })}
-                                </TableCell>
-                                <TableCell align='left'>{item.quantity}</TableCell>
-                                <TableCell align='left'>
-                                  <div
-                                    style={{
-                                      display: 'flex',
-                                      height: '100%',
-                                      justifyContent: 'center',
-                                      alignItems: 'center'
-                                    }}
-                                  >
-                                    <IconButton
-                                      onClick={() => {
-                                        if (item.selectedQuantity > 1) {
-                                          handleDecrement(item.id)
-                                        }
-                                      }}
-                                      disabled={item.selectedQuantity <= 1}
-                                      sx={{
-                                        color: 'red',
-                                        opacity: item.selectedQuantity <= 1 ? '0.5' : '1',
-                                        cursor: item.selectedQuantity <= 1 ? 'not-allowed' : 'pointer'
-                                      }}
-                                    >
-                                      <MinusBox />
-                                    </IconButton>
-
-                                    <input
-                                      className='quantValue'
-                                      type='number'
-                                      value={item.selectedQuantity}
+                                  <TableCell align='left'>
+                                    {item.price.toLocaleString(undefined, {
+                                      minimumFractionDigits: 2,
+                                      maximumFractionDigits: 2
+                                    })}
+                                  </TableCell>
+                                  <TableCell align='left'>{item.quantity}</TableCell>
+                                  <TableCell align='left'>
+                                    <div
                                       style={{
-                                        minWidth: '30px',
-                                        maxWidth: '50px',
-                                        textAlign: 'center',
-                                        border: '1px solid transparent',
-
-                                        // backgroundColor: 'transparent',
-                                        fontSize: '14px',
-                                        fontWeight: 'bold',
-
-                                        // color: 'secondary.main',
-                                        appearance: 'textfield'
+                                        display: 'flex',
+                                        height: '100%',
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
                                       }}
-                                      onChange={e => handleQuantChange(item.id, e)}
-                                    />
-
-                                    <IconButton
-                                      sx={{
-                                        color: 'blue',
-
-                                        // opacity: item.selectedQuantity === item.quantity ? '0.5' : '1',
-                                        cursor: 'pointer'
-
-                                        // cursor: item.selectedQuantity === item.quantity ? 'not-allowed' : 'pointer'
-                                      }}
-                                      onClick={() => {
-                                        // if (item.selectedQuantity < item.quantity) {
-                                        handleIncrement(item.id)
-
-                                        // }
-                                      }}
-
-                                      // disabled={item.selectedQuantity === item.quantity}
                                     >
-                                      <PlusBox />
+                                      <IconButton
+                                        onClick={() => {
+                                          if (item.selectedQuantity > 1) {
+                                            handleDecrement(item.id)
+                                          }
+                                        }}
+                                        disabled={item.selectedQuantity <= 1}
+                                        sx={{
+                                          color: 'red',
+                                          opacity: item.selectedQuantity <= 1 ? '0.5' : '1',
+                                          cursor: item.selectedQuantity <= 1 ? 'not-allowed' : 'pointer'
+                                        }}
+                                      >
+                                        <MinusBox />
+                                      </IconButton>
+
+                                      <input
+                                        className='quantValue'
+                                        type='number'
+                                        value={item.selectedQuantity}
+                                        style={{
+                                          minWidth: '30px',
+                                          maxWidth: '50px',
+                                          textAlign: 'center',
+                                          border: '1px solid transparent',
+
+                                          // backgroundColor: 'transparent',
+                                          fontSize: '14px',
+                                          fontWeight: 'bold',
+
+                                          // color: 'secondary.main',
+                                          appearance: 'textfield'
+                                        }}
+                                        onChange={e => handleQuantChange(item.id, e)}
+                                      />
+
+                                      <IconButton
+                                        sx={{
+                                          color: 'blue',
+
+                                          // opacity: item.selectedQuantity === item.quantity ? '0.5' : '1',
+                                          cursor: 'pointer'
+
+                                          // cursor: item.selectedQuantity === item.quantity ? 'not-allowed' : 'pointer'
+                                        }}
+                                        onClick={() => {
+                                          // if (item.selectedQuantity < item.quantity) {
+                                          handleIncrement(item.id)
+
+                                          // }
+                                        }}
+
+                                        // disabled={item.selectedQuantity === item.quantity}
+                                      >
+                                        <PlusBox />
+                                      </IconButton>
+                                    </div>
+                                  </TableCell>
+                                  <TableCell align='left'>
+                                    {item.discount.toLocaleString(undefined, {
+                                      minimumFractionDigits: 2,
+                                      maximumFractionDigits: 2
+                                    })}
+                                  </TableCell>
+                                  <TableCell align='left'>
+                                    {(item.subtotal = item.price * item.selectedQuantity).toLocaleString(undefined, {
+                                      minimumFractionDigits: 2,
+                                      maximumFractionDigits: 2
+                                    })}
+                                  </TableCell>
+                                  <TableCell align='center'>
+                                    <IconButton onClick={() => handleProductRemove(item.id)} sx={{ color: 'red' }}>
+                                      <Delete />
                                     </IconButton>
-                                  </div>
-                                </TableCell>
-                                <TableCell align='left'>
-                                  {item.discount.toLocaleString(undefined, {
-                                    minimumFractionDigits: 2,
-                                    maximumFractionDigits: 2
-                                  })}
-                                </TableCell>
-                                <TableCell align='left'>
-                                  {(item.subtotal = item.price * item.selectedQuantity).toLocaleString(undefined, {
-                                    minimumFractionDigits: 2,
-                                    maximumFractionDigits: 2
-                                  })}
-                                </TableCell>
-                                <TableCell align='center'>
-                                  <IconButton onClick={() => handleProductRemove(item.id)} sx={{ color: 'red' }}>
-                                    <Delete />
-                                  </IconButton>
-                                </TableCell>
-                              </TableRow>
-                            ))}
-                            {selectedProducts.length == 0 && (
+                                  </TableCell>
+                                </TableRow>
+                              ))}
+                            {selectedProducts && selectedProducts.length == 0 && (
                               <TableRow>
                                 <TableCell colSpan={7}>
                                   <Typography align='center' variant='subtitle2'>
@@ -796,7 +797,7 @@ const EditQuotation = ({
                             !selectedDate ||
                             !selectedShelve ||
                             !selectedCustomer ||
-                            !selectedProducts.length ||
+                            !(selectedProducts && selectedProducts.length > 0) ||
                             !selectedStatus
                           }
                         >
