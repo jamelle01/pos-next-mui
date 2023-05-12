@@ -516,7 +516,7 @@ const EditQuotation = ({
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {selectedProducts.map(item => (
+                            {selectedProducts && selectedProducts.map(item => (
                               <TableRow key={item.desc}>
                                 <TableCell>
                                   <Typography variant='subtitle1'>{item.code}</Typography>
@@ -754,11 +754,12 @@ const EditQuotation = ({
                             onChange={e => setSelectedStatus(e.target.value)}
                             input={<OutlinedInput label='Shelve' />}
                           >
-                            {status.map(stat => (
-                              <MenuItem key={stat.id} value={stat.name}>
-                                {stat.name}
-                              </MenuItem>
-                            ))}
+                            {status &&
+                              status.map(stat => (
+                                <MenuItem key={stat.id} value={stat.name}>
+                                  {stat.name}
+                                </MenuItem>
+                              ))}
                           </Select>
                         </FormControl>
                       )}
