@@ -24,7 +24,13 @@ To install and run the application locally, follow these steps:
 - Material UI
 - [ThemeSelection](https://github.com/themeselection/materio-mui-react-nextjs-admin-template-free) template
 
-## Contributing
+## Live Demo
+Please note that this demo utilizes a local JSON server, which is not accessible in the live demo environment. To run the local JSON server, follow these steps:
+* Navigate to the project directory and download the db.json file.
+* Run the server using the following command:
+```
+npx json-server --watch data/db.json --port 8000
+```
 
 ## Developers
 
