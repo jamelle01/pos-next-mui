@@ -464,6 +464,10 @@ const EditQuotation = ({
                         onChange={e => setSearch(e.target.value)}
                         inputRef={searchInputRef}
                         autoComplete='off'
+                        label="search"
+                        InputLabelProps={{
+                          shrink: true
+                        }}
                         InputProps={{
                           startAdornment: (
                             <Magnify
@@ -776,9 +780,12 @@ const EditQuotation = ({
                         placeholder='Enter Notes'
                         fullWidth
                         multiline
-                        variant='filled'
+                        variant='outlined'
                         rows={4}
                         value={notes}
+                        InputLabelProps={{
+                          shrink: true
+                        }}
                         onChange={e => setNotes(e.target.value)}
                       />
                     </Grid>
