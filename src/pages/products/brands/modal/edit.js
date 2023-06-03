@@ -108,7 +108,9 @@ const EditBrand = ({ count, brand, id, openEdit, setOpenEdit, refresh, setRefres
                 <TextField
                   fullWidth
                   required
-                  focused
+                  InputLabelProps={{
+                    shrink: true
+                  }}
                   autoComplete='off'
                   label='Name'
                   placeholder='Enter Product Name'

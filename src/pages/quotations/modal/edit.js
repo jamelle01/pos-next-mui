@@ -464,10 +464,7 @@ const EditQuotation = ({
                         onChange={e => setSearch(e.target.value)}
                         inputRef={searchInputRef}
                         autoComplete='off'
-                        label="search"
-                        InputLabelProps={{
-                          shrink: true
-                        }}
+                        label='search'
                         InputProps={{
                           startAdornment: (
                             <Magnify
