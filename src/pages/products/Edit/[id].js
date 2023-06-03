@@ -128,7 +128,7 @@ export async function getServerSideProps(context) {
     }
   } catch (error) {
     console.error(error)
-    
+
     return {
       props: {
         product: null
@@ -274,7 +274,7 @@ const Edit = ({ product }) => {
       .then(data => {
         console.log('Product updated successfully:', data)
         router.push('/products')
-        
+
         // do something after the product is updated
       })
       .catch(error => {
@@ -408,16 +408,20 @@ const Edit = ({ product }) => {
                         fullWidth
                         autoComplete='off'
                         value={name}
-                        focused
                         onChange={e => setName(e.target.value)}
                         label='Name'
                         placeholder='Enter Product Name'
+                        InputLabelProps={{
+                          shrink: true
+                        }}
                       />
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
                         required
-                        focused
+                        focusInputLabelProps={{
+                          shrink: true
+                        }}
                         fullWidth
                         value={code}
                         label='Code'
@@ -426,7 +430,13 @@ const Edit = ({ product }) => {
                       />
                     </Grid>
                     <Grid item xs={6}>
-                      <FormControl required focused fullWidth>
+                      <FormControl
+                        required
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                        fullWidth
+                      >
                         <InputLabel id='demo-multiple-name-label'>Product Category</InputLabel>
                         <Select
                           labelId='demo-multiple-name-label'
@@ -445,7 +455,13 @@ const Edit = ({ product }) => {
                     </Grid>
 
                     <Grid item xs={6}>
-                      <FormControl required focused fullWidth>
+                      <FormControl
+                        required
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                        fullWidth
+                      >
                         <InputLabel id='demo-multiple-name-label'>Brand</InputLabel>
                         <Select
                           labelId='demo-multiple-name-label'
@@ -464,7 +480,13 @@ const Edit = ({ product }) => {
                     </Grid>
 
                     <Grid item xs={6}>
-                      <FormControl focused required fullWidth>
+                      <FormControl
+                        InputLabelProps={{
+                          shrink: true
+                        }}
+                        required
+                        fullWidth
+                      >
                         <InputLabel id='demo-multiple-name-label'>Barcode Symbology</InputLabel>
                         <Select
                           labelId='demo-multiple-name-label'
@@ -483,7 +505,9 @@ const Edit = ({ product }) => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
-                        focused
+                        InputLabelProps={{
+                          shrink: true
+                        }}
                         required
                         fullWidth
                         label='Product Cost'
@@ -500,7 +524,9 @@ const Edit = ({ product }) => {
                     </Grid>
                     <Grid item xs={6}>
                       <TextField
-                        focused
+                        InputLabelProps={{
+                          shrink: true
+                        }}
                         required
                         fullWidth
                         label='Product Price'
@@ -516,7 +542,9 @@ const Edit = ({ product }) => {
                       />
                     </Grid>
                     <Grid item xs={6}>
-                      <FormControl focused required fullWidth>
+                      <FormControl InputLabelProps={{
+                          shrink: true
+                        }} required fullWidth>
                         <InputLabel id='demo-multiple-name-label'>Product Unit</InputLabel>
                         <Select
                           labelId='demo-multiple-name-label'
@@ -536,7 +564,9 @@ const Edit = ({ product }) => {
 
                     <Grid item xs={6}>
                       <TextField
-                        focused
+                        InputLabelProps={{
+                          shrink: true
+                        }}
                         required
                         value={stockAlert}
                         onChange={e => e.target.value}
@@ -549,7 +579,9 @@ const Edit = ({ product }) => {
 
                     <Grid item xs={12}>
                       <TextField
-                        focused
+                        InputLabelProps={{
+                          shrink: true
+                        }}
                         fullWidth
                         id='standard-multiline-static'
                         label='Notes'
@@ -563,7 +595,9 @@ const Edit = ({ product }) => {
                       />
                     </Grid>
 
-                    <Grid focused item xs={12}>
+                    <Grid InputLabelProps={{
+                          shrink: true
+                        }} item xs={12}>
                       <Divider sx={{ margin: 0 }} />
                       <CardActions sx={{ justifyContent: 'flex-end' }}>
                         <Button size='large' type='submit' sx={{ mr: 2 }} variant='contained'>
@@ -639,7 +673,9 @@ const Edit = ({ product }) => {
                     </Grid>
 
                     <Grid item xs={12}>
-                      <FormControl required focused fullWidth>
+                      <FormControl required InputLabelProps={{
+                          shrink: true
+                        }} fullWidth>
                         <InputLabel id='demo-multiple-name-label'>Shelve</InputLabel>
                         <Select
                           labelId='demo-multiple-name-label'
@@ -657,7 +693,9 @@ const Edit = ({ product }) => {
                       </FormControl>
                     </Grid>
                     <Grid item xs={12}>
-                      <FormControl focused required fullWidth>
+                      <FormControl InputLabelProps={{
+                          shrink: true
+                        }} required fullWidth>
                         <InputLabel id='demo-multiple-name-label'>Supplier</InputLabel>
                         <Select
                           labelId='demo-multiple-name-label'
@@ -676,7 +714,9 @@ const Edit = ({ product }) => {
                     </Grid>
                     <Grid item xs={12}>
                       <TextField
-                        focused
+                        InputLabelProps={{
+                          shrink: true
+                        }}
                         required
                         value={quantity}
                         fullWidth
