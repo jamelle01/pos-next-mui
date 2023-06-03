@@ -108,10 +108,12 @@ const EditCategory = ({ count, category, id, openEdit, setOpenEdit, refresh, set
                 <TextField
                   fullWidth
                   required
-                  focused
+                  InputLabelProps={{
+                    shrink: true
+                  }}
                   autoComplete='off'
-                  label='Name'
-                  placeholder='Enter Product Name'
+                  label='Product Category'
+                  placeholder='Enter Product Category'
                   value={productCategory}
                   onChange={e => setProductCategory(e.target.value)}
                 />
